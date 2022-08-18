@@ -95,4 +95,4 @@ npm run lint:fix
 
 ## Author
 
-- [Sen Serafim](https://github.com/Hostlife22)
+- [Gennadiy Konko](https://github.com/GenDev-1001), [Dzmitry Karakulka](https://github.com/mitrofanzxc), [Anastasia Chernova](https://github.com/ShadowFox35)
