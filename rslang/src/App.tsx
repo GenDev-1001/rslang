@@ -5,7 +5,7 @@ import { About } from './pages/About';
 import { Audio } from './pages/Audio';
 import { Dictionary } from './pages/Dictionary';
 import { Main } from './pages/Main';
-import { Sprint } from './pages/Sprint';
+import { Sprint } from './pages/Sprint/Sprint';
 import { Statistics } from './pages/Statistics';
 
 function App() {

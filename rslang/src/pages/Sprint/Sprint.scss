@@ -1,0 +1,14 @@
+@import '../../sass/Constants.scss';
+
+.button-level__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $base * 4;
+}
+
+.button-level {
+  width: $base * 20;
+  height: $base * 20;
+  border-radius: 50%;
+}

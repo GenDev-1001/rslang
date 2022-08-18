@@ -1,0 +1,155 @@
+@use 'sass:math';
+
+// === FUNCTIONS ===
+
+@function strip-unit($num) {
+  @return math.div($num, ($num * 0 + 1));
+}
+
+@function rem($num) {
+  @return math.div(strip-unit($num), 16) * 1rem;
+}
+
+@function calcResponsiveSize($size-min, $size-max, $width-min, $width-max) {
+  $size-min: strip-unit($size-min);
+  $size-max: strip-unit($size-max);
+  $width-min: strip-unit($width-min);
+  $width-max: strip-unit($width-max);
+  $k: math.div(($size-max - $size-min), ($width-max - $width-min));
+  $b: rem($size-min - $k * $width-min);
+  @return calc(#{$k} * 100vw + #{$b});
+}
+
+// === / FUNCTIONS ===
+
+// === VARIABLES ===
+
+$base: rem(5px);
+
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semi-bold: 600;
+$fw-bold: 700;
+
+$fs-xxs: rem(11px);
+$fs-xs: rem(12px);
+$fs-s: rem(13px);
+$fs-m: rem(14px);
+$fs-l: rem(16px);
+$fs-xl: rem(22px);
+$fs-xxl: rem(26px);
+$fs-xxxl: rem(36px);
+$fs-xxxxl: rem(50px);
+
+$transition: 0.3s;
+$transition-01: 0.1s;
+$transition-02: 0.2s;
+
+$color-dark: rgba(18, 18, 18, 1);
+$color-dark-02: rgba(18, 18, 18, 0.2);
+$color-dark-03: rgba(18, 18, 18, 0.3);
+$color-dark-04: rgba(18, 18, 18, 0.4);
+$color-dark-05: rgba(18, 18, 18, 0.5);
+$color-dark-06: rgba(18, 18, 18, 0.6);
+$color-dark-07: rgba(18, 18, 18, 0.7);
+$color-dark-08: rgba(18, 18, 18, 0.8);
+$color-dark-09: rgba(18, 18, 18, 0.9);
+$color-grey: rgba(229, 229, 229, 1);
+$color-grey-02: rgba(229, 229, 229, 0.2);
+$color-grey-03: rgba(229, 229, 229, 0.3);
+$color-grey-04: rgba(229, 229, 229, 0.4);
+$color-grey-05: rgba(229, 229, 229, 0.5);
+$color-grey-06: rgba(229, 229, 229, 0.6);
+$color-grey-07: rgba(229, 229, 229, 0.7);
+$color-grey-08: rgba(229, 229, 229, 0.8);
+$color-grey-09: rgba(229, 229, 229, 0.9);
+$color-gr-white: rgba(248, 248, 248, 1);
+$color-gr-white-02: rgba(248, 248, 248, 0.2);
+$color-gr-white-03: rgba(248, 248, 248, 0.3);
+$color-gr-white-04: rgba(248, 248, 248, 0.4);
+$color-gr-white-05: rgba(248, 248, 248, 0.5);
+$color-gr-white-06: rgba(248, 248, 248, 0.6);
+$color-gr-white-07: rgba(248, 248, 248, 0.7);
+$color-gr-white-08: rgba(248, 248, 248, 0.8);
+$color-gr-white-09: rgba(248, 248, 248, 0.9);
+$color-white: rgba(255, 255, 255, 1);
+$color-white-02: rgba(255, 255, 255, 0.2);
+$color-white-03: rgba(255, 255, 255, 0.3);
+$color-white-04: rgba(255, 255, 255, 0.4);
+$color-white-05: rgba(255, 255, 255, 0.5);
+$color-white-06: rgba(255, 255, 255, 0.6);
+$color-white-07: rgba(255, 255, 255, 0.7);
+$color-white-08: rgba(255, 255, 255, 0.8);
+$color-white-09: rgba(255, 255, 255, 0.9);
+$color-sale: rgba(233, 30, 99, 1);
+$color-sale-02: rgba(233, 30, 99, 0.2);
+$color-sale-03: rgba(233, 30, 99, 0.3);
+$color-sale-04: rgba(233, 30, 99, 0.4);
+$color-sale-05: rgba(233, 30, 99, 0.5);
+$color-sale-06: rgba(233, 30, 99, 0.6);
+$color-sale-07: rgba(233, 30, 99, 0.7);
+$color-sale-08: rgba(233, 30, 99, 0.8);
+$color-sale-09: rgba(233, 30, 99, 0.9);
+$color-yellow: rgba(240, 204, 132, 1);
+$color-yellow-02: rgba(240, 204, 132, 0.2);
+$color-yellow-03: rgba(240, 204, 132, 0.3);
+$color-yellow-04: rgba(240, 204, 132, 0.4);
+$color-yellow-05: rgba(240, 204, 132, 0.5);
+$color-yellow-06: rgba(240, 204, 132, 0.6);
+$color-yellow-07: rgba(240, 204, 132, 0.7);
+$color-yellow-08: rgba(240, 204, 132, 0.8);
+$color-yellow-09: rgba(240, 204, 132, 0.9);
+$color-error: rgba(214, 19, 19, 1);
+$color-error-02: rgba(214, 19, 19, 0.2);
+$color-error-03: rgba(214, 19, 19, 0.3);
+$color-error-04: rgba(214, 19, 19, 0.4);
+$color-error-05: rgba(214, 19, 19, 0.5);
+$color-error-06: rgba(214, 19, 19, 0.6);
+$color-error-07: rgba(214, 19, 19, 0.7);
+$color-error-08: rgba(214, 19, 19, 0.8);
+$color-error-09: rgba(214, 19, 19, 0.9);
+$color-ok: rgba(11, 177, 127, 1);
+$color-ok-02: rgba(11, 177, 127, 0.2);
+$color-ok-03: rgba(11, 177, 127, 0.3);
+$color-ok-04: rgba(11, 177, 127, 0.4);
+$color-ok-02: rgba(11, 177, 127, 0.5);
+$color-ok-02: rgba(11, 177, 127, 0.6);
+$color-ok-02: rgba(11, 177, 127, 0.7);
+$color-ok-02: rgba(11, 177, 127, 0.8);
+$color-ok-02: rgba(11, 177, 127, 0.9);
+$color-grey-dark: rgba(156, 156, 156, 1);
+$color-grey-dark-02: rgba(156, 156, 156, 0.2);
+$color-grey-dark-03: rgba(156, 156, 156, 0.3);
+$color-grey-dark-04: rgba(156, 156, 156, 0.4);
+$color-grey-dark-05: rgba(156, 156, 156, 0.5);
+$color-grey-dark-06: rgba(156, 156, 156, 0.6);
+$color-grey-dark-07: rgba(156, 156, 156, 0.7);
+$color-grey-dark-08: rgba(156, 156, 156, 0.8);
+$color-grey-dark-09: rgba(156, 156, 156, 0.9);
+$color-orange: rgba(211, 118, 12, 1);
+$color-orange-02: rgba(211, 118, 12, 0.2);
+$color-orange-03: rgba(211, 118, 12, 0.3);
+$color-orange-04: rgba(211, 118, 12, 0.4);
+$color-orange-05: rgba(211, 118, 12, 0.5);
+$color-orange-06: rgba(211, 118, 12, 0.6);
+$color-orange-07: rgba(211, 118, 12, 0.7);
+$color-orange-08: rgba(211, 118, 12, 0.8);
+$color-orange-09: rgba(211, 118, 12, 0.9);
+
+$breakpoint-xxs-min: 320px;
+$breakpoint-xs-min: 480px;
+$breakpoint-sm-min: 576px;
+$breakpoint-md-min: 768px;
+$breakpoint-lg-min: 992px;
+$breakpoint-xl-min: 1200px;
+$breakpoint-xxl-min: 1440px;
+
+$breakpoint-xxxs-max: $breakpoint-xxs-min - 1px;
+$breakpoint-xxs-max: $breakpoint-xs-min - 1px;
+$breakpoint-xs-max: $breakpoint-sm-min - 1px;
+$breakpoint-sm-max: $breakpoint-md-min - 1px;
+$breakpoint-md-max: $breakpoint-lg-min - 1px;
+$breakpoint-lg-max: $breakpoint-xl-min - 1px;
+$breakpoint-xl-max: $breakpoint-xxl-min - 1px;
+
+// === / VARIABLES ===
