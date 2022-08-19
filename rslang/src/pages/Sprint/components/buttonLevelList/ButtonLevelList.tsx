@@ -9,8 +9,10 @@ export interface IButtonLevelList {
 export function ButtonLevelList({ onClick }: IButtonLevelList) {
   return (
     <div className="button-level__wrapper">
-      {mockButtonLevel.map(({ description, id }) => {
-        return <ButtonLevel key={id} description={description} onClick={onClick} />;
+      {mockButtonLevel.map(({ description, bgColor, id }) => {
+        return (
+          <ButtonLevel key={id} description={description} bgColor={bgColor} onClick={onClick} />
+        );
       })}
     </div>
   );

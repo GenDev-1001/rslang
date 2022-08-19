@@ -1,15 +1,98 @@
 @import '../../sass/Constants.scss';
 
+.sprint-wrapper {
+  position: relative;
+  height: 100vh;
+}
+
+.sprint-wrapper__bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.sprint-greetings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: $base * 10;
+  width: 80vw;
+  min-height: 65vh;
+  margin: auto;
+  margin-top: 5%;
+  padding: $base * 5;
+  border-radius: $base * 5;
+  background-color: $color-white;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.sprint-greetings__header {
+  font-size: $base * 20;
+  font-weight: $fw-bold;
+}
+
+.sprint-greetings__description {
+  font-size: $base * 8;
+  text-align: center;
+}
+
 .button-level__wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: $base * 4;
 }
 
 .button-level {
   width: $base * 20;
   height: $base * 20;
-  border-radius: 50%;
+  font-size: $base * 8;
+  border: none;
+  border-radius: $base * 5;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   cursor: pointer;
+}
+
+.strong {
+  background: linear-gradient(
+    90deg,
+    rgba(212, 225, 87, 1) 0%,
+    rgba(255, 112, 67, 1) 50%,
+    rgba(171, 71, 188, 1) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg_green {
+  background-color: #d4e157;
+}
+
+.bg_yellow {
+  background-color: #c6ff00;
+}
+
+.bg_orange {
+  background-color: #ffa726;
+}
+
+.bg_red {
+  background-color: #ff7043;
+}
+
+.bg_pink {
+  background-color: #ef5350;
+}
+
+.bg_purple {
+  background-color: #ab47bc;
 }
