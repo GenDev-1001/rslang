@@ -8,12 +8,12 @@ const mockButtonSelect: IMockButtonSelect[] = [
   {
     description: 'false',
     bgColor: 'bg_red',
-    id: '827bcc74-d2a1-4745-8bb5-26ac5645e1cd',
+    id: 'e1321b74-fd2e-419f-a6b5-3fcb41f7d5cc',
   },
   {
     description: 'true',
     bgColor: 'bg_green',
-    id: 'c653bec0-245a-46eb-9692-12751d6ab3c1',
+    id: 'd47021da-dd6a-4d25-95c9-43b8dca2d374',
   },
 ];
 

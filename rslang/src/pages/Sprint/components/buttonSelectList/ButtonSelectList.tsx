@@ -9,7 +9,7 @@ export interface IButtonSelectList {
 
 export function ButtonSelectList({ onClick }: IButtonSelectList) {
   return (
-    <div className="button-Select__wrapper">
+    <div className="button-select__wrapper">
       {mockButtonSelect.map(({ description, bgColor, id }) => {
         return (
           <ButtonSelect key={id} description={description} bgColor={bgColor} onClick={onClick} />

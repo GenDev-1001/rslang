@@ -18,6 +18,7 @@
 }
 
 .sprint-frame {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,6 +37,7 @@
 .sprint-frame__header {
   font-size: $base * 20;
   font-weight: $fw-bold;
+  text-align: center;
 }
 
 .sprint-frame__description {
@@ -58,4 +60,28 @@
 .loading {
   width: 75%;
   height: auto;
+}
+
+.bg_green {
+  background-color: $color-green;
+}
+
+.bg_yellow {
+  background-color: $color-yellow;
+}
+
+.bg_orange {
+  background-color: $color-orange;
+}
+
+.bg_red {
+  background-color: $color-red;
+}
+
+.bg_pink {
+  background-color: $color-pink;
+}
+
+.bg_purple {
+  background-color: $color-purple;
 }

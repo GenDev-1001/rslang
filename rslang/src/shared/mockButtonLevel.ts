@@ -8,32 +8,32 @@ const mockButtonLevel: IMockButtonLevel[] = [
   {
     description: '1',
     bgColor: 'bg_green',
-    id: '827bcc74-d2a1-4745-8bb5-26ac5645e1cd',
+    id: 'e7963452-a850-49c0-989b-237183a792b3',
   },
   {
     description: '2',
     bgColor: 'bg_yellow',
-    id: 'c653bec0-245a-46eb-9692-12751d6ab3c1',
+    id: '5954ccda-b5ef-4c74-a96a-d4d2ef0651ea',
   },
   {
     description: '3',
     bgColor: 'bg_orange',
-    id: '3956c473-1ccb-4cc6-9eec-15c1772805e2',
+    id: '2058a280-0fc6-4737-b77a-eb1fc27c509c',
   },
   {
     description: '4',
     bgColor: 'bg_red',
-    id: '5c6061da-ad7a-4114-af43-cf29a43ae404',
+    id: 'e49e223b-94d8-4f61-b6a1-678c3205ae34',
   },
   {
     description: '5',
     bgColor: 'bg_pink',
-    id: '256ab900-dd77-41f0-bee4-8152a64edcfa',
+    id: '8459a836-42b2-490f-a411-e5a6adc9a77d',
   },
   {
     description: '6',
     bgColor: 'bg_purple',
-    id: '256ab900-dd77-41f0-bee4-8152a64edcfa',
+    id: '5a9d1ede-6c17-4977-a194-93c9959b1fad',
   },
 ];
 

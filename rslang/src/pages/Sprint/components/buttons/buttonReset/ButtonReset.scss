@@ -1,16 +1,25 @@
 @import '../../../../../sass/Constants.scss';
 
-.button-select {
-  width: $base * 60;
+.button-reset {
+  position: fixed;
+  top: $base * 20;
+  right: $base * 4;
+  width: $base * 20;
   height: $base * 20;
-  font-size: $base * 8;
+  font-size: $base * 5;
   font-weight: $fw-bold;
+  text-align: center;
   text-transform: uppercase;
   border: none;
-  border-radius: $base * 5;
+  border-radius: 50%;
+  background-color: $color-red;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   cursor: pointer;
   transition: all $transition-01 ease-out;
+
+  &:hover {
+    transform: translate(0.063rem, 0.063rem);
+  }
 
   &:active {
     transform: translate($base, $base);

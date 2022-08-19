@@ -15,8 +15,8 @@ export function Sprint() {
 
   const handleSetLevel = (event: MouseEvent<HTMLButtonElement>) => {
     const target = event.target as HTMLButtonElement;
-    const value = target.textContent as string;
-    setLevel(value);
+    const textContent = target.textContent as string;
+    setLevel(textContent);
     handleLoading();
   };
 
