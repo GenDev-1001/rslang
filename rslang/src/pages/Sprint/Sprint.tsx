@@ -1,5 +1,6 @@
 import { useState, MouseEvent } from 'react';
 import { Header } from '../../components/Header';
+import { ButtonLevelList } from './components';
 import './Sprint.scss';
 
 export function Sprint() {
@@ -15,29 +16,13 @@ export function Sprint() {
     <>
       <Header />
       <div className="container">
-        {!level && (
-          <div className="button-level__wrapper">
-            <button className="button-level" onClick={handleSetLevel}>
-              1
-            </button>
-            <button className="button-level" onClick={handleSetLevel}>
-              2
-            </button>
-            <button className="button-level" onClick={handleSetLevel}>
-              3
-            </button>
-            <button className="button-level" onClick={handleSetLevel}>
-              4
-            </button>
-            <button className="button-level" onClick={handleSetLevel}>
-              5
-            </button>
-            <button className="button-level" onClick={handleSetLevel}>
-              6
-            </button>
-          </div>
+        {!level && <ButtonLevelList onClick={handleSetLevel} />}
+        {level && (
+          <>
+            <h2>{`Вы выбрали уровень №${level}`}</h2>
+            <button onClick={() => setLevel('')}>Сброс уровня</button>
+          </>
         )}
-        {level && <h2>{`Вы выбрали уровень №${level}`}</h2>}
       </div>
     </>
   );
