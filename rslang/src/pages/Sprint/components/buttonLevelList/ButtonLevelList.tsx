@@ -1,6 +1,7 @@
 import { MouseEvent } from 'react';
 import { ButtonLevel } from '../buttons';
 import { mockButtonLevel } from '../../../../shared/mockButtonLevel';
+import './ButtonLevelList.scss';
 
 export interface IButtonLevelList {
   onClick: (event: MouseEvent<HTMLButtonElement>) => void;

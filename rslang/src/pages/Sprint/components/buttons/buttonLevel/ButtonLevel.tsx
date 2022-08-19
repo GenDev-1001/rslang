@@ -1,4 +1,5 @@
 import { MouseEvent } from 'react';
+import './ButtonLevel.scss';
 
 export interface IButtonLevel {
   description: string;

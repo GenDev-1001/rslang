@@ -17,14 +17,14 @@
   object-position: center center;
 }
 
-.sprint-greetings {
+.sprint-frame {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   row-gap: $base * 10;
   width: 80vw;
-  min-height: 65vh;
+  min-height: 70vh;
   margin: auto;
   margin-top: 5%;
   padding: $base * 5;
@@ -33,32 +33,14 @@
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
-.sprint-greetings__header {
+.sprint-frame__header {
   font-size: $base * 20;
   font-weight: $fw-bold;
 }
 
-.sprint-greetings__description {
+.sprint-frame__description {
   font-size: $base * 8;
   text-align: center;
-}
-
-.button-level__wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: $base * 4;
-}
-
-.button-level {
-  width: $base * 20;
-  height: $base * 20;
-  font-size: $base * 8;
-  border: none;
-  border-radius: $base * 5;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-  cursor: pointer;
 }
 
 .strong {
@@ -73,26 +55,7 @@
   -webkit-text-fill-color: transparent;
 }
 
-.bg_green {
-  background-color: #d4e157;
-}
-
-.bg_yellow {
-  background-color: #c6ff00;
-}
-
-.bg_orange {
-  background-color: #ffa726;
-}
-
-.bg_red {
-  background-color: #ff7043;
-}
-
-.bg_pink {
-  background-color: #ef5350;
-}
-
-.bg_purple {
-  background-color: #ab47bc;
+.loading {
+  width: 75%;
+  height: auto;
 }

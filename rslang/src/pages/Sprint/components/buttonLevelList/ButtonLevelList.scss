@@ -1,0 +1,9 @@
+@import '../../../../sass/Constants.scss';
+
+.button-level__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: $base * 4;
+}

@@ -1,0 +1,40 @@
+@import '../../../../../sass/Constants.scss';
+
+.button-level {
+  width: $base * 20;
+  height: $base * 20;
+  font-size: $base * 8;
+  border: none;
+  border-radius: $base * 5;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  cursor: pointer;
+  transition: all $transition ease-out;
+
+  &:hover {
+    transform: translate(-$base, -$base);
+  }
+}
+
+.bg_green {
+  background-color: #d4e157;
+}
+
+.bg_yellow {
+  background-color: #c6ff00;
+}
+
+.bg_orange {
+  background-color: #ffa726;
+}
+
+.bg_red {
+  background-color: #ff7043;
+}
+
+.bg_pink {
+  background-color: #ef5350;
+}
+
+.bg_purple {
+  background-color: #ab47bc;
+}
