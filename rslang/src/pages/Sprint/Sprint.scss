@@ -24,6 +24,7 @@
   justify-content: space-between;
   flex-direction: column;
   row-gap: $base * 10;
+  max-width: $base * 240;
   width: 80vw;
   min-height: 70vh;
   margin: auto;
