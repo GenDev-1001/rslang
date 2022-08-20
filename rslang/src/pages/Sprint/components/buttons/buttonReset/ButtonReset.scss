@@ -1,10 +1,9 @@
 @import '../../../../../sass/Constants.scss';
 
 .button-reset {
-  position: fixed;
-  top: $base * 20;
-  right: $base * 4;
+  min-width: $base * 20;
   width: $base * 20;
+  min-height: $base * 20;
   height: $base * 20;
   font-size: $base * 5;
   font-weight: $fw-bold;
@@ -23,5 +22,19 @@
 
   &:active {
     transform: translate($base, $base);
+  }
+
+  &:disabled {
+    user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    background-color: $color-dark-02;
+
+    &:hover,
+    &:active {
+      transform: none;
+    }
   }
 }

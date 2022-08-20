@@ -1,12 +1,13 @@
 import { useState, MouseEvent } from 'react';
 import { Header } from '../../components/Header';
-import { Loading, Greetings, Game } from './components';
+import { Loading, Greetings, Game, Statistics } from './components';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import './Sprint.scss';
 
 export function Sprint() {
   const [level, setLevel] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isEndGame, setIsEndGame] = useState<boolean>(false);
 
   const handleLoading = () => {
     setIsLoading(true);
@@ -20,7 +21,16 @@ export function Sprint() {
     handleLoading();
   };
 
+  const handleIsEndGame = (value: boolean) => {
+    setIsEndGame(value);
+  };
+
+  const endGame = () => {
+    setIsEndGame(false);
+  };
+
   const resetLevel = () => {
+    endGame();
     setLevel('');
   };
 
@@ -30,7 +40,10 @@ export function Sprint() {
       <img src={sprintBg} alt="Sprint Background" className="sprint-wrapper__bg" />
       {!level && <Greetings onClick={handleSetLevel} />}
       {isLoading && <Loading />}
-      {level && !isLoading && <Game level={level} onClick={resetLevel} />}
+      {level && !isLoading && !isEndGame && (
+        <Game level={level} onClick={resetLevel} handleIsEndGame={handleIsEndGame} />
+      )}
+      {isEndGame && <Statistics endGame={endGame} resetLevel={resetLevel} />}
     </div>
   );
 }

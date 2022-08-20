@@ -86,3 +86,17 @@
 .bg_purple {
   background-color: $color-purple;
 }
+
+.button-menu {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: $base * 5;
+  width: $base * 25;
+  height: 100%;
+  background-color: $color-white-02;
+}

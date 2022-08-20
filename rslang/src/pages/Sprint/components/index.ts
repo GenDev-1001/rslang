@@ -4,6 +4,7 @@ import { ButtonLevel, ButtonSelect, ButtonReset } from './buttons';
 import { Loading } from './loading/Loading';
 import { Greetings } from './greetings/Greetings';
 import { Game } from './game/Game';
+import { Statistics } from './statistics/Statistics';
 
 export {
   ButtonLevelList,
@@ -14,4 +15,5 @@ export {
   Loading,
   Greetings,
   Game,
+  Statistics,
 };
