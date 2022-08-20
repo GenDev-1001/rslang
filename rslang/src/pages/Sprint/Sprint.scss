@@ -109,3 +109,12 @@
   -moz-user-select: none;
   -ms-user-select: none;
 }
+
+.opacity_zero {
+  opacity: 0;
+  transition: all $transition-01;
+}
+
+.opacity_one {
+  opacity: 1;
+}

@@ -12,6 +12,10 @@
   cursor: pointer;
   transition: all $transition-01 ease-out;
 
+  &:hover {
+    transform: translate(0.063rem, 0.063rem);
+  }
+
   &:active {
     transform: translate($base, $base);
   }

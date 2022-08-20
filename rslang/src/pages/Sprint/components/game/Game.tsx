@@ -10,13 +10,38 @@ export interface IGame {
 }
 
 export function Game({ level, resetLevel, handleIsEndGame }: IGame) {
-  const [timer, setTimer] = useState<number>(3);
-  const [score, setScore] = useState<number>(10);
+  const [timer, setTimer] = useState<number>(6000);
+  const [score, setScore] = useState<number>(0);
+  const [streak, setStreak] = useState<number>(0);
+  const [multiplier, setMultiplier] = useState<number>(1);
+
+  const handleAnswer = (value: string) => {
+    if (value === 'true' || value === 'ArrowRight') {
+      if (streak === 3) {
+        if (multiplier !== 4) {
+          setMultiplier((prevState) => prevState + 1);
+        }
+        setStreak(0);
+      }
+      if (streak !== 3) {
+        setStreak((prevState) => prevState + 1);
+      }
+      setScore((prevState) => prevState + 10 * multiplier);
+    }
+
+    if (value === 'false') {
+      setStreak(0);
+      setMultiplier(1);
+    }
+
+    console.log('streak ===', streak);
+    console.log('multiplier ===', multiplier);
+  };
 
   const handleButtonSelect = (event: MouseEvent<HTMLButtonElement>) => {
     const target = event.target as HTMLButtonElement;
     const textContent = target.textContent as string;
-    console.log('textContent ===', textContent);
+    handleAnswer(textContent);
   };
 
   const handleKeySelect = (event: globalThis.KeyboardEvent) => {
@@ -24,10 +49,10 @@ export function Game({ level, resetLevel, handleIsEndGame }: IGame) {
 
     switch (code) {
       case 'ArrowRight':
-        console.log('code ===', code);
+        handleAnswer('ArrowRight');
         break;
       case 'ArrowLeft':
-        console.log('code ===', code);
+        handleAnswer('ArrowLeft');
         break;
       default:
         break;
@@ -37,7 +62,7 @@ export function Game({ level, resetLevel, handleIsEndGame }: IGame) {
   useEffect(() => {
     document.addEventListener('keydown', handleKeySelect);
     return () => {
-      document.removeEventListener('keypress', handleKeySelect);
+      document.removeEventListener('keydown', handleKeySelect);
     };
   }, []);
 
@@ -58,24 +83,42 @@ export function Game({ level, resetLevel, handleIsEndGame }: IGame) {
   return (
     <>
       <div className="sprint-frame">
-        <h2 className="sprint-frame__header user-select_none">{`Уровень №${level}`}</h2>
         <div className="sprint-ui">
           <div className="sprint-ui__circle user-select_none">
             Time:
             <br />
             {timer}
           </div>
+          <div className="sprint-ui__circle user-select_none">
+            Level
+            <br />
+            {`№${level}`}
+          </div>
           <div className="sprint-ui__streak-wrapper user-select_none">
             <ul className="sprint-ui__streak">
-              <li className="sprint-ui__circle sprint-ui__circle_small">&#128293;</li>
-              <li className="sprint-ui__circle sprint-ui__circle_small">&#128293;</li>
-              <li className="sprint-ui__circle sprint-ui__circle_small">&#128293;</li>
+              <li className="sprint-ui__circle sprint-ui__circle_small">
+                <span className={`opacity_zero ${streak > 0 ? 'opacity_one' : ''}`}>&#128293;</span>
+              </li>
+              <li className="sprint-ui__circle sprint-ui__circle_small">
+                <span className={`opacity_zero ${streak > 1 ? 'opacity_one' : ''}`}>&#128293;</span>
+              </li>
+              <li className="sprint-ui__circle sprint-ui__circle_small">
+                <span className={`opacity_zero ${streak > 2 ? 'opacity_one' : ''}`}>&#128293;</span>
+              </li>
             </ul>
             <ul className="sprint-ui__level">
-              <li className="sprint-ui__circle sprint-ui__circle_small">x1</li>
-              <li className="sprint-ui__circle sprint-ui__circle_small">x2</li>
-              <li className="sprint-ui__circle sprint-ui__circle_small">x3</li>
-              <li className="sprint-ui__circle sprint-ui__circle_small">x4</li>
+              <li className="sprint-ui__circle sprint-ui__circle_small">
+                <span className={`opacity_zero ${multiplier > 0 ? 'opacity_one' : ''}`}>x1</span>
+              </li>
+              <li className="sprint-ui__circle sprint-ui__circle_small">
+                <span className={`opacity_zero ${multiplier > 1 ? 'opacity_one' : ''}`}>x2</span>
+              </li>
+              <li className="sprint-ui__circle sprint-ui__circle_small">
+                <span className={`opacity_zero ${multiplier > 2 ? 'opacity_one' : ''}`}>x3</span>
+              </li>
+              <li className="sprint-ui__circle sprint-ui__circle_small">
+                <span className={`opacity_zero ${multiplier > 3 ? 'opacity_one' : ''}`}>x4</span>
+              </li>
             </ul>
           </div>
           <div className="sprint-ui__circle user-select_none">
@@ -84,6 +127,8 @@ export function Game({ level, resetLevel, handleIsEndGame }: IGame) {
             {score}
           </div>
         </div>
+        <h2 className="sprint-frame__header">English</h2>
+        <h2 className="sprint-frame__header">Русский</h2>
         <button className="sprint-ui__circle sprint-ui__circle_small button-cat-speak">
           <img src={cat} alt="cat" className="button-cat-speak__img" />
         </button>
