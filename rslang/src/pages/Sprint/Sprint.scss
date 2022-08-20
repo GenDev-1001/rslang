@@ -61,6 +61,7 @@
 .loading {
   width: 75%;
   height: auto;
+  margin: auto;
 }
 
 .bg_green {
@@ -99,4 +100,12 @@
   width: $base * 25;
   height: 100%;
   background-color: $color-white-02;
+}
+
+.user-select_none {
+  user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
