@@ -41,7 +41,7 @@ export function Sprint() {
       {!level && <Greetings onClick={handleSetLevel} />}
       {isLoading && <Loading />}
       {level && !isLoading && !isEndGame && (
-        <Game level={level} onClick={resetLevel} handleIsEndGame={handleIsEndGame} />
+        <Game level={level} resetLevel={resetLevel} handleIsEndGame={handleIsEndGame} />
       )}
       {isEndGame && <Statistics endGame={endGame} resetLevel={resetLevel} />}
     </div>

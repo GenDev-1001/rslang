@@ -3,11 +3,11 @@ import { ButtonSelectList, ButtonReset } from '..';
 
 export interface IGame {
   level: string;
-  onClick: () => void;
+  resetLevel: () => void;
   handleIsEndGame: (value: boolean) => void;
 }
 
-export function Game({ level, onClick, handleIsEndGame }: IGame) {
+export function Game({ level, resetLevel, handleIsEndGame }: IGame) {
   const [timer, setTimer] = useState<number>(3);
 
   const handleButtonSelect = (event: MouseEvent<HTMLButtonElement>) => {
@@ -60,7 +60,7 @@ export function Game({ level, onClick, handleIsEndGame }: IGame) {
         <ButtonSelectList onClick={handleButtonSelect} />
       </div>
       <nav className="button-menu">
-        <ButtonReset description="Level Reset" disabled={!timer} onClick={onClick} />
+        <ButtonReset description="Level Reset" disabled={!timer} onClick={resetLevel} />
       </nav>
     </>
   );
