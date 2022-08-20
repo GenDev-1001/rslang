@@ -112,7 +112,7 @@
 
 .opacity_zero {
   opacity: 0;
-  transition: all $transition-01;
+  transition: all $transition-01 ease-out;
 }
 
 .opacity_one {

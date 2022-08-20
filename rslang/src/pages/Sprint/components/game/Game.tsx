@@ -1,6 +1,5 @@
 import { useState, useEffect, MouseEvent } from 'react';
-import { ButtonSelectList, ButtonReset } from '..';
-import cat from '../../../../images/cat-speak.svg';
+import { ButtonSelectList, ButtonReset, ButtonSpeak } from '..';
 import './Game.scss';
 
 export interface IGame {
@@ -10,7 +9,7 @@ export interface IGame {
 }
 
 export function Game({ level, resetLevel, handleIsEndGame }: IGame) {
-  const [timer, setTimer] = useState<number>(6000);
+  const [timer, setTimer] = useState<number>(60);
   const [score, setScore] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
   const [multiplier, setMultiplier] = useState<number>(1);
@@ -21,7 +20,7 @@ export function Game({ level, resetLevel, handleIsEndGame }: IGame) {
         if (multiplier !== 4) {
           setMultiplier((prevState) => prevState + 1);
         }
-        setStreak(0);
+        setStreak(1);
       }
       if (streak !== 3) {
         setStreak((prevState) => prevState + 1);
@@ -129,9 +128,7 @@ export function Game({ level, resetLevel, handleIsEndGame }: IGame) {
         </div>
         <h2 className="sprint-frame__header">English</h2>
         <h2 className="sprint-frame__header">Русский</h2>
-        <button className="sprint-ui__circle sprint-ui__circle_small button-cat-speak">
-          <img src={cat} alt="cat" className="button-cat-speak__img" />
-        </button>
+        <ButtonSpeak />
         <ButtonSelectList onClick={handleButtonSelect} />
       </div>
       <nav className="button-menu">
