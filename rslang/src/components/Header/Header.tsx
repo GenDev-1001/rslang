@@ -59,7 +59,11 @@ export function Header({ isMain, handler }: IHeaderProps) {
             </li>
 
             <li className="menu-list__item" onClick={hendlerAuth}>
-              {user.token ? <MdLogout /> : <button className="menu-list__btn">Login</button>}
+              {user.token ? (
+                <MdLogout className="menu-list__exit" />
+              ) : (
+                <button className="menu-list__btn">Login</button>
+              )}
             </li>
           </ul>
         </div>

@@ -20,23 +20,13 @@ export function Dictionary() {
           <LevelCard levelWord="Medium" range="1801-2400" levelIndex="B2" />
           <LevelCard levelWord="Hard" range="2401-3000" levelIndex="C1" />
           <LevelCard levelWord="Hard" range="3001-3600" levelIndex="C2" />
-          <LevelCard levelWord="Сложные" range="Слов: 0" levelIndex="C" />
+        </div>
+        <div className="dictionary-lvls-custom__wrapper">
+          <LevelCard levelWord="Сложные" range="Слов: 0" levelIndex="С" />
+          <LevelCard levelWord="Изученные" range="Слов: 0" levelIndex="И" />
         </div>
         <h4 className="dictionary-words__title">Слова</h4>
         <div className="dictionary-words__wrapper">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
           <Card />
           <Card />
           <Card />

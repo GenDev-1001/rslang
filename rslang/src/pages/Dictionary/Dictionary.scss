@@ -33,10 +33,14 @@
   margin: 0 auto 20px;
 }
 
+.dictionary-lvls-custom__wrapper {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
 .dictionary-words__wrapper {
   display: grid;
-  grid-row-gap: 35px;
-  grid-column-gap: 37px;
-  grid-template-rows: repeat(4, 440px);
+  grid-gap: 37px;
   grid-template-columns: repeat(5, 250px);
 }
