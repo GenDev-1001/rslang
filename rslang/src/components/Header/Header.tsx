@@ -1,5 +1,4 @@
 import cn from 'classnames';
-import { FaUserCircle } from 'react-icons/fa';
 import { MdLogout } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -60,7 +59,7 @@ export function Header({ isMain, handler }: IHeaderProps) {
             </li>
 
             <li className="menu-list__item" onClick={hendlerAuth}>
-              {user.token ? <MdLogout /> : <FaUserCircle />}
+              {user.token ? <MdLogout /> : <button className="menu-list__btn">Login</button>}
             </li>
           </ul>
         </div>

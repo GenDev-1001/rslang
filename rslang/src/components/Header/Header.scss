@@ -18,8 +18,24 @@
   background-color: transparent;
 }
 
+.header_main .menu-list__btn {
+  width: 0;
+  padding: 0;
+  visibility: hidden;
+}
+
+.header_main .menu-list__item:last-child {
+  padding: 0;
+}
+
 .header_main .logo-link {
   color: var(--color-pink);
+}
+
+.header_main .menu-list__item {
+  > svg {
+    color: var(--color-black);
+  }
 }
 
 .header_main .menu-list__link {
@@ -52,6 +68,8 @@
   transition: all 0.5s;
 
   > svg {
+    margin-top: 3px;
+    color: var(--color-white);
     font-size: 20px;
     cursor: pointer;
   }
@@ -81,4 +99,20 @@
 .menu-list__link:hover::after,
 .menu-list__link:focus::after {
   width: 100%;
+}
+
+.menu-list__btn {
+  width: 70px;
+  padding: 8px 5px;
+  color: var(--color-white);
+  background-color: transparent;
+  border: 1px solid var(--color-white);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+
+.menu-list__btn:hover {
+  color: var(--color-black);
+  background-color: var(--color-white);
 }
