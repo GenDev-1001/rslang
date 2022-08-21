@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { FC, MouseEvent } from 'react';
 import './ButtonSelect.scss';
 
 export interface IButtonSelect {
@@ -7,10 +7,12 @@ export interface IButtonSelect {
   onClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
-export function ButtonSelect({ description, bgColor, onClick }: IButtonSelect) {
+const ButtonSelect: FC<IButtonSelect> = ({ description, bgColor, onClick }) => {
   return (
     <button className={`button-select ${bgColor}`} onClick={onClick}>
       {description}
     </button>
   );
-}
+};
+
+export { ButtonSelect };

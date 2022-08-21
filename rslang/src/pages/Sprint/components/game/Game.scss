@@ -54,3 +54,19 @@
   justify-content: center;
   column-gap: $base * 5;
 }
+
+.button-select__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: $base * 4;
+}
+
+.button-level__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: $base * 4;
+}

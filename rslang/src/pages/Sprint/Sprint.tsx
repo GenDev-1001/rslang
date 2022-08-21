@@ -1,10 +1,10 @@
-import { useState, MouseEvent } from 'react';
+import { FC, useState, MouseEvent } from 'react';
 import { Header } from '../../components/Header';
 import { Loading, Greetings, Game, Statistics } from './components';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import './Sprint.scss';
 
-export function Sprint() {
+const Sprint: FC = () => {
   const [level, setLevel] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEndGame, setIsEndGame] = useState<boolean>(false);
@@ -46,4 +46,6 @@ export function Sprint() {
       {isEndGame && <Statistics endGame={endGame} resetLevel={resetLevel} />}
     </div>
   );
-}
+};
+
+export { Sprint };

@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { ButtonReset } from '../buttons';
 import { TableRow } from '..';
 import './Statistics.scss';
@@ -7,7 +8,7 @@ export interface IStatistics {
   resetLevel: () => void;
 }
 
-export function Statistics({ endGame, resetLevel }: IStatistics) {
+const Statistics: FC<IStatistics> = ({ endGame, resetLevel }) => {
   return (
     <>
       <div className="sprint-frame sprint-table__wrapper">
@@ -33,4 +34,6 @@ export function Statistics({ endGame, resetLevel }: IStatistics) {
       </nav>
     </>
   );
-}
+};
+
+export { Statistics };

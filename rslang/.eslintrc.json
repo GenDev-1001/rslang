@@ -57,6 +57,12 @@
       "off",
       { "forbidDefaultForRequired": true, "ignoreFunctionalComponents": true }
     ],
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": ["function-declaration", "arrow-function"]
+      }
+    ],
     "prettier/prettier": [
       "error",
       {

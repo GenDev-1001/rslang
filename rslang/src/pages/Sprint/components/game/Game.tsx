@@ -1,5 +1,5 @@
-import { useState, useEffect, MouseEvent } from 'react';
-import { ButtonSelectList, ButtonReset, ButtonSpeak } from '..';
+import { FC, useState, useEffect, MouseEvent } from 'react';
+import { ButtonReset, ButtonSpeak, ButtonSelect } from '..';
 import './Game.scss';
 
 export interface IGame {
@@ -8,7 +8,7 @@ export interface IGame {
   handleIsEndGame: (value: boolean) => void;
 }
 
-export function Game({ level, resetLevel, handleIsEndGame }: IGame) {
+const Game: FC<IGame> = ({ level, resetLevel, handleIsEndGame }) => {
   const [timer, setTimer] = useState<number>(20);
   const [score, setScore] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
@@ -129,11 +129,16 @@ export function Game({ level, resetLevel, handleIsEndGame }: IGame) {
         <h2 className="sprint-frame__header">English</h2>
         <h2 className="sprint-frame__header">Русский</h2>
         <ButtonSpeak />
-        <ButtonSelectList onClick={handleButtonSelect} />
+        <div className="button-select__wrapper">
+          <ButtonSelect description="false" bgColor="bg_red" onClick={handleButtonSelect} />
+          <ButtonSelect description="true" bgColor="bg_green" onClick={handleButtonSelect} />
+        </div>
       </div>
       <nav className="button-menu">
         <ButtonReset description="Level Reset" disabled={!timer} onClick={resetLevel} />
       </nav>
     </>
   );
-}
+};
+
+export { Game };

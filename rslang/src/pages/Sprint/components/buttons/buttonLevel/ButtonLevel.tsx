@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { FC, MouseEvent } from 'react';
 import './ButtonLevel.scss';
 
 export interface IButtonLevel {
@@ -7,10 +7,12 @@ export interface IButtonLevel {
   onClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
-export function ButtonLevel({ description, bgColor, onClick }: IButtonLevel) {
+const ButtonLevel: FC<IButtonLevel> = ({ description, bgColor, onClick }) => {
   return (
     <button className={`button-level ${bgColor}`} onClick={onClick}>
       {description}
     </button>
   );
-}
+};
+
+export { ButtonLevel };

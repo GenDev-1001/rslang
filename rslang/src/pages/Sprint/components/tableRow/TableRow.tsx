@@ -1,7 +1,8 @@
+import { FC } from 'react';
 import { ButtonSpeak } from '../buttons';
 import trueChoise from '../../../../images/true-choise.svg';
 
-export function TableRow() {
+const TableRow: FC = () => {
   return (
     <tr className="table-row">
       <td>
@@ -15,4 +16,6 @@ export function TableRow() {
       </td>
     </tr>
   );
-}
+};
+
+export { TableRow };
