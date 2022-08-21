@@ -1,5 +1,4 @@
 import { FC, useState, MouseEvent } from 'react';
-import { Header } from '../../components/Header';
 import { Loading, Greetings, Game, Statistics } from './components';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import './Sprint.scss';
@@ -36,7 +35,6 @@ const Sprint: FC = () => {
 
   return (
     <div className="sprint-wrapper">
-      <Header />
       <img src={sprintBg} alt="Sprint Background" className="sprint-wrapper__bg" />
       {!level && <Greetings onClick={handleSetLevel} />}
       {isLoading && <Loading />}

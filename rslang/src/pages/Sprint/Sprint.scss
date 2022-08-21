@@ -2,7 +2,10 @@
 
 .sprint-wrapper {
   position: relative;
-  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 70px);
 }
 
 .sprint-wrapper__bg {
@@ -28,7 +31,6 @@
   width: 80vw;
   min-height: 70vh;
   margin: auto;
-  margin-top: 5%;
   padding: $base * 5;
   border-radius: $base * 5;
   background-color: $color-white;
