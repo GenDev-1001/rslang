@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Login } from '../components/Login/Login';
-import { useAuth } from '../hooks/useAuth';
-import { mainPage } from '../images';
+import { Login } from '../../components/Login/Login';
+import { useAuth } from '../../hooks/useAuth';
+import { mainPage } from '../../images';
+import './Main.scss';
 
 export function Main() {
   const [isShowLogin, setIsShowLogin] = useState(false);

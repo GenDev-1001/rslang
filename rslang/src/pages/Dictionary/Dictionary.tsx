@@ -1,6 +1,7 @@
-import { Card } from '../components/Card/Card';
-import { Footer } from '../components/Footer/Footer';
-import { LevelCard } from '../components/LevelCard/LevelCard';
+import { Card } from '../../components/Card/Card';
+import { Footer } from '../../components/Footer/Footer';
+import { LevelCard } from '../../components/LevelCard/LevelCard';
+import './Dictionary.scss';
 
 export function Dictionary() {
   return (
