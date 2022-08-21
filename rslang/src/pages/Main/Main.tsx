@@ -1,14 +1,15 @@
 import { useState } from 'react';
-import { Header } from '../components/Header';
-import { Login } from '../components/Login';
-import { mainPage } from '../images';
+import { Login } from '../../components/Login/Login';
+import { useAuth } from '../../hooks/useAuth';
+import { mainPage } from '../../images';
+import './Main.scss';
 
 export function Main() {
   const [isShowLogin, setIsShowLogin] = useState(false);
+  const { user } = useAuth();
 
   return (
     <div className="main-wrapper">
-      <Header />
       <div className="container">
         <div className="main-page">
           <div className="main-page__block">
@@ -29,13 +30,15 @@ export function Main() {
               </a>
               &ensp;
             </p>
-            <button className="main-page__button" onClick={() => setIsShowLogin(true)}>
-              Login
-            </button>
+            {!user.token && (
+              <button className="main-page__button" onClick={() => setIsShowLogin(true)}>
+                Login
+              </button>
+            )}
           </div>
           <img className="main-page__img" src={mainPage} alt="main img" />
         </div>
-        <Login isShowLogin={isShowLogin} handlerCloseLogin={() => setIsShowLogin(false)} />
+        <Login isShowLogin={isShowLogin} handler={() => setIsShowLogin(false)} />
       </div>
     </div>
   );
