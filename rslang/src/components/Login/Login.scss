@@ -53,14 +53,14 @@
 }
 
 .modal__title {
-  margin: 0 0 30px;
+  margin: 0 0 20px;
   font-size: 40px;
   text-align: center;
 }
 
 .modal__input {
   display: block;
-  width: 100%;
+  width: 250px;
   margin: 10px auto;
   padding: 10px 15px;
   color: var(--color-white);
@@ -73,17 +73,9 @@
   color: rgb(255 255 255 / 80%);
 }
 
-.modal__buttons {
-  width: 100%;
-  margin: 30px auto;
-  text-align: center;
-}
-
-.modal__button + .modal__button {
-  margin-left: 10px;
-}
-
 .modal__button {
+  width: 100%;
+  margin: 0 auto;
   padding: 10px 15px;
   color: var(--color-white);
   font-size: 14px;
@@ -100,4 +92,20 @@
 .modal__button:hover {
   color: var(--color-pink);
   background-color: white;
+}
+
+.modal__title-text {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.modal__signIn {
+  padding-top: 20px;
+  text-align: center;
+}
+
+.modal__signIn-text {
+  color: var(--color-black);
+  font-weight: 400;
+  cursor: pointer;
 }

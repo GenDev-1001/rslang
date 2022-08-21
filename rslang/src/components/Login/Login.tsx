@@ -22,7 +22,7 @@ export function Login({ isShowLogin, handler }: IPropsLogin) {
           </span>
 
           <div className="modal__title">{!showRegister ? 'Login!' : 'Register'} </div>
-          <p>
+          <p className="modal__title-text">
             {!showRegister ? 'Please enter your Email & Password' : 'Please enter your User detail'}
           </p>
           <AuthForm
@@ -32,14 +32,20 @@ export function Login({ isShowLogin, handler }: IPropsLogin) {
             hideModal={handler}
           />
 
-          <h5>
+          <h5 className="modal__signIn">
             {!showRegister ? (
               <>
-                Dont&rsquo;t have an account ? <p onClick={() => setShowRegister(true)}>Sign Up</p>
+                Dont&rsquo;t have an account ?{' '}
+                <p className="modal__signIn-text" onClick={() => setShowRegister(true)}>
+                  Sign Up
+                </p>
               </>
             ) : (
               <>
-                Alredy have an account ? <p onClick={() => setShowRegister(false)}>Sign In</p>
+                Alredy have an account ?{' '}
+                <p className="modal__signIn-text" onClick={() => setShowRegister(false)}>
+                  Sign In
+                </p>
               </>
             )}
           </h5>
