@@ -1,0 +1,122 @@
+.header {
+  background-color: var(--color-pink);
+}
+
+.header__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header_main {
+  background-color: transparent;
+}
+
+.header_main .menu-list__btn {
+  width: 0;
+  padding: 0;
+  visibility: hidden;
+}
+
+.header_main .menu-list__item:last-child {
+  padding: 0;
+}
+
+.header_main .logo-link {
+  color: var(--color-pink);
+}
+
+.header_main .menu-list__item {
+  > svg {
+    color: var(--color-black);
+  }
+}
+
+.header_main .menu-list__link {
+  color: var(--color-black);
+}
+
+.header_main .menu-list__link::after {
+  background-color: var(--color-black);
+}
+
+.header_main .menu-list__exit {
+  margin-left: 10px;
+}
+
+.logo-link {
+  width: 100%;
+  max-width: 100%;
+  margin: 20px 10px;
+  color: var(--color-white);
+  font-weight: 800;
+  font-size: 24px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.menu-list {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.menu-list__item {
+  padding: 10px 15px;
+  transition: all 0.5s;
+
+  > svg {
+    margin-top: 3px;
+    color: var(--color-white);
+    font-size: 20px;
+    cursor: pointer;
+  }
+}
+
+.menu-list__link {
+  position: relative;
+  color: var(--color-white);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.3;
+  text-align: center;
+  cursor: pointer;
+}
+
+.menu-list__link::after {
+  position: absolute;
+  left: 0;
+  display: block;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-white);
+  transition: width 0.3s ease-out;
+  content: '';
+}
+
+.menu-list__link:hover::after,
+.menu-list__link:focus::after {
+  width: 100%;
+}
+
+.menu-list__btn {
+  width: 70px;
+  padding: 8px 5px;
+  color: var(--color-white);
+  background-color: transparent;
+  border: 1px solid var(--color-white);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+
+.menu-list__btn:hover {
+  color: var(--color-black);
+  background-color: var(--color-white);
+}
