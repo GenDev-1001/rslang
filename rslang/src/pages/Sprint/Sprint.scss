@@ -1,0 +1,122 @@
+@import '../../sass/Constants.scss';
+
+.sprint-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 70px);
+}
+
+.sprint-wrapper__bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.sprint-frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  row-gap: $base * 10;
+  max-width: $base * 240;
+  width: 80vw;
+  min-height: 70vh;
+  margin: auto;
+  padding: $base * 5;
+  border-radius: $base * 5;
+  background-color: $color-white;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.sprint-frame__header {
+  font-size: $base * 20;
+  font-weight: $fw-bold;
+  text-align: center;
+}
+
+.sprint-frame__description {
+  font-size: $base * 8;
+  text-align: center;
+}
+
+.strong {
+  background: linear-gradient(
+    90deg,
+    rgba(212, 225, 87, 1) 0%,
+    rgba(255, 112, 67, 1) 50%,
+    rgba(171, 71, 188, 1) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.loading {
+  width: 75%;
+  height: auto;
+  margin: auto;
+}
+
+.bg_green {
+  background-color: $color-green;
+}
+
+.bg_yellow {
+  background-color: $color-yellow;
+}
+
+.bg_orange {
+  background-color: $color-orange;
+}
+
+.bg_red {
+  background-color: $color-red;
+}
+
+.bg_pink {
+  background-color: $color-pink;
+}
+
+.bg_purple {
+  background-color: $color-purple;
+}
+
+.button-menu {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: $base * 5;
+  width: $base * 25;
+  height: 100%;
+  background-color: $color-white-02;
+}
+
+.user-select_none {
+  user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.opacity_zero {
+  opacity: 0;
+  transition: all $transition-01 ease-out;
+}
+
+.opacity_one {
+  opacity: 1;
+}
