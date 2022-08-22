@@ -6,7 +6,7 @@ import { Audio } from './pages/Audio';
 import { Dictionary } from './pages/Dictionary/Dictionary';
 import { Main } from './pages/Main/Main';
 import { Sprint } from './pages/Sprint/Sprint';
-import { Statistics } from './pages/Statistics';
+import { Statistics } from './pages/Statistics/Statistics';
 
 function App() {
   return (
