@@ -48,7 +48,7 @@ export function Dictionary() {
         <div className="dictionary-words__wrapper">
           {activeWords?.paginatedResults.map((word) => {
             console.log(word);
-            return <Card />;
+            return <Card word={word} />;
           })}
         </div>
         <Pagination />

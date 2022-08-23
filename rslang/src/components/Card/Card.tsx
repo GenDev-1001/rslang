@@ -1,14 +1,14 @@
-import { duckImg } from '../../images';
+import { IWordCardProps } from './Card.interface';
 import './Card.scss';
 
-export function Card() {
+export function Card({ word }: IWordCardProps) {
   return (
     <div className="dictionary-words__card card">
       <div className="card-details">
-        <h6 className="card-details__title">duck</h6>
+        <h6 className="card-details__title">{word.word}</h6>
         <div className="card-details__translate translate">
-          <span className="translate-ru">утка</span>
-          <span className="translate-transcription">[dʌk]</span>
+          <span className="translate-ru">{word.wordTranslate}</span>
+          <span className="translate-transcription">{word.transcription}</span>
           <button className="translate-audio">
             <svg
               className="translate-audio__svg"
@@ -24,19 +24,20 @@ export function Card() {
           <button className="card-details__btn">Изученное</button>
         </div>
         <div className="card-details__text-en text-en">
-          <div className="text-en__first">
-            A <i>duck</i> is a small water bird.
-          </div>
-          <div className="text-en__second">
-            People feed <b>ducks</b> at the lake.
-          </div>
+          <div className="text-en__first">{`${word.textMeaning}`}</div>
+          <div className="text-en__second">{word.textExample}</div>
         </div>
+        <div className="text-en__line" />
         <div className="card-details__text-ru text-ru">
-          <div className="text-ru__first">Утка - маленькая водяная птица</div>
-          <div className="text-ru__second">Люди кормят уток у озера</div>
+          <div className="text-ru__first">{word.textMeaningTranslate}</div>
+          <div className="text-ru__second">{word.textExampleTranslate}</div>
         </div>
       </div>
-      <img className="card-img" src={duckImg} alt="card img" />
+      <img
+        className="card-img"
+        src={`https://rs-lang-team-84.herokuapp.com/${word.image}`}
+        alt="card img"
+      />
     </div>
   );
 }
