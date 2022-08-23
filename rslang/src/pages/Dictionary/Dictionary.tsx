@@ -3,21 +3,15 @@ import { Card } from '../../components/Card/Card';
 import { Footer } from '../../components/Footer/Footer';
 import { LevelCard } from '../../components/LevelCard/LevelCard';
 import Pagination from '../../components/Pagination/Pagination';
+import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 
-import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
-import { useAuth } from '../../hooks/useAuth';
 import './Dictionary.scss';
 
 export function Dictionary() {
-  const {
-    user: { userId },
-  } = useAuth();
-
   const [currentPage, setCurrentPage] = useState(1);
   const [currentGroup, setCurrentGroup] = useState(0);
 
-  const { data: activeWords } = useActiveWordsByUserQuery({
-    userId: userId || '',
+  const { data: activeWords } = useGetWordsQuery({
     group: currentGroup,
     page: currentPage - 1,
   });
@@ -61,7 +55,7 @@ export function Dictionary() {
         </div>
         <h4 className="dictionary-words__title">Слова</h4>
         <div className="dictionary-words__wrapper">
-          {activeWords?.paginatedResults.map((word) => {
+          {activeWords?.map((word) => {
             return <Card word={word} />;
           })}
         </div>
