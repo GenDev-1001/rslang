@@ -14,7 +14,7 @@ export function Dictionary() {
   } = useAuth();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentGroup, setCurrentGroup] = useState(1);
+  const [currentGroup, setCurrentGroup] = useState(0);
 
   const { data: activeWords } = useActiveWordsByUserQuery({
     userId: userId || '',
