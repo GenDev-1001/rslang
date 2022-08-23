@@ -1,5 +1,6 @@
 .pagination-ul {
   display: flex;
+  justify-content: center;
   list-style-type: none;
 }
 
@@ -16,19 +17,20 @@
   line-height: 1.43;
   text-align: center;
   border-radius: 16px;
+  transition: all 0.5s;
 }
 
-.pagination-ul__item .dots:hover {
+.pagination-ul__item.dots:hover {
   background-color: transparent;
   cursor: default;
 }
 
 .pagination-ul__item:hover {
-  background-color: rgb(0 0 0 / 4%);
+  background-color: var(--color-pink);
   cursor: pointer;
 }
 
-.pagination-arrow .selected {
+.pagination-arrow.selected {
   background-color: rgb(0 0 0 / 8%);
 }
 
@@ -44,15 +46,15 @@
   content: '';
 }
 
-.pagination-arrow .left {
+.pagination-arrow.left {
   transform: rotate(-135deg) translate(-50%);
 }
 
-.pagination-arrow .right {
+.pagination-arrow.right {
   transform: rotate(45deg);
 }
 
-.pagination-arrow .disabled {
+.pagination-arrow.disabled {
   pointer-events: none;
 }
 
