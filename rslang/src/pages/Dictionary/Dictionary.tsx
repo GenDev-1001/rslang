@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Card } from '../../components/Card/Card';
 import { Footer } from '../../components/Footer/Footer';
 import { LevelCard } from '../../components/LevelCard/LevelCard';
-import { Pagination } from '../../components/Pagination/Pagination';
+import Pagination from '../../components/Pagination/Pagination';
+
 import {
   useActiveWordsByUserQuery,
   useCountWordsByGroupQuery,
@@ -14,14 +16,13 @@ export function Dictionary() {
     user: { userId },
   } = useAuth();
 
+  const [currentPage, setCurrentPage] = useState(1);
   const { data: countWords } = useCountWordsByGroupQuery({ userId: userId || '', group: 0 });
   const { data: activeWords } = useActiveWordsByUserQuery({
     userId: userId || '',
     group: 0,
     page: 0,
   });
-
-  console.log(activeWords);
 
   return (
     <>
@@ -47,11 +48,15 @@ export function Dictionary() {
         <h4 className="dictionary-words__title">Слова</h4>
         <div className="dictionary-words__wrapper">
           {activeWords?.paginatedResults.map((word) => {
-            console.log(word);
             return <Card word={word} />;
           })}
         </div>
-        <Pagination />
+        <Pagination
+          currentPage={currentPage}
+          total={600}
+          pageSize={20}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
       </div>
       <Footer />
     </>
