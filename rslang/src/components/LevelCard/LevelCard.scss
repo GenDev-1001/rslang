@@ -13,7 +13,12 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  opacity: 0.7;
   transition: all easy 0.5s;
+}
+
+.directory-button:hover {
+  opacity: 1;
 }
 
 .directory-button-left {
@@ -41,22 +46,22 @@
   border-radius: 53px;
 }
 
-.directory-button:nth-child(2) .directory-button-circle {
+li:nth-child(2) .directory-button .directory-button-circle {
   background-color: var(--color-yellow);
 }
 
-.directory-button:nth-child(3) .directory-button-circle {
+li:nth-child(3) > .directory-button .directory-button-circle {
   background-color: var(--color-light-blue);
 }
 
-.directory-button:nth-child(4) .directory-button-circle {
+li:nth-child(4) .directory-button .directory-button-circle {
   background-color: var(--color-pink);
 }
 
-.directory-button:nth-child(5) .directory-button-circle {
+li:nth-child(5) .directory-button .directory-button-circle {
   background-color: var(--color-blue);
 }
 
-.directory-button:nth-child(6) .directory-button-circle {
+li:nth-child(6) .directory-button .directory-button-circle {
   background-color: var(--color-blueviolet);
 }

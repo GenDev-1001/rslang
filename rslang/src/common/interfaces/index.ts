@@ -21,3 +21,9 @@ export interface LocationParams {
   hash: string;
   key: string;
 }
+
+export const enum UserWordStatus {
+  WORK = 'work',
+  HARD = 'hard',
+  DELETE = 'delete',
+}
