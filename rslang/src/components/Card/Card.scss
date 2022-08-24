@@ -1,7 +1,8 @@
 .card {
   display: flex;
   flex-direction: column-reverse;
-  width: 250px;
+  justify-content: flex-end;
+  width: 300px;
   color: var(--color-white);
   background-color: var(--color-pink);
   border-radius: 10px;
@@ -9,7 +10,7 @@
 }
 
 .card-img {
-  width: 250px;
+  width: 300px;
   height: 250px;
   margin-bottom: 10px;
   border-top-left-radius: 10px;
@@ -60,7 +61,6 @@
 }
 
 .card-details__text-en {
-  position: relative;
   margin-bottom: 10px;
 }
 
@@ -69,15 +69,25 @@
   margin-bottom: 5px;
 }
 
-.card-details__text-en::after {
-  position: absolute;
-  top: 42px;
-  left: 35px;
+.text-en__second {
+  margin-bottom: 20px;
+}
+
+.text-en__first,
+.text-ru__first,
+.text-en__second,
+.text-ru__second {
+  padding: 0 5px;
+}
+
+.text-en__line {
+  position: relative;
+  top: -10px;
+  left: 60px;
   width: 180px;
   height: 1px;
   background-color: #fff;
   background-color: var(--color-white);
-  content: '';
 }
 
 .card-details__text-ru {
