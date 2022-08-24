@@ -1,8 +1,51 @@
 @import '../../sass/Constants.scss';
 
 .statistics-frame {
+  align-items: flex-start;
   max-width: none;
   width: 95vw;
   height: 85vh;
   overflow-y: scroll;
+}
+
+.statistics-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 5%;
+  width: 100%;
+}
+
+.words-learned__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  padding: $base * 5 $base;
+  background-color: $color-white;
+  border-radius: $base * 5;
+  box-shadow: rgb(0 0 0 / 16%) 0 3px 6px, rgb(0 0 0 / 23%) 0 3px 6px;
+}
+
+.words-learned {
+  font-size: $base * 15;
+  margin-right: $base * 2;
+}
+
+.words-learned__wrapper-descrption {
+  text-align: center;
+
+  h2 {
+    font-size: $base * 8;
+    font-weight: $fw-medium;
+    color: $color-dark-09;
+  }
+
+  h3 {
+    margin-top: $base;
+    font-size: $base * 3;
+    font-weight: $fw-regular;
+    color: $color-dark-05;
+  }
 }

@@ -1,0 +1,62 @@
+@import '../../../../sass/Constants.scss';
+
+.progress-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: $base * 3;
+  width: 30%;
+  padding: $base * 5;
+  background-color: $color-white;
+  border-radius: $base * 5;
+  box-shadow: rgb(0 0 0 / 16%) 0 3px 6px, rgb(0 0 0 / 23%) 0 3px 6px;
+
+  h2 {
+    font-size: $base * 10;
+    font-weight: $fw-medium;
+    color: $color-dark-09;
+  }
+}
+
+.circle {
+  position: relative;
+  min-width: calcResponsiveSize(264, 264, 1729, 3000);
+  width: calcResponsiveSize(264, 264, 1729, 3000);
+  height: calcResponsiveSize(264, 264, 1729, 3000);
+  padding: 0 $base * 5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    height: 85%;
+    width: 85%;
+    background-color: $color-white;
+    border-radius: 50%;
+  }
+
+  @media (max-width: $breakpoint-xxl-min) {
+    min-width: calcResponsiveSize(230, 264, 769, 1728);
+    width: calcResponsiveSize(230, 264, 769, 1728);
+    height: calcResponsiveSize(230, 264, 769, 1728);
+  }
+
+  @media (max-width: $breakpoint-md-min) {
+    min-width: calcResponsiveSize(230, 230, 1, 768);
+    width: calcResponsiveSize(230, 230, 1, 768);
+    height: calcResponsiveSize(230, 230, 1, 768);
+  }
+
+  h2 {
+    position: relative;
+    font-size: $base * 10;
+    font-weight: $fw-bold;
+    color: $color-dark;
+  }
+}

@@ -1,6 +1,8 @@
 import { FC } from 'react';
-import { Graph } from './components';
+import { Graph, Progress, Game } from './components';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
+import sprintIcon from '../../images/sprint.svg';
+import audiocallIcon from '../../images/audiocall.svg';
 import './Statistics.scss';
 
 const Statistics: FC = () => {
@@ -8,6 +10,18 @@ const Statistics: FC = () => {
     <div className="sprint-wrapper">
       <img src={sprintBg} alt="Statistics Background" className="sprint-wrapper__bg" />
       <div className="sprint-frame statistics-frame">
+        <div className="statistics-wrapper">
+          <div className="words-learned__wrapper">
+            <h2 className="words-learned">0</h2>
+            <div className="words-learned__wrapper-descrption">
+              <h2>words</h2>
+              <h3>were learned</h3>
+            </div>
+          </div>
+          <Progress progress={50} />
+          <Game title="Sprint" src={sprintIcon} />
+          <Game title="Audio Call" src={audiocallIcon} />
+        </div>
         <Graph title="Новые слова" subtitle="за каждый день изучения" />
         <Graph title="Изученные слова" subtitle="за весь период обучения" />
       </div>
