@@ -30,8 +30,8 @@ export function Card({ word }: IWordCardProps) {
           <button className="card-details__btn">Изученное</button>
         </div>
         <div className="card-details__text-en text-en">
-          <div className="text-en__first">{`${word.textMeaning}`}</div>
-          <div className="text-en__second">{word.textExample}</div>
+          <div className="text-en__first" dangerouslySetInnerHTML={{ __html: word.textMeaning }} />
+          <div className="text-en__second" dangerouslySetInnerHTML={{ __html: word.textExample }} />
         </div>
         <div className="text-en__line" />
         <div className="card-details__text-ru text-ru">

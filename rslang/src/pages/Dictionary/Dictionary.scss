@@ -12,6 +12,7 @@
 
 .dictionary-lvls__wrapper-li {
   opacity: 0.5;
+  transition: opacity 0.5s;
 }
 
 .dictionary-lvls__wrapper-li:hover {
@@ -19,6 +20,15 @@
 }
 
 .dictionary-lvls__wrapper-li.active {
+  opacity: 1;
+}
+
+.dictionary-lvls-custom__wrapper-li {
+  opacity: 0.5;
+  transition: opacity 0.5s;
+}
+
+.dictionary-lvls-custom__wrapper-li:hover {
   opacity: 1;
 }
 
