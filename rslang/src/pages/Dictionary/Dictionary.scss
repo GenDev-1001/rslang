@@ -10,6 +10,18 @@
   transition: color 0.5s;
 }
 
+.dictionary-lvls__wrapper-li {
+  opacity: 0.5;
+}
+
+.dictionary-lvls__wrapper-li:hover {
+  opacity: 1;
+}
+
+.dictionary-lvls__wrapper-li.active {
+  opacity: 1;
+}
+
 .dictionary-block-title:hover {
   color: var(--color-pink);
 }
