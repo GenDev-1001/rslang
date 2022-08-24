@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.scss';
 import { Layout } from './layout/Layout';
-import { About } from './pages/About';
+import { About } from './pages/About/About';
 import { Audio } from './pages/Audio';
 import { Dictionary } from './pages/Dictionary/Dictionary';
 import { Main } from './pages/Main/Main';
