@@ -1,10 +1,10 @@
-import { memberType } from './types';
-import dzmitryK from './assets/Dzmitry_Karakulka.jpg';
-import gennadiyK from './assets/Gennadiy_Konko.jpg';
-import anastasiaC from './assets/Anastasia_Chernova.jpg';
-import githubImg from './assets/github_link.svg';
+import { MemberType } from './types';
+import dzmitryK from '../../images/Dzmitry_Karakulka.jpg';
+import gennadiyK from '../../images/Gennadiy_Konko.jpg';
+import anastasiaC from '../../images/Anastasia_Chernova.jpg';
+import githubImg from '../../images/github_link.svg';
 
-export const membersArray: memberType[] = [
+export const membersArray: MemberType[] = [
   {
     img: dzmitryK,
     name: 'Dzmitry Karakulka',

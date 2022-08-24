@@ -1,0 +1,19 @@
+@import '../../../../../sass/Constants.scss';
+
+.button-cat-speak {
+  cursor: pointer;
+  transition: all $transition-01 ease-out;
+
+  &:hover {
+    transform: translate(0.063rem, 0.063rem);
+  }
+
+  &:active {
+    transform: translate($base, $base);
+  }
+}
+
+.button-cat-speak__img {
+  width: 100%;
+  height: auto;
+}

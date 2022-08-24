@@ -1,12 +1,11 @@
 import React from 'react';
-import { Header } from '../../components/Header';
-import { memberType } from './types';
+import { MemberType } from './types';
 
-interface propAbout {
-  member: memberType;
+interface PropAbout {
+  member: MemberType;
 }
 
-const Member: React.FC<propAbout> = ({ member }) => {
+const Member: React.FC<PropAbout> = ({ member }) => {
   return (
     <div className="member">
       <img className="member_img" src={member.img} alt={`${member.name}`} />

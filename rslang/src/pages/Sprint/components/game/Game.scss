@@ -1,0 +1,72 @@
+@import '../../../../sass/Constants.scss';
+
+.sprint-ui {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: $base;
+  width: 100%;
+}
+
+.sprint-ui__circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: $base * 30;
+  width: $base * 30;
+  min-height: $base * 30;
+  height: $base * 30;
+  font-size: $base * 7;
+  font-weight: $fw-bold;
+  text-align: center;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 50%;
+  background-color: $color-white;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.sprint-ui__circle_small {
+  min-width: $base * 15;
+  width: $base * 15;
+  min-height: $base * 15;
+  height: $base * 15;
+}
+
+.sprint-ui__streak-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: $base * 2;
+}
+
+.sprint-ui__streak {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: $base * 5;
+}
+
+.sprint-ui__level {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: $base * 5;
+}
+
+.button-select__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: $base * 4;
+}
+
+.button-level__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: $base * 4;
+}

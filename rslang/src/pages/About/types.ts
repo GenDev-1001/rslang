@@ -1,4 +1,4 @@
-export interface memberType {
+export interface MemberType {
   img: string;
   name: string;
   gitImg: string;

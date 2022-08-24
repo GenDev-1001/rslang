@@ -1,0 +1,89 @@
+@use 'sass:math';
+
+// === FUNCTIONS ===
+
+@function strip-unit($num) {
+  @return math.div($num, ($num * 0 + 1));
+}
+
+@function rem($num) {
+  @return math.div(strip-unit($num), 16) * 1rem;
+}
+
+@function calcResponsiveSize($size-min, $size-max, $width-min, $width-max) {
+  $size-min: strip-unit($size-min);
+  $size-max: strip-unit($size-max);
+  $width-min: strip-unit($width-min);
+  $width-max: strip-unit($width-max);
+  $k: math.div(($size-max - $size-min), ($width-max - $width-min));
+  $b: rem($size-min - $k * $width-min);
+  @return calc(#{$k} * 100vw + #{$b});
+}
+
+// === / FUNCTIONS ===
+
+// === VARIABLES ===
+
+$base: rem(5px);
+
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semi-bold: 600;
+$fw-bold: 700;
+
+$fs-xxs: rem(11px);
+$fs-xs: rem(12px);
+$fs-s: rem(13px);
+$fs-m: rem(14px);
+$fs-l: rem(16px);
+$fs-xl: rem(22px);
+$fs-xxl: rem(26px);
+$fs-xxxl: rem(36px);
+$fs-xxxxl: rem(50px);
+
+$transition: 0.3s;
+$transition-01: 0.1s;
+$transition-02: 0.2s;
+
+$color-dark: rgba(18, 18, 18, 1);
+$color-dark-02: rgba(18, 18, 18, 0.2);
+$color-dark-03: rgba(18, 18, 18, 0.3);
+$color-dark-04: rgba(18, 18, 18, 0.4);
+$color-dark-05: rgba(18, 18, 18, 0.5);
+$color-dark-06: rgba(18, 18, 18, 0.6);
+$color-dark-07: rgba(18, 18, 18, 0.7);
+$color-dark-08: rgba(18, 18, 18, 0.8);
+$color-dark-09: rgba(18, 18, 18, 0.9);
+$color-white: rgba(255, 255, 255, 1);
+$color-white-02: rgba(255, 255, 255, 0.2);
+$color-white-03: rgba(255, 255, 255, 0.3);
+$color-white-04: rgba(255, 255, 255, 0.4);
+$color-white-05: rgba(255, 255, 255, 0.5);
+$color-white-06: rgba(255, 255, 255, 0.6);
+$color-white-07: rgba(255, 255, 255, 0.7);
+$color-white-08: rgba(255, 255, 255, 0.8);
+$color-white-09: rgba(255, 255, 255, 0.9);
+$color-green: #d4e157;
+$color-yellow: #c6ff00;
+$color-orange: #ffa726;
+$color-red: #ff7043;
+$color-pink: #ef5350;
+$color-purple: #ab47bc;
+
+$breakpoint-xxs-min: 320px;
+$breakpoint-xs-min: 480px;
+$breakpoint-sm-min: 576px;
+$breakpoint-md-min: 768px;
+$breakpoint-lg-min: 992px;
+$breakpoint-xl-min: 1200px;
+$breakpoint-xxl-min: 1440px;
+
+$breakpoint-xxxs-max: $breakpoint-xxs-min - 1px;
+$breakpoint-xxs-max: $breakpoint-xs-min - 1px;
+$breakpoint-xs-max: $breakpoint-sm-min - 1px;
+$breakpoint-sm-max: $breakpoint-md-min - 1px;
+$breakpoint-md-max: $breakpoint-lg-min - 1px;
+$breakpoint-lg-max: $breakpoint-xl-min - 1px;
+$breakpoint-xl-max: $breakpoint-xxl-min - 1px;
+
+// === / VARIABLES ===
