@@ -11,17 +11,32 @@
 .statistics-wrapper {
   display: flex;
   align-items: flex-start;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  justify-content: space-between;
   gap: 5%;
   width: 100%;
+}
+
+.statistics-wrapper_first {
+  display: flex;
+  flex-direction: column;
+  row-gap: $base * 5;
+  width: 45%;
+}
+
+.statistics-wrapper_second {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  row-gap: $base * 5;
+  width: 55%;
+  height: 100%;
 }
 
 .words-learned__wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30%;
+  width: 100%;
   padding: $base * 5 $base;
   background-color: $color-white;
   border-radius: $base * 5;

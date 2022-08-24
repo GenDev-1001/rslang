@@ -1,1 +1,29 @@
 @import '../../../../sass/Constants.scss';
+
+.game-statistics__title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: $base * 5;
+  width: 100%;
+}
+
+.game-statistics__list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  row-gap: $base;
+  width: 100%;
+
+  p {
+    width: 30%;
+    font-size: $base * 5;
+    font-weight: $fw-regular;
+  }
+}
+
+.game-statistics__icon {
+  width: $base * 15;
+  height: $base * 15;
+}
