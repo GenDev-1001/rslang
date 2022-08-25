@@ -6,47 +6,49 @@ import {
   IUserWordResponse,
 } from './userWordsApiSlice.interface';
 
-const userWordsApiSlice = apiSlice.enhanceEndpoints({ addTagTypes: ['Words'] }).injectEndpoints({
-  endpoints: (builder) => ({
-    getUserWords: builder.query<IUserWordResponse[], string>({
-      query: (id) => `/users/${id}/words`,
-      providesTags: (result) =>
-        result
-          ? [
-              { type: 'Words', id: 'LIST' },
-              ...result.map(({ wordId }) => ({ type: 'Words' as const, id: wordId })),
-            ]
-          : [{ type: 'Words', id: 'LIST' }],
-    }),
-    createUserWord: builder.mutation<IUserWordResponse, ICreateUserWordRequest>({
-      query: ({ userId, wordId, word }) => ({
-        url: `/users/${userId}/words/${wordId}`,
-        method: 'POST',
-        body: word,
+const userWordsApiSlice = apiSlice
+  .enhanceEndpoints({ addTagTypes: ['Words', 'WordsAggregate'] })
+  .injectEndpoints({
+    endpoints: (builder) => ({
+      getUserWords: builder.query<IUserWordResponse[], string>({
+        query: (id) => `/users/${id}/words`,
+        providesTags: (result) =>
+          result
+            ? [
+                { type: 'Words', id: 'LIST' },
+                ...result.map(({ wordId }) => ({ type: 'Words' as const, id: wordId })),
+              ]
+            : [{ type: 'Words', id: 'LIST' }],
       }),
-      invalidatesTags: [{ type: 'Words', id: 'LIST' }],
-    }),
-    getUserWord: builder.query<IUserWordResponse, IUserWordRequest>({
-      query: ({ userId, wordId }) => `/users/${userId}/words/${wordId}`,
-      providesTags: (result, error, { wordId }) => [{ type: 'Words', id: wordId }],
-    }),
-    updateUserWord: builder.mutation<IUserWordResponse, IUpdateUserWordRequest>({
-      query: ({ userId, wordId, word }) => ({
-        url: `/users/${userId}/words/${wordId}`,
-        method: 'PUT',
-        body: word,
+      createUserWord: builder.mutation<IUserWordResponse, ICreateUserWordRequest>({
+        query: ({ userId, wordId, word }) => ({
+          url: `/users/${userId}/words/${wordId}`,
+          method: 'POST',
+          body: word,
+        }),
+        invalidatesTags: [{ type: 'WordsAggregate', id: 'LIST' }],
       }),
-      invalidatesTags: (result, error, { wordId }) => [{ type: 'Words', id: wordId }],
-    }),
-    deleteUserWord: builder.mutation<null, IUserWordRequest>({
-      query: ({ userId, wordId }) => ({
-        url: `/users/${userId}/words/${wordId}`,
-        method: 'DELETE',
+      getUserWord: builder.query<IUserWordResponse, IUserWordRequest>({
+        query: ({ userId, wordId }) => `/users/${userId}/words/${wordId}`,
+        providesTags: (result, error, { wordId }) => [{ type: 'Words', id: wordId }],
       }),
-      invalidatesTags: (result, error, { wordId }) => [{ type: 'Words', id: wordId }],
+      updateUserWord: builder.mutation<IUserWordResponse, IUpdateUserWordRequest>({
+        query: ({ userId, wordId, word }) => ({
+          url: `/users/${userId}/words/${wordId}`,
+          method: 'PUT',
+          body: word,
+        }),
+        invalidatesTags: (result, error, { wordId }) => [{ type: 'WordsAggregate', id: wordId }],
+      }),
+      deleteUserWord: builder.mutation<null, IUserWordRequest>({
+        query: ({ userId, wordId }) => ({
+          url: `/users/${userId}/words/${wordId}`,
+          method: 'DELETE',
+        }),
+        invalidatesTags: (result, error, { wordId }) => [{ type: 'Words', id: wordId }],
+      }),
     }),
-  }),
-});
+  });
 
 export const {
   useGetUserWordsQuery,

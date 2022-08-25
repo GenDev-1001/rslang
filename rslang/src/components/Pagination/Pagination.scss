@@ -30,8 +30,9 @@
   cursor: pointer;
 }
 
-.pagination-arrow.selected {
-  background-color: rgb(0 0 0 / 8%);
+.pagination-ul__item.selected {
+  background-color: var(--color-pink);
+  cursor: default;
 }
 
 .pagination-arrow::before {
@@ -54,11 +55,6 @@
   transform: rotate(45deg);
 }
 
-.pagination-arrow.disabled {
+.pagination-ul__item.disabled {
   pointer-events: none;
-}
-
-.pagination-arrow:hover {
-  background-color: transparent;
-  cursor: default;
 }

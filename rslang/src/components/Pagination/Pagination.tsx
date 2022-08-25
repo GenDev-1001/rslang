@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import cn from 'classnames';
 import { usePagination } from '../../hooks/usePagination';
 import { IPaginationProps } from './Pagination.interface';
@@ -25,11 +26,11 @@ function Pagination({
   }
 
   const onNext = () => {
-    onPageChange(currentPage + 1);
+    if (currentPage < 30) onPageChange(currentPage + 1);
   };
 
   const onPrevious = () => {
-    onPageChange(currentPage - 1);
+    if (currentPage > 1) onPageChange(currentPage - 1);
   };
 
   const lastPage = paginationRange[paginationRange.length - 1];
@@ -43,9 +44,13 @@ function Pagination({
         onClick={onPrevious}>
         <div className={cn('pagination-arrow', 'left')} />
       </li>
-      {paginationRange.map((pageNumber) => {
+      {paginationRange.map((pageNumber, i) => {
         if (pageNumber === DOTS || typeof pageNumber === 'string') {
-          return <li className={cn('pagination-ul__item', 'dots')}>&#8230;</li>;
+          return (
+            <li className={cn('pagination-ul__item', 'dots')} key={i}>
+              &#8230;
+            </li>
+          );
         }
 
         return (
@@ -53,7 +58,8 @@ function Pagination({
             className={cn('pagination-ul__item', {
               selected: pageNumber === currentPage,
             })}
-            onClick={() => onPageChange(pageNumber)}>
+            onClick={() => onPageChange(pageNumber)}
+            key={i}>
             {pageNumber}
           </li>
         );

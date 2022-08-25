@@ -20,47 +20,69 @@ const extWordsRes = (response: [IAggregatedWordsData]) => {
   };
 };
 
-export const aggregatedWordsApiSlice = apiSlice.injectEndpoints({
-  endpoints: (builder) => ({
-    dictionaryWords: builder.query<IAggregatedWordsResponse, IAggregatedWordsRequest>({
-      query: ({ userId, group, page, difficulty }) => ({
-        url: `users/${userId}/aggregatedWords`,
-        params: {
-          group,
-          page,
-          wordsPerPage: 20,
-          filter: FILTER_PARAMS.dictionary(difficulty),
-        },
+export const aggregatedWordsApiSlice = apiSlice
+  .enhanceEndpoints({ addTagTypes: ['WordsAggregate'] })
+  .injectEndpoints({
+    endpoints: (builder) => ({
+      dictionaryWords: builder.query<IAggregatedWordsResponse, IAggregatedWordsRequest>({
+        query: ({ userId, group, page, difficulty }) => ({
+          url: `users/${userId}/aggregatedWords`,
+          params: {
+            group,
+            page,
+            wordsPerPage: 20,
+            filter: FILTER_PARAMS.dictionary(difficulty),
+          },
+        }),
+        transformResponse: extWordsRes,
+        providesTags: (result) =>
+          result
+            ? [
+                { type: 'WordsAggregate', id: 'LIST' },
+                ...result.paginatedResults.map(({ id }) => ({
+                  type: 'WordsAggregate' as const,
+                  id,
+                })),
+              ]
+            : [{ type: 'WordsAggregate', id: 'LIST' }],
       }),
-      transformResponse: extWordsRes,
-    }),
-    countWordsByGroup: builder.query<number, ICountWordsByGroup>({
-      query: ({ userId, group }) => ({
-        url: `users/${userId}/aggregatedWords`,
-        params: {
-          group,
-          page: 0,
-          wordsPerPage: 1,
-          filter: FILTER_PARAMS.count,
-        },
+      countWordsByGroup: builder.query<number, ICountWordsByGroup>({
+        query: ({ userId, group }) => ({
+          url: `users/${userId}/aggregatedWords`,
+          params: {
+            group,
+            page: 0,
+            wordsPerPage: 1,
+            filter: FILTER_PARAMS.count,
+          },
+        }),
+        transformResponse: (response: [IAggregatedWordsData]) =>
+          response[0]?.totalCount[0]?.count || 0,
       }),
-      transformResponse: (response: [IAggregatedWordsData]) =>
-        response[0]?.totalCount[0]?.count || 0,
-    }),
-    activeWordsByUser: builder.query<IActiveWordsResponse, IActiveWordsByUser>({
-      query: ({ userId, group, page }) => ({
-        url: `users/${userId}/aggregatedWords`,
-        params: {
-          group,
-          page,
-          wordsPerPage: 20,
-          filter: FILTER_PARAMS.active,
-        },
+      activeWordsByUser: builder.query<IActiveWordsResponse, IActiveWordsByUser>({
+        query: ({ userId, group, page }) => ({
+          url: `users/${userId}/aggregatedWords`,
+          params: {
+            group,
+            page,
+            wordsPerPage: 20,
+            filter: FILTER_PARAMS.active,
+          },
+        }),
+        transformResponse: extWordsRes,
+        providesTags: (result) =>
+          result
+            ? [
+                { type: 'WordsAggregate', id: 'LIST' },
+                ...result.paginatedResults.map(({ id }) => ({
+                  type: 'WordsAggregate' as const,
+                  id,
+                })),
+              ]
+            : [{ type: 'WordsAggregate', id: 'LIST' }],
       }),
-      transformResponse: extWordsRes,
     }),
-  }),
-});
+  });
 
 export const { useDictionaryWordsQuery, useCountWordsByGroupQuery, useActiveWordsByUserQuery } =
   aggregatedWordsApiSlice;
