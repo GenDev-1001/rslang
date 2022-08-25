@@ -31,6 +31,9 @@ export function Header({ isMain, handler }: IHeaderProps) {
               RSLang
             </Link>
           </h1>
+          <div className="header__menu-btn">
+            <span className="header__menu-span" />
+          </div>
           <ul className="menu-list">
             <li className="menu-list__item">
               <Link to="/dictionary" className="menu-list__link">
