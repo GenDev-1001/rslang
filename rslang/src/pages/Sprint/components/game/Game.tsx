@@ -1,5 +1,5 @@
 import { FC, useState, useEffect, MouseEvent } from 'react';
-import { ButtonReset, ButtonSpeak, ButtonSelect } from '..';
+import { ButtonReset, ButtonSpeak, ButtonSelect, Multiplier } from '..';
 import { IWordsResponse } from '../../../../features/words/wordsSlice.interface';
 import './Game.scss';
 
@@ -154,29 +154,15 @@ const Game: FC<IGame> = ({ data, group, resetGroup, handleIsEndGame }) => {
           </div>
           <div className="sprint-ui__streak-wrapper user-select_none">
             <ul className="sprint-ui__streak">
-              <li className="sprint-ui__circle sprint-ui__circle_small">
-                <span className={`opacity_zero ${streak > 0 ? 'opacity_one' : ''}`}>&#128293;</span>
-              </li>
-              <li className="sprint-ui__circle sprint-ui__circle_small">
-                <span className={`opacity_zero ${streak > 1 ? 'opacity_one' : ''}`}>&#128293;</span>
-              </li>
-              <li className="sprint-ui__circle sprint-ui__circle_small">
-                <span className={`opacity_zero ${streak > 2 ? 'opacity_one' : ''}`}>&#128293;</span>
-              </li>
+              <Multiplier multiplier={streak} value={0} description="&#128293;" />
+              <Multiplier multiplier={streak} value={1} description="&#128293;" />
+              <Multiplier multiplier={streak} value={2} description="&#128293;" />
             </ul>
             <ul className="sprint-ui__level">
-              <li className="sprint-ui__circle sprint-ui__circle_small">
-                <span className={`opacity_zero ${multiplier > 0 ? 'opacity_one' : ''}`}>x1</span>
-              </li>
-              <li className="sprint-ui__circle sprint-ui__circle_small">
-                <span className={`opacity_zero ${multiplier > 1 ? 'opacity_one' : ''}`}>x2</span>
-              </li>
-              <li className="sprint-ui__circle sprint-ui__circle_small">
-                <span className={`opacity_zero ${multiplier > 2 ? 'opacity_one' : ''}`}>x3</span>
-              </li>
-              <li className="sprint-ui__circle sprint-ui__circle_small">
-                <span className={`opacity_zero ${multiplier > 3 ? 'opacity_one' : ''}`}>x4</span>
-              </li>
+              <Multiplier multiplier={multiplier} value={0} description="x1" />
+              <Multiplier multiplier={multiplier} value={1} description="x2" />
+              <Multiplier multiplier={multiplier} value={2} description="x3" />
+              <Multiplier multiplier={multiplier} value={3} description="x4" />
             </ul>
           </div>
           <div className="sprint-ui__circle user-select_none">
