@@ -98,17 +98,16 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  row-gap: $base * 5;
   width: $base * 25;
   height: 100%;
   background-color: $color-white-02;
-  row-gap: $base * 5;
 }
 
 .user-select_none {
-  user-select: none;
-  user-select: none;
-  user-select: none;
-  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 
