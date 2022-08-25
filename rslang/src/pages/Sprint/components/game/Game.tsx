@@ -1,5 +1,5 @@
 import { FC, useState, useEffect, MouseEvent } from 'react';
-import { ButtonReset, ButtonSpeak, ButtonSelect, Multiplier } from '..';
+import { ButtonReset, ButtonSpeak, ButtonSelect, Multiplier, Circle } from '..';
 import { IWordsResponse } from '../../../../features/words/wordsSlice.interface';
 import './Game.scss';
 
@@ -142,16 +142,8 @@ const Game: FC<IGame> = ({ data, group, resetGroup, handleIsEndGame }) => {
     <>
       <div className="sprint-frame">
         <div className="sprint-ui">
-          <div className="sprint-ui__circle user-select_none">
-            Time:
-            <br />
-            {timer}
-          </div>
-          <div className="sprint-ui__circle user-select_none">
-            Level
-            <br />
-            {`№${group}`}
-          </div>
+          <Circle title="Time:" value={timer} />
+          <Circle title="Level" value={`№${group}`} />
           <div className="sprint-ui__streak-wrapper user-select_none">
             <ul className="sprint-ui__streak">
               <Multiplier multiplier={streak} value={0} description="&#128293;" />
@@ -165,11 +157,7 @@ const Game: FC<IGame> = ({ data, group, resetGroup, handleIsEndGame }) => {
               <Multiplier multiplier={multiplier} value={3} description="x4" />
             </ul>
           </div>
-          <div className="sprint-ui__circle user-select_none">
-            Score:
-            <br />
-            {score}
-          </div>
+          <Circle title="Score:" value={score} />
         </div>
         <h2 className="sprint-frame__header">{englishWord}</h2>
         <h2 className="sprint-frame__header">{randomWordTranslation}</h2>
