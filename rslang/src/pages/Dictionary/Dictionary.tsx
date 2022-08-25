@@ -1,10 +1,15 @@
 import cn from 'classnames';
-import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
+import { UserWordStatus } from '../../common/interfaces';
+import { AuthCardList } from '../../components/AuthCardList/AuthCardList';
 import { Card } from '../../components/Card/Card';
 import { Footer } from '../../components/Footer/Footer';
 import { LevelCard } from '../../components/LevelCard/LevelCard';
 import Pagination from '../../components/Pagination/Pagination';
+import {
+  useCountWordsByGroupQuery,
+  useDictionaryWordsQuery,
+} from '../../features/aggregaredWords/aggregaredWordsApiSlice';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -17,10 +22,26 @@ export function Dictionary() {
 
   const { user } = useAuth();
 
+  const { data: countWords } = useCountWordsByGroupQuery({
+    userId: user.userId || '',
+    group: 0,
+  });
+
   const { data: activeWords } = useGetWordsQuery({
     group: currentGroup,
     page: currentPage - 1,
   });
+
+  const { data: difficultyWords } = useDictionaryWordsQuery({
+    userId: user.userId || '',
+    group: currentGroup,
+    page: currentPage - 1,
+    difficulty: UserWordStatus.HARD,
+  });
+
+  const handlerClickDifficulty = () => {
+    console.log(difficultyWords);
+  };
 
   const handleClickGroup = (group: number) => {
     setCurrentGroup(group);
@@ -78,8 +99,10 @@ export function Dictionary() {
         </div>
         {isDictionary && (
           <div className="dictionary-lvls-custom__wrapper">
-            <li className="dictionary-lvls-custom__wrapper-li">
-              <LevelCard levelWord="Сложные" range="Слов: 0" levelIndex="С" />
+            <li
+              className="dictionary-lvls-custom__wrapper-li"
+              onClick={() => handlerClickDifficulty()}>
+              <LevelCard levelWord="Сложные" range={`Слов: ${String(countWords)}`} levelIndex="С" />
             </li>
             <li className="dictionary-lvls-custom__wrapper-li">
               <LevelCard levelWord="Изученные" range="Слов: 0" levelIndex="И" />
@@ -87,16 +110,15 @@ export function Dictionary() {
           </div>
         )}
         <h4 className="dictionary-words__title">Слова</h4>
-        <motion.div
-          layout
-          transition={{ ease: 'easeOut', duration: 1 }}
-          className="dictionary-words__wrapper">
-          <AnimatePresence>
-            {activeWords?.map((word) => {
-              return <Card word={word} />;
-            })}
-          </AnimatePresence>
-        </motion.div>
+        {user.token ? (
+          <AuthCardList currentGroup={currentGroup} currentPage={currentPage} />
+        ) : (
+          <div className="dictionary-words__wrapper">
+            {activeWords?.map((word) => (
+              <Card word={word} key={word.id} />
+            ))}
+          </div>
+        )}
         <Pagination
           className="pagination"
           currentPage={currentPage}

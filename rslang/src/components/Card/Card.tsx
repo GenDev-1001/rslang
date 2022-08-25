@@ -1,11 +1,39 @@
+import cn from 'classnames';
+import { UserWordStatus } from '../../common/interfaces';
+import {
+  useCreateUserWordMutation,
+  useUpdateUserWordMutation,
+} from '../../features/userWords/userWordsApiSlice';
+import { useAuth } from '../../hooks/useAuth';
 import { IWordCardProps } from './Card.interface';
 import './Card.scss';
 
 export function Card({ word }: IWordCardProps) {
+  const [updateWord] = useUpdateUserWordMutation();
+  const [createUserWord] = useCreateUserWordMutation();
+  const { user } = useAuth();
+
+  const handlerClick = (difficulty: UserWordStatus) => {
+    const optional = word?.userWord ? word.userWord.optional : { correctCount: 0, errorCount: 0 };
+    const wordRequest = {
+      word: { difficulty, optional },
+      wordId: word.id,
+      userId: user.userId || '',
+    };
+
+    if (word?.userWord) {
+      updateWord(wordRequest);
+    } else {
+      createUserWord(wordRequest);
+    }
+  };
+
   const handlerAudio = () => {
     const audio = new Audio(`https://rs-lang-team-84.herokuapp.com/${word.audio}`);
     audio.play();
   };
+
+  const isHard = word.userWord?.difficulty === UserWordStatus.HARD;
 
   return (
     <div className="dictionary-words__card card">
@@ -25,18 +53,38 @@ export function Card({ word }: IWordCardProps) {
             </svg>
           </button>
         </div>
-        <div className="card-details__btns">
-          <button className="card-details__btn">Сложное</button>
-          <button className="card-details__btn">Изученное</button>
-        </div>
+        {user.token && (
+          <div className="card-details__btns">
+            <button
+              className={cn('card-details__btn', { active: isHard })}
+              onClick={() => handlerClick(isHard ? UserWordStatus.WORK : UserWordStatus.HARD)}>
+              {isHard ? 'Простое' : 'Сложное'}
+            </button>
+          </div>
+        )}
+        <h3 className="card-details__text-title">Пример:</h3>
         <div className="card-details__text-en text-en">
-          <div className="text-en__first" dangerouslySetInnerHTML={{ __html: word.textMeaning }} />
-          <div className="text-en__second" dangerouslySetInnerHTML={{ __html: word.textExample }} />
+          <div className="text-en__first" dangerouslySetInnerHTML={{ __html: word.textExample }} />
+          <div className="text-en__second">{word.textExampleTranslate}</div>
         </div>
         <div className="text-en__line" />
+        <h3 className="card-details__text-title">Значение:</h3>
         <div className="card-details__text-ru text-ru">
-          <div className="text-ru__first">{word.textMeaningTranslate}</div>
-          <div className="text-ru__second">{word.textExampleTranslate}</div>
+          <div className="text-ru__first" dangerouslySetInnerHTML={{ __html: word.textMeaning }} />
+          <div className="text-ru__second">{word.textMeaningTranslate}</div>
+        </div>
+        <div className="card-details__result">
+          <h3 className="card-details__result-title">Ответы в играх:</h3>
+          <div className="card-details__result-games games">
+            <div className="games-block">
+              <span className="games-block__name">Аудиовызов</span>
+              <span className="games-block__stat">0</span>
+            </div>
+            <div className="games-block">
+              <span className="games-block__name">Спринт</span>
+              <span className="games-block__stat">0</span>
+            </div>
+          </div>
         </div>
       </div>
       <img

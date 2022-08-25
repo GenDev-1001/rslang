@@ -3,7 +3,7 @@
   flex-direction: column-reverse;
   justify-content: flex-end;
   width: 300px;
-  height: 520px;
+  max-height: 640px;
   color: var(--color-white);
   background-color: var(--color-pink);
   border-radius: 10px;
@@ -98,6 +98,7 @@
 .translate-audio {
   background-color: transparent;
   border: none;
+  transition: background-color 0.5s;
 }
 
 .translate-audio__svg {
@@ -105,4 +106,53 @@
   height: 20px;
   cursor: pointer;
   filter: invert(1);
+}
+
+.translate-audio:hover {
+  background-color: var(--color-yellow);
+  border-radius: 10px;
+}
+
+.card-details__result-games {
+  display: flex;
+  justify-content: center;
+}
+
+.card-details__result-title {
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+.games-block + .games-block {
+  margin-left: 10px;
+}
+
+.games-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.games-block__name {
+  display: inline-block;
+  width: fit-content;
+  margin-bottom: 3px;
+  padding: 3px 6px;
+  color: #fffffe;
+  font-size: 12px;
+  text-transform: lowercase;
+  background-color: var(--color-yellow);
+  border-radius: 26px;
+}
+
+.games-block__stat {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.card-details__text-title {
+  margin-bottom: 5px;
+  font-size: 16px;
 }
