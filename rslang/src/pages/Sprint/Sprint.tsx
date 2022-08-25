@@ -1,4 +1,4 @@
-import { FC, useState, MouseEvent } from 'react';
+import { FC, useState, MouseEvent, useEffect } from 'react';
 import { Loading, Greetings, Game, Statistics } from './components';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
@@ -24,12 +24,6 @@ const Sprint: FC = () => {
     const target = event.target as HTMLButtonElement;
     const textContent = target.textContent as string;
     setGroup(`${+textContent - 1}`);
-
-    // const min = 0;
-    // const max = 29;
-    // const random = Math.floor(Math.random() * (max - min)) + min;
-    // setPage(`${random}`);
-
     handleLoading();
   };
 
@@ -45,6 +39,10 @@ const Sprint: FC = () => {
     endGame();
     setGroup('');
   };
+
+  useEffect(() => {
+    console.log('data ===', data);
+  }, []);
 
   return (
     <div className="sprint-wrapper">

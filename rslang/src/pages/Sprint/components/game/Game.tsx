@@ -3,11 +3,6 @@ import { ButtonReset, ButtonSpeak, ButtonSelect, Multiplier, Circle } from '..';
 import { IWordsResponse } from '../../../../features/words/wordsSlice.interface';
 import './Game.scss';
 
-// @ts-ignore
-// import audioTrue from '../../../../audio/success.mp3';
-// @ts-ignore
-// import audioFalse from '../../../../audio/error.mp3';
-
 export interface IGame {
   data: IWordsResponse[] | undefined;
   group: string;
@@ -48,16 +43,6 @@ const Game: FC<IGame> = ({ data, group, resetGroup, handleIsEndGame }) => {
     }
   };
 
-  // const handleAudio = (result: boolean) => {
-  //   if (result) {
-  //     const audio = new Audio(audioTrue);
-  //     audio.play();
-  //   } else {
-  //     const audio = new Audio(audioFalse);
-  //     audio.play();
-  //   }
-  // };
-
   const handleAnswer = (textContent: string) => {
     if (
       (textContent === 'true' && englishWordTranslation === randomWordTranslation) ||
@@ -74,10 +59,8 @@ const Game: FC<IGame> = ({ data, group, resetGroup, handleIsEndGame }) => {
         setStreak((prevState) => prevState + 1);
       }
 
-      // handleAudio(true);
       setScore((prevState) => prevState + 10 * multiplier);
     } else {
-      // handleAudio(false);
       setStreak(0);
       setMultiplier(1);
     }
@@ -110,6 +93,8 @@ const Game: FC<IGame> = ({ data, group, resetGroup, handleIsEndGame }) => {
   };
 
   useEffect(() => {
+    console.log('data ===', data);
+
     getEnglishWord();
     getRandomWordTranslation();
 
