@@ -218,3 +218,9 @@
     background-color: var(--color-black);
   }
 }
+
+@media (max-width: 500px) {
+  .menu-list {
+    width: 100%;
+  }
+}
