@@ -42,7 +42,11 @@
   filter: invert(1);
 }
 
-@media (max-width: 450px) {
+.footer__data-text {
+  display: flex;
+}
+
+@media (max-width: 620px) {
   .footer {
     height: 120px;
   }
@@ -65,5 +69,25 @@
     max-width: 100%;
     margin: 0 auto;
     margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 440px) {
+  .footer {
+    height: 210px;
+  }
+
+  .footer__data-text {
+    flex-direction: column;
+  }
+
+  .footer__data-copy {
+    margin: 0 auto 10px;
+  }
+
+  .footer__data-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }

@@ -89,3 +89,9 @@
     grid-template-columns: repeat(2, 300px);
   }
 }
+
+@media (max-width: 670px) {
+  .dictionary-words__wrapper {
+    grid-template-columns: repeat(1, 300px);
+  }
+}
