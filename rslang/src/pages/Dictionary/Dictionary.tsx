@@ -3,13 +3,12 @@ import { useState } from 'react';
 import { UserWordStatus } from '../../common/interfaces';
 import { AuthCardList } from '../../components/AuthCardList/AuthCardList';
 import { Card } from '../../components/Card/Card';
+import { DifficultyCardList } from '../../components/DifficultyCardList/DifficultyCardList';
 import { Footer } from '../../components/Footer/Footer';
 import { LevelCard } from '../../components/LevelCard/LevelCard';
 import Pagination from '../../components/Pagination/Pagination';
-import {
-  useCountWordsByGroupQuery,
-  useDictionaryWordsQuery,
-} from '../../features/aggregaredWords/aggregaredWordsApiSlice';
+import { WorkingCardList } from '../../components/WorkingCardList/WorkingCardList';
+import { useDictionaryWordsQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -19,13 +18,10 @@ export function Dictionary() {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentGroup, setCurrentGroup] = useState(0);
   const [isDictionary, setIsDictionary] = useState(false);
+  const [isDifficulty, setIsDifficulty] = useState(false);
+  const [isWorking, setIsWorking] = useState(false);
 
   const { user } = useAuth();
-
-  const { data: countWords } = useCountWordsByGroupQuery({
-    userId: user.userId || '',
-    group: 0,
-  });
 
   const { data: activeWords } = useGetWordsQuery({
     group: currentGroup,
@@ -39,8 +35,27 @@ export function Dictionary() {
     difficulty: UserWordStatus.HARD,
   });
 
+  const { data: workingWords } = useDictionaryWordsQuery({
+    userId: user.userId || '',
+    group: currentGroup,
+    page: currentPage - 1,
+    difficulty: UserWordStatus.WORK,
+  });
+
+  const handlerClickDictionary = (prev: boolean) => {
+    setIsDictionary(!prev);
+    setIsDifficulty(false);
+    setIsWorking(false);
+  };
+
   const handlerClickDifficulty = () => {
-    console.log(difficultyWords);
+    setIsDifficulty(true);
+    setIsWorking(false);
+  };
+
+  const handlerClickWorking = () => {
+    setIsWorking(true);
+    setIsDifficulty(false);
   };
 
   const handleClickGroup = (group: number) => {
@@ -51,14 +66,14 @@ export function Dictionary() {
     <>
       <div className="container">
         <div className="dictionary-block">
-          <a className="dictionary-block-title" onClick={() => setIsDictionary(false)}>
+          <a className="dictionary-block-title" onClick={() => handlerClickDictionary(true)}>
             Учебник
           </a>
 
           {user.token && (
             <>
               <span className="dictionary-block-title__dev">|</span>
-              <a className="dictionary-block-title" onClick={() => setIsDictionary(true)}>
+              <a className="dictionary-block-title" onClick={() => handlerClickDictionary(false)}>
                 Словарь
               </a>
             </>
@@ -100,32 +115,75 @@ export function Dictionary() {
         {isDictionary && (
           <div className="dictionary-lvls-custom__wrapper">
             <li
-              className="dictionary-lvls-custom__wrapper-li"
+              className={cn('dictionary-lvls-custom__wrapper-li', { active: isDifficulty })}
               onClick={() => handlerClickDifficulty()}>
-              <LevelCard levelWord="Сложные" range={`Слов: ${String(countWords)}`} levelIndex="С" />
+              <LevelCard
+                levelWord="Сложные"
+                range={`Слов: ${difficultyWords?.totalCount}`}
+                levelIndex="С"
+              />
             </li>
-            <li className="dictionary-lvls-custom__wrapper-li">
-              <LevelCard levelWord="Изученные" range="Слов: 0" levelIndex="И" />
+            <li
+              className={cn('dictionary-lvls-custom__wrapper-li', { active: isWorking })}
+              onClick={() => handlerClickWorking()}>
+              <LevelCard
+                levelWord="Изученные"
+                range={`Слов: ${workingWords?.totalCount}`}
+                levelIndex="И"
+              />
             </li>
           </div>
         )}
         <h4 className="dictionary-words__title">Слова</h4>
-        {user.token ? (
-          <AuthCardList currentGroup={currentGroup} currentPage={currentPage} />
+        {isDifficulty && difficultyWords ? (
+          <>
+            <DifficultyCardList difficultyWords={difficultyWords?.paginatedResults} />
+            <Pagination
+              className="pagination"
+              currentPage={currentPage}
+              total={difficultyWords?.totalCount}
+              pageSize={20}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
+          </>
+        ) : isWorking && workingWords ? (
+          <>
+            <WorkingCardList workingWords={workingWords?.paginatedResults} />
+            <Pagination
+              className="pagination"
+              currentPage={currentPage}
+              total={workingWords?.totalCount}
+              pageSize={20}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
+          </>
+        ) : user.token ? (
+          <>
+            <AuthCardList currentGroup={currentGroup} currentPage={currentPage} />
+            <Pagination
+              className="pagination"
+              currentPage={currentPage}
+              total={600}
+              pageSize={20}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
+          </>
         ) : (
-          <div className="dictionary-words__wrapper">
-            {activeWords?.map((word) => (
-              <Card word={word} key={word.id} />
-            ))}
-          </div>
+          <>
+            <div className="dictionary-words__wrapper">
+              {activeWords?.map((word) => (
+                <Card word={word} key={word.id} />
+              ))}
+            </div>
+            <Pagination
+              className="pagination"
+              currentPage={currentPage}
+              total={600}
+              pageSize={20}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
+          </>
         )}
-        <Pagination
-          className="pagination"
-          currentPage={currentPage}
-          total={600}
-          pageSize={20}
-          onPageChange={(page) => setCurrentPage(page)}
-        />
       </div>
 
       <Footer />
