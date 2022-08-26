@@ -148,10 +148,22 @@
   transition: rotate 0.3s ease 0.5s;
 }
 
+.header_main .header__menu-btn span,
+.header_main .header__menu-btn::before,
+.header_main .header__menu-btn::after {
+  background-color: var(--color-black);
+}
+
 .header__menu-btn:hover span,
 .header__menu-btn:hover::after,
 .header__menu-btn:hover::before {
   background-color: var(--color-black);
+}
+
+.header_main .header__menu-btn:hover span,
+.header_main .header__menu-btn:hover::after,
+.header_main .header__menu-btn:hover::before {
+  background-color: var(--color-yellow);
 }
 
 .header__menu-btn::before,
@@ -216,6 +228,14 @@
 
   .menu-list__item:hover {
     background-color: var(--color-black);
+  }
+
+  .header_main .menu-list__item:hover {
+    background-color: var(--color-white);
+  }
+
+  .menu-list__item .menu-list__btn {
+    font-size: 18px;
   }
 }
 
