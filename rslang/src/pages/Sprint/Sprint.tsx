@@ -1,19 +1,32 @@
-import { FC, useState, MouseEvent, useEffect } from 'react';
+import { FC, useState, MouseEvent } from 'react';
 import { Loading, Greetings, Game, Statistics } from './components';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
+import { useAuth } from '../../hooks/useAuth';
+import { useGetUserWordsQuery } from '../../features/userWords/userWordsApiSlice';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import './Sprint.scss';
 
 const Sprint: FC = () => {
-  const [group, setGroup] = useState<string>('');
-  const [page, setPage] = useState<string>('');
+  const [group, setGroup] = useState<number>(0);
+  const [page, setPage] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isStartGame, setIsStartGame] = useState<boolean>(true);
   const [isEndGame, setIsEndGame] = useState<boolean>(false);
 
-  const { data } = useGetWordsQuery({
-    group: +group,
-    page: +page,
+  const { user } = useAuth();
+
+  const { data: unauthorizedWords } = useGetWordsQuery({
+    group,
+    page,
   });
+
+  console.log('user.userId ===', user.userId);
+
+  const { data: authorizedWords } = useGetUserWordsQuery({
+    userId: user.userId || '',
+  });
+
+  console.log('useGetUserWordsQuery ===', authorizedWords);
 
   const handleLoading = () => {
     setIsLoading(true);
@@ -23,7 +36,8 @@ const Sprint: FC = () => {
   const handleGroup = (event: MouseEvent<HTMLButtonElement>) => {
     const target = event.target as HTMLButtonElement;
     const textContent = target.textContent as string;
-    setGroup(`${+textContent - 1}`);
+    setGroup(+textContent - 1);
+    setIsStartGame(false);
     handleLoading();
   };
 
@@ -35,24 +49,25 @@ const Sprint: FC = () => {
     setIsEndGame(false);
   };
 
-  const resetGroup = () => {
+  const resetGame = () => {
     endGame();
-    setGroup('');
+    setIsStartGame(true);
   };
-
-  useEffect(() => {
-    console.log('data ===', data);
-  }, []);
 
   return (
     <div className="sprint-wrapper">
       <img src={sprintBg} alt="Sprint Background" className="sprint-wrapper__bg" />
-      {!group && <Greetings onClick={handleGroup} />}
+      {isStartGame && <Greetings onClick={handleGroup} />}
       {isLoading && <Loading />}
-      {group && !isLoading && !isEndGame && (
-        <Game data={data} group={group} resetGroup={resetGroup} handleIsEndGame={handleIsEndGame} />
+      {!isStartGame && !isLoading && !isEndGame && (
+        <Game
+          data={unauthorizedWords}
+          group={group}
+          resetGame={resetGame}
+          handleIsEndGame={handleIsEndGame}
+        />
       )}
-      {isEndGame && <Statistics endGame={endGame} resetGroup={resetGroup} />}
+      {isEndGame && <Statistics endGame={endGame} resetGame={resetGame} />}
     </div>
   );
 };

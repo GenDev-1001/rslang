@@ -5,12 +5,12 @@ import './Game.scss';
 
 export interface IGame {
   data: IWordsResponse[] | undefined;
-  group: string;
-  resetGroup: () => void;
+  group: number;
+  resetGame: () => void;
   handleIsEndGame: (value: boolean) => void;
 }
 
-const Game: FC<IGame> = ({ data, group, resetGroup, handleIsEndGame }) => {
+const Game: FC<IGame> = ({ data, group, resetGame, handleIsEndGame }) => {
   const [timer, setTimer] = useState<number>(20);
   const [score, setScore] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
@@ -64,10 +64,6 @@ const Game: FC<IGame> = ({ data, group, resetGroup, handleIsEndGame }) => {
       setStreak(0);
       setMultiplier(1);
     }
-
-    console.log(englishWordTranslation === randomWordTranslation);
-    console.log('streak ===', streak);
-    console.log('multiplier ===', multiplier);
   };
 
   const handleButtonSelect = (event: MouseEvent<HTMLButtonElement>) => {
@@ -93,8 +89,6 @@ const Game: FC<IGame> = ({ data, group, resetGroup, handleIsEndGame }) => {
   };
 
   useEffect(() => {
-    console.log('data ===', data);
-
     getEnglishWord();
     getRandomWordTranslation();
 
@@ -153,7 +147,7 @@ const Game: FC<IGame> = ({ data, group, resetGroup, handleIsEndGame }) => {
         </div>
       </div>
       <nav className="button-menu">
-        <ButtonReset description="Level Reset" disabled={!timer} onClick={resetGroup} />
+        <ButtonReset description="Level Reset" disabled={!timer} onClick={resetGame} />
       </nav>
     </>
   );

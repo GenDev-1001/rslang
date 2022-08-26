@@ -5,10 +5,10 @@ import './Statistics.scss';
 
 export interface IStatistics {
   endGame: () => void;
-  resetGroup: () => void;
+  resetGame: () => void;
 }
 
-const Statistics: FC<IStatistics> = ({ endGame, resetGroup }) => {
+const Statistics: FC<IStatistics> = ({ endGame, resetGame }) => {
   return (
     <>
       <div className="sprint-frame sprint-table__wrapper">
@@ -30,7 +30,7 @@ const Statistics: FC<IStatistics> = ({ endGame, resetGroup }) => {
       </div>
       <nav className="button-menu">
         <ButtonReset description="Play Again" bgColor="bg_green" onClick={endGame} />
-        <ButtonReset description="Level Reset" onClick={resetGroup} />
+        <ButtonReset description="Level Reset" onClick={resetGame} />
       </nav>
     </>
   );
