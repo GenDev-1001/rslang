@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import { useState } from 'react';
 import { MdLogout } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -9,8 +10,13 @@ import { IHeaderProps } from './Header.interface';
 import './Header.scss';
 
 export function Header({ isMain, handler }: IHeaderProps) {
+  const [isBurger, setIsBurger] = useState(false);
   const dispatch = useAppDispatch();
   const { user } = useAuth();
+
+  const handlerClickBurger = (prev: boolean) => {
+    isBurger ? setIsBurger(!prev) : setIsBurger(prev);
+  };
 
   const hendlerAuth = () => {
     if (user.token) {
@@ -31,7 +37,12 @@ export function Header({ isMain, handler }: IHeaderProps) {
               RSLang
             </Link>
           </h1>
-          <ul className="menu-list">
+          <div
+            className={cn('header__menu-btn', { active: isBurger })}
+            onClick={() => handlerClickBurger(true)}>
+            <span className="header__menu-span" />
+          </div>
+          <ul className={cn('menu-list', { active: isBurger })}>
             <li className="menu-list__item">
               <Link to="/dictionary" className="menu-list__link">
                 Учебник
