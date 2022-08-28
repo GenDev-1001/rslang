@@ -122,7 +122,7 @@ const Game: FC<IGame> = ({ data, group, resetGame, handleIsEndGame }) => {
       <div className="sprint-frame">
         <div className="sprint-ui">
           <Circle title="Time:" value={timer} />
-          <Circle title="Level" value={`№${group}`} />
+          <Circle title="Level" value={`№${group + 1}`} />
           <div className="sprint-ui__streak-wrapper user-select_none">
             <ul className="sprint-ui__streak">
               <Multiplier multiplier={streak} value={0} description="&#128293;" />
