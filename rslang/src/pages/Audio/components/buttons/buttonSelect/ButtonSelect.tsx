@@ -9,7 +9,7 @@ export interface IButtonSelect {
 
 const ButtonSelect: FC<IButtonSelect> = ({ description, bgColor, onClick }) => {
   return (
-    <button className={`button-select ${bgColor}`} onClick={onClick}>
+    <button className={`audio-btn-select ${bgColor}`} onClick={onClick}>
       {description}
     </button>
   );

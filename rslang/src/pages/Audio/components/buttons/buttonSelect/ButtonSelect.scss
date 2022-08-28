@@ -1,10 +1,10 @@
 @import '../../../../../sass/Constants.scss';
 
-.button-select {
-  width: $base * 60;
-  height: $base * 20;
-  font-size: $base * 8;
-  font-weight: $fw-bold;
+.audio-btn-select {
+  width: $base * 40;
+  height: $base * 15;
+  font-size: $base * 5;
+  font-weight: $fw-semi-bold;
   text-transform: uppercase;
   border: none;
   border-radius: $base * 5;

@@ -10,6 +10,7 @@
 
 .audio-wrapper__bg {
   position: absolute;
+
   top: 50%;
   left: 50%;
   z-index: -1;
@@ -55,4 +56,55 @@
       }
     }
   }
+}
+
+.audio-ui {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: $base;
+  width: 100%;
+  &__streak-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: $base * 2;
+  }
+
+  &__streak {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: $base * 5;
+  }
+
+  &__level {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: $base * 5;
+  }
+}
+
+.audio-btn-select__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: $base * 4;
+}
+
+.button-menu {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: $base * 5;
+  width: $base * 25;
+  height: 100%;
+  background-color: $color-white-02;
 }

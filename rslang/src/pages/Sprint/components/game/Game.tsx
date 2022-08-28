@@ -1,38 +1,71 @@
 import { FC, useState, useEffect, MouseEvent } from 'react';
-import { ButtonReset, ButtonSpeak, ButtonSelect } from '..';
+import { ButtonReset, ButtonSpeak, ButtonSelect, Multiplier, Circle } from '..';
+import { IWordsResponse } from '../../../../features/words/wordsSlice.interface';
 import './Game.scss';
 
 export interface IGame {
-  level: string;
-  resetLevel: () => void;
+  data: IWordsResponse[] | undefined;
+  group: string;
+  resetGroup: () => void;
   handleIsEndGame: (value: boolean) => void;
 }
 
-const Game: FC<IGame> = ({ level, resetLevel, handleIsEndGame }) => {
+const Game: FC<IGame> = ({ data, group, resetGroup, handleIsEndGame }) => {
   const [timer, setTimer] = useState<number>(20);
   const [score, setScore] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
   const [multiplier, setMultiplier] = useState<number>(1);
+  const [wordIndex, setWordIndex] = useState<number>(0);
+  const [englishWord, setEnglishWord] = useState<string>('');
+  const [englishWordTranslation, setEnglishWordTranslation] = useState<string>('');
+  const [randomWordTranslation, setRandomWordTranslation] = useState<string>('');
 
-  const handleAnswer = (value: string) => {
-    if (value === 'true' || value === 'ArrowRight') {
+  const getEnglishWord = () => {
+    const word = data ? data[wordIndex].word : '';
+    const wordTranslate = data ? data[wordIndex].wordTranslate : '';
+    setEnglishWord(word);
+    setEnglishWordTranslation(wordTranslate);
+  };
+
+  const getRandomWordTranslation = () => {
+    const min = 0;
+    const max = 20;
+    const random = Math.floor(Math.random() * (max - min)) + min;
+    const randomWordTranlation = data ? data[random].wordTranslate : '';
+    setRandomWordTranslation(randomWordTranlation);
+  };
+
+  const handleWordIndex = () => {
+    if (wordIndex < 19) {
+      setWordIndex(wordIndex + 1);
+    } else {
+      handleIsEndGame(true);
+    }
+  };
+
+  const handleAnswer = (textContent: string) => {
+    if (
+      (textContent === 'true' && englishWordTranslation === randomWordTranslation) ||
+      (textContent === 'false' && englishWordTranslation !== randomWordTranslation)
+    ) {
       if (streak === 3) {
         if (multiplier !== 4) {
           setMultiplier((prevState) => prevState + 1);
         }
         setStreak(1);
       }
+
       if (streak !== 3) {
         setStreak((prevState) => prevState + 1);
       }
-      setScore((prevState) => prevState + 10 * multiplier);
-    }
 
-    if (value === 'false') {
+      setScore((prevState) => prevState + 10 * multiplier);
+    } else {
       setStreak(0);
       setMultiplier(1);
     }
 
+    console.log(englishWordTranslation === randomWordTranslation);
     console.log('streak ===', streak);
     console.log('multiplier ===', multiplier);
   };
@@ -41,6 +74,7 @@ const Game: FC<IGame> = ({ level, resetLevel, handleIsEndGame }) => {
     const target = event.target as HTMLButtonElement;
     const textContent = target.textContent as string;
     handleAnswer(textContent);
+    handleWordIndex();
   };
 
   const handleKeySelect = (event: globalThis.KeyboardEvent) => {
@@ -59,11 +93,21 @@ const Game: FC<IGame> = ({ level, resetLevel, handleIsEndGame }) => {
   };
 
   useEffect(() => {
+    console.log('data ===', data);
+
+    getEnglishWord();
+    getRandomWordTranslation();
+
     document.addEventListener('keydown', handleKeySelect);
     return () => {
       document.removeEventListener('keydown', handleKeySelect);
     };
   }, []);
+
+  useEffect(() => {
+    getEnglishWord();
+    getRandomWordTranslation();
+  }, [wordIndex]);
 
   useEffect(() => {
     const counter = setTimeout(() => {
@@ -83,59 +127,33 @@ const Game: FC<IGame> = ({ level, resetLevel, handleIsEndGame }) => {
     <>
       <div className="sprint-frame">
         <div className="sprint-ui">
-          <div className="sprint-ui__circle user-select_none">
-            Time:
-            <br />
-            {timer}
-          </div>
-          <div className="sprint-ui__circle user-select_none">
-            Level
-            <br />
-            {`№${level}`}
-          </div>
+          <Circle title="Time:" value={timer} />
+          <Circle title="Level" value={`№${group}`} />
           <div className="sprint-ui__streak-wrapper user-select_none">
             <ul className="sprint-ui__streak">
-              <li className="sprint-ui__circle sprint-ui__circle_small">
-                <span className={`opacity_zero ${streak > 0 ? 'opacity_one' : ''}`}>&#128293;</span>
-              </li>
-              <li className="sprint-ui__circle sprint-ui__circle_small">
-                <span className={`opacity_zero ${streak > 1 ? 'opacity_one' : ''}`}>&#128293;</span>
-              </li>
-              <li className="sprint-ui__circle sprint-ui__circle_small">
-                <span className={`opacity_zero ${streak > 2 ? 'opacity_one' : ''}`}>&#128293;</span>
-              </li>
+              <Multiplier multiplier={streak} value={0} description="&#128293;" />
+              <Multiplier multiplier={streak} value={1} description="&#128293;" />
+              <Multiplier multiplier={streak} value={2} description="&#128293;" />
             </ul>
             <ul className="sprint-ui__level">
-              <li className="sprint-ui__circle sprint-ui__circle_small">
-                <span className={`opacity_zero ${multiplier > 0 ? 'opacity_one' : ''}`}>x1</span>
-              </li>
-              <li className="sprint-ui__circle sprint-ui__circle_small">
-                <span className={`opacity_zero ${multiplier > 1 ? 'opacity_one' : ''}`}>x2</span>
-              </li>
-              <li className="sprint-ui__circle sprint-ui__circle_small">
-                <span className={`opacity_zero ${multiplier > 2 ? 'opacity_one' : ''}`}>x3</span>
-              </li>
-              <li className="sprint-ui__circle sprint-ui__circle_small">
-                <span className={`opacity_zero ${multiplier > 3 ? 'opacity_one' : ''}`}>x4</span>
-              </li>
+              <Multiplier multiplier={multiplier} value={0} description="x1" />
+              <Multiplier multiplier={multiplier} value={1} description="x2" />
+              <Multiplier multiplier={multiplier} value={2} description="x3" />
+              <Multiplier multiplier={multiplier} value={3} description="x4" />
             </ul>
           </div>
-          <div className="sprint-ui__circle user-select_none">
-            Score:
-            <br />
-            {score}
-          </div>
+          <Circle title="Score:" value={score} />
         </div>
-        <h2 className="sprint-frame__header">English</h2>
-        <h2 className="sprint-frame__header">Русский</h2>
-        <ButtonSpeak />
+        <h2 className="sprint-frame__header">{englishWord}</h2>
+        <h2 className="sprint-frame__header">{randomWordTranslation}</h2>
+        <ButtonSpeak data={data ? data[wordIndex] : undefined} />
         <div className="button-select__wrapper">
           <ButtonSelect description="false" bgColor="bg_red" onClick={handleButtonSelect} />
           <ButtonSelect description="true" bgColor="bg_green" onClick={handleButtonSelect} />
         </div>
       </div>
       <nav className="button-menu">
-        <ButtonReset description="Level Reset" disabled={!timer} onClick={resetLevel} />
+        <ButtonReset description="Level Reset" disabled={!timer} onClick={resetGroup} />
       </nav>
     </>
   );

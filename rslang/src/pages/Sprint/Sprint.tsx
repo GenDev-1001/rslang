@@ -1,22 +1,29 @@
-import { FC, useState, MouseEvent } from 'react';
+import { FC, useState, MouseEvent, useEffect } from 'react';
 import { Loading, Greetings, Game, Statistics } from './components';
+import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import './Sprint.scss';
 
 const Sprint: FC = () => {
-  const [level, setLevel] = useState<string>('');
+  const [group, setGroup] = useState<string>('');
+  const [page, setPage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEndGame, setIsEndGame] = useState<boolean>(false);
+
+  const { data } = useGetWordsQuery({
+    group: +group,
+    page: +page,
+  });
 
   const handleLoading = () => {
     setIsLoading(true);
     setTimeout(() => setIsLoading(false), 2000);
   };
 
-  const handleSetLevel = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleGroup = (event: MouseEvent<HTMLButtonElement>) => {
     const target = event.target as HTMLButtonElement;
     const textContent = target.textContent as string;
-    setLevel(textContent);
+    setGroup(`${+textContent - 1}`);
     handleLoading();
   };
 
@@ -28,20 +35,24 @@ const Sprint: FC = () => {
     setIsEndGame(false);
   };
 
-  const resetLevel = () => {
+  const resetGroup = () => {
     endGame();
-    setLevel('');
+    setGroup('');
   };
+
+  useEffect(() => {
+    console.log('data ===', data);
+  }, []);
 
   return (
     <div className="sprint-wrapper">
       <img src={sprintBg} alt="Sprint Background" className="sprint-wrapper__bg" />
-      {!level && <Greetings onClick={handleSetLevel} />}
+      {!group && <Greetings onClick={handleGroup} />}
       {isLoading && <Loading />}
-      {level && !isLoading && !isEndGame && (
-        <Game level={level} resetLevel={resetLevel} handleIsEndGame={handleIsEndGame} />
+      {group && !isLoading && !isEndGame && (
+        <Game data={data} group={group} resetGroup={resetGroup} handleIsEndGame={handleIsEndGame} />
       )}
-      {isEndGame && <Statistics endGame={endGame} resetLevel={resetLevel} />}
+      {isEndGame && <Statistics endGame={endGame} resetGroup={resetGroup} />}
     </div>
   );
 };
