@@ -19,7 +19,8 @@
   opacity: 1;
 }
 
-.dictionary-lvls__wrapper-li.active {
+.dictionary-lvls__wrapper-li.active,
+.dictionary-lvls-custom__wrapper-li.active {
   opacity: 1;
 }
 
@@ -57,6 +58,7 @@
 
 .dictionary-lvls-custom__wrapper {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
   margin-bottom: 20px;
@@ -68,4 +70,29 @@
   grid-template-columns: repeat(4, 300px);
   width: max-content;
   margin: 0 auto 30px;
+}
+
+@media (max-width: 1350px) {
+  .dictionary-words__wrapper {
+    grid-gap: 30px;
+    grid-template-columns: repeat(3, 300px);
+  }
+}
+
+@media (max-width: 1200px) {
+  .dictionary-lvls__wrapper {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 990px) {
+  .dictionary-words__wrapper {
+    grid-template-columns: repeat(2, 300px);
+  }
+}
+
+@media (max-width: 670px) {
+  .dictionary-words__wrapper {
+    grid-template-columns: repeat(1, 300px);
+  }
 }

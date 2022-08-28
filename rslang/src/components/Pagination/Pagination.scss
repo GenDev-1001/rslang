@@ -58,3 +58,9 @@
 .pagination-ul__item.disabled {
   pointer-events: none;
 }
+
+@media (max-width: 370px) {
+  .pagination-ul__item {
+    margin: auto 2px;
+  }
+}

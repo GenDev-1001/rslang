@@ -55,3 +55,45 @@
 .main-page__button:hover {
   background-color: var(--color-black);
 }
+
+@media (max-width: 990px) {
+  .main-page__title {
+    font-size: 70px;
+  }
+}
+
+@media (max-width: 820px) {
+  .main-page__title {
+    font-size: 50px;
+  }
+
+  .main-page__block {
+    width: 600px;
+    padding-top: 200px;
+  }
+}
+
+@media (max-width: 650px) {
+  .main-page__block {
+    width: 400px;
+  }
+
+  .main-page__text {
+    max-width: 419px;
+  }
+}
+
+@media (max-width: 460px) {
+  .main-page__title {
+    font-size: 32px;
+  }
+
+  .main-page__text {
+    max-width: 300px;
+    font-size: 11px;
+  }
+
+  .main-page__block {
+    width: 300px;
+  }
+}
