@@ -20,7 +20,24 @@ const Sprint: FC = () => {
     page,
   });
 
-  console.log('user.userId ===', user.userId);
+  console.log('unauthorizedWords ===', unauthorizedWords);
+
+  const test = () => {
+    const arr = [];
+
+    for (let i = 0; i < 6; i += 1) {
+      const { data: testUnauthorizedWords } = useGetWordsQuery({
+        group,
+        page,
+      });
+
+      arr.push(testUnauthorizedWords);
+    }
+
+    Promise.all(arr).then((value) => console.log(value));
+  };
+
+  test();
 
   const { data: authorizedWords } = useGetUserWordsQuery({
     userId: user.userId || '',

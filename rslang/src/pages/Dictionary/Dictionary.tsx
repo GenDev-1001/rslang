@@ -28,8 +28,6 @@ export function Dictionary() {
     page: currentPage - 1,
   });
 
-  console.log('activeWords ===', activeWords);
-
   const { data: difficultyWords } = useDictionaryWordsQuery({
     userId: user.userId || '',
     group: currentGroup,
@@ -37,16 +35,12 @@ export function Dictionary() {
     difficulty: UserWordStatus.HARD,
   });
 
-  console.log('difficultyWords ===', difficultyWords);
-
   const { data: workingWords } = useDictionaryWordsQuery({
     userId: user.userId || '',
     group: currentGroup,
     page: currentPage - 1,
     difficulty: UserWordStatus.WORK,
   });
-
-  console.log('workingWords ===', workingWords);
 
   const handlerClickDictionary = (prev: boolean) => {
     setIsDictionary(!prev);

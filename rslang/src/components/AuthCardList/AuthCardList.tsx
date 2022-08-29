@@ -1,4 +1,7 @@
-import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
+import {
+  useActiveWordsByUserQuery,
+  useCountWordsByGroupQuery,
+} from '../../features/aggregaredWords/aggregaredWordsApiSlice';
 import { useAuth } from '../../hooks/useAuth';
 import { Card } from '../Card/Card';
 
@@ -17,6 +20,8 @@ export const AuthCardList = ({ currentPage, currentGroup }: IPropsCardList) => {
     group: currentGroup,
     page: currentPage - 1,
   });
+
+  console.log('activeWords ===', activeWords);
 
   return (
     <div className="dictionary-words__wrapper">
