@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import { useState } from 'react';
 import { UserWordStatus } from '../../common/interfaces';
 import {
   useCreateUserWordMutation,
@@ -8,9 +9,10 @@ import { useAuth } from '../../hooks/useAuth';
 import { IWordCardProps } from './Card.interface';
 import './Card.scss';
 
-export function Card({ word }: IWordCardProps) {
+export function Card({ word, activeColor }: IWordCardProps) {
   const [updateWord] = useUpdateUserWordMutation();
   const [createUserWord] = useCreateUserWordMutation();
+  const [wordPlaying, setWordPlaying] = useState<string | null>(null);
   const { user } = useAuth();
 
   const handlerClick = (difficulty: UserWordStatus) => {
@@ -29,14 +31,36 @@ export function Card({ word }: IWordCardProps) {
   };
 
   const handlerAudio = () => {
-    const audio = new Audio(`https://rs-lang-team-84.herokuapp.com/${word.audio}`);
+    const baseUrl = 'https://rs-lang-team-84.herokuapp.com/';
+
+    setWordPlaying(word.id);
+
+    const audioList = [
+      `${baseUrl}${word.audio}`,
+      `${baseUrl}${word.audioMeaning}`,
+      `${baseUrl}${word.audioExample}`,
+    ];
+
+    const audio = new Audio(audioList[0]);
     audio.play();
+
+    let index = 1;
+    audio.onended = () => {
+      if (index < audioList.length) {
+        audio.src = audioList[index];
+        audio.play();
+        index += 1;
+      } else {
+        setWordPlaying(null);
+      }
+    };
   };
 
   const isHard = word.userWord?.difficulty === UserWordStatus.HARD;
+  const isWorking = word.userWord?.difficulty === UserWordStatus.WORK;
 
   return (
-    <div className="dictionary-words__card card">
+    <div className={cn('dictionary-words__card card', `group${activeColor}`)}>
       <div className="card-details">
         <h6 className="card-details__title">{word.word}</h6>
         <div className="card-details__translate translate">
@@ -59,6 +83,11 @@ export function Card({ word }: IWordCardProps) {
               className={cn('card-details__btn', { active: isHard })}
               onClick={() => handlerClick(isHard ? UserWordStatus.WORK : UserWordStatus.HARD)}>
               {isHard ? 'Простое' : 'Сложное'}
+            </button>
+            <button
+              className={cn('card-details__btn', { active: isWorking })}
+              onClick={() => handlerClick(isWorking ? UserWordStatus.WORK : UserWordStatus.NULL)}>
+              {!isWorking && !isHard ? 'В изученное' : 'Не изученное'}
             </button>
           </div>
         )}

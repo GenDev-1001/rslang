@@ -1,7 +1,9 @@
 import cn from 'classnames';
+import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { UserWordStatus } from '../../common/interfaces';
 import { AuthCardList } from '../../components/AuthCardList/AuthCardList';
+import { BtnScrool } from '../../components/BtnScrool/BtnScrool';
 import { Card } from '../../components/Card/Card';
 import { DifficultyCardList } from '../../components/DifficultyCardList/DifficultyCardList';
 import { Footer } from '../../components/Footer/Footer';
@@ -20,6 +22,7 @@ export function Dictionary() {
   const [isDictionary, setIsDictionary] = useState(false);
   const [isDifficulty, setIsDifficulty] = useState(false);
   const [isWorking, setIsWorking] = useState(false);
+  const [activeColor, setActiveColor] = useState(0);
 
   const { user } = useAuth();
 
@@ -50,30 +53,37 @@ export function Dictionary() {
 
   const handlerClickDifficulty = () => {
     setIsDifficulty(true);
+    setCurrentPage(1);
     setIsWorking(false);
   };
 
   const handlerClickWorking = () => {
     setIsWorking(true);
+    setCurrentPage(1);
     setIsDifficulty(false);
   };
 
   const handleClickGroup = (group: number) => {
     setCurrentGroup(group);
+    setActiveColor(group);
   };
 
   return (
     <>
       <div className="container">
         <div className="dictionary-block">
-          <a className="dictionary-block-title" onClick={() => handlerClickDictionary(true)}>
+          <a
+            className={cn('dictionary-block-title', { active: !isDictionary })}
+            onClick={() => handlerClickDictionary(true)}>
             Учебник
           </a>
 
           {user.token && (
             <>
               <span className="dictionary-block-title__dev">|</span>
-              <a className="dictionary-block-title" onClick={() => handlerClickDictionary(false)}>
+              <a
+                className={cn('dictionary-block-title', { active: isDictionary })}
+                onClick={() => handlerClickDictionary(false)}>
                 Словарь
               </a>
             </>
@@ -137,7 +147,10 @@ export function Dictionary() {
         <h4 className="dictionary-words__title">Слова</h4>
         {isDifficulty && difficultyWords ? (
           <>
-            <DifficultyCardList difficultyWords={difficultyWords?.paginatedResults} />
+            <DifficultyCardList
+              difficultyWords={difficultyWords?.paginatedResults}
+              activeColor={activeColor}
+            />
             <Pagination
               className="pagination"
               currentPage={currentPage}
@@ -148,7 +161,10 @@ export function Dictionary() {
           </>
         ) : isWorking && workingWords ? (
           <>
-            <WorkingCardList workingWords={workingWords?.paginatedResults} />
+            <WorkingCardList
+              workingWords={workingWords?.paginatedResults}
+              activeColor={activeColor}
+            />
             <Pagination
               className="pagination"
               currentPage={currentPage}
@@ -159,7 +175,11 @@ export function Dictionary() {
           </>
         ) : user.token ? (
           <>
-            <AuthCardList currentGroup={currentGroup} currentPage={currentPage} />
+            <AuthCardList
+              currentGroup={currentGroup}
+              currentPage={currentPage}
+              activeColor={activeColor}
+            />
             <Pagination
               className="pagination"
               currentPage={currentPage}
@@ -172,7 +192,9 @@ export function Dictionary() {
           <>
             <div className="dictionary-words__wrapper">
               {activeWords?.map((word) => (
-                <Card word={word} key={word.id} />
+                <AnimatePresence>
+                  <Card word={word} key={word.id} activeColor={activeColor} />
+                </AnimatePresence>
               ))}
             </div>
             <Pagination
@@ -185,7 +207,7 @@ export function Dictionary() {
           </>
         )}
       </div>
-
+      <BtnScrool />
       <Footer />
     </>
   );

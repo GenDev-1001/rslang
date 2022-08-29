@@ -26,12 +26,12 @@
 }
 
 .pagination-ul__item:hover {
-  background-color: var(--color-pink);
+  background-color: var(--color-green);
   cursor: pointer;
 }
 
 .pagination-ul__item.selected {
-  background-color: var(--color-pink);
+  background-color: var(--color-green);
   cursor: default;
 }
 

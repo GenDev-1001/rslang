@@ -1,13 +1,24 @@
 .dictionary-block {
+  margin-bottom: 20px;
   padding-top: 30px;
   font-weight: bold;
+  text-align: center;
 }
 
 .dictionary-block-title {
+  padding: 4px 12px;
+  color: var(--color-white);
   font-size: 20px;
   text-transform: uppercase;
+  background-color: var(--color-green);
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgb(0 0 0 / 20%);
   cursor: pointer;
-  transition: color 0.5s;
+  transition: background-color 0.5s;
+}
+
+.dictionary-block-title.active {
+  background-color: var(--color-yellow);
 }
 
 .dictionary-lvls__wrapper-li {
@@ -34,7 +45,7 @@
 }
 
 .dictionary-block-title:hover {
-  color: var(--color-pink);
+  background-color: var(--color-yellow);
 }
 
 .dictionary-lvl__title,
@@ -69,7 +80,7 @@
   grid-gap: 37px;
   grid-template-columns: repeat(4, 300px);
   width: max-content;
-  margin: 0 auto 30px;
+  margin: 0 auto 50px;
 }
 
 @media (max-width: 1350px) {

@@ -5,9 +5,35 @@
   width: 300px;
   max-height: 640px;
   color: var(--color-white);
-  background-color: var(--color-pink);
+  background-color: var(--color-green);
   border-radius: 10px;
+  border-top-left-radius: 80px;
+  border-bottom-right-radius: 80px;
   box-shadow: 1px 1px 15px 0 rgb(0 0 0 / 20%);
+}
+
+.card.group0 {
+  background-color: var(--color-green);
+}
+
+.card.group1 {
+  background-color: var(--color-yellow);
+}
+
+.card.group2 {
+  background-color: var(--color-light-blue);
+}
+
+.card.group3 {
+  background-color: var(--color-pink);
+}
+
+.card.group4 {
+  background-color: var(--color-blue);
+}
+
+.card.group5 {
+  background-color: var(--color-blueviolet);
 }
 
 .card-img {
@@ -15,7 +41,9 @@
   height: 250px;
   margin-bottom: 10px;
   border-top-left-radius: 10px;
+  border-top-left-radius: 80px;
   border-top-right-radius: 10px;
+  border-bottom-right-radius: 80px;
 }
 
 .card-details {
@@ -39,17 +67,36 @@
   margin-left: 5px;
 }
 
+.card.group1 .card-details__btn {
+  background-color: var(--color-green);
+}
+
+.card.card.group1 .card-details__btn:hover {
+  background-color: var(--color-yellow);
+  background-color: var(--color-white);
+}
+
+.card.card.group1 .games-block__name {
+  background-color: var(--color-green);
+}
+
+.card.card.group1 .translate-audio:hover {
+  background-color: var(--color-green);
+  border-radius: 10px;
+}
+
 .card-details__btn {
-  padding: 2px 5px;
+  padding: 4px 6px;
   color: var(--color-white);
-  background-color: transparent;
-  border: 1px solid var(--color-white);
+  background-color: var(--color-yellow);
+  border: 1px solid transparent;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.5s;
 }
 
 .card-details__btn:hover {
-  color: var(--color-pink);
+  color: var(--color-green);
   background-color: var(--color-white);
 }
 

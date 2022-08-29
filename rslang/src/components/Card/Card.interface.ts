@@ -2,4 +2,5 @@ import { IActivePaginatedResult } from '../../features/aggregaredWords/aggregare
 
 export interface IWordCardProps {
   word: IActivePaginatedResult;
+  activeColor: number;
 }

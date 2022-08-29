@@ -1,3 +1,4 @@
+import { AnimatePresence } from 'framer-motion';
 import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
 import { useAuth } from '../../hooks/useAuth';
 import { Card } from '../Card/Card';
@@ -5,9 +6,10 @@ import { Card } from '../Card/Card';
 interface IPropsCardList {
   currentPage: number;
   currentGroup: number;
+  activeColor: number;
 }
 
-export const AuthCardList = ({ currentPage, currentGroup }: IPropsCardList) => {
+export const AuthCardList = ({ currentPage, currentGroup, activeColor }: IPropsCardList) => {
   const {
     user: { userId },
   } = useAuth();
@@ -20,9 +22,11 @@ export const AuthCardList = ({ currentPage, currentGroup }: IPropsCardList) => {
 
   return (
     <div className="dictionary-words__wrapper">
-      {activeWords?.paginatedResults.map((word) => {
-        return <Card word={word} key={word.id} />;
-      })}
+      <AnimatePresence>
+        {activeWords?.paginatedResults.map((word) => {
+          return <Card word={word} key={word.id} activeColor={activeColor} />;
+        })}
+      </AnimatePresence>
     </div>
   );
 };
