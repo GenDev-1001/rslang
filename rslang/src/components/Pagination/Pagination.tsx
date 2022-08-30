@@ -26,11 +26,17 @@ function Pagination({
   }
 
   const onNext = () => {
-    if (currentPage < 30) onPageChange(currentPage + 1);
+    if (currentPage < 30) {
+      const newPage = currentPage + 1;
+      onPageChange(newPage);
+    }
   };
 
   const onPrevious = () => {
-    if (currentPage > 1) onPageChange(currentPage - 1);
+    if (currentPage > 1) {
+      const newPage = currentPage - 1;
+      onPageChange(newPage);
+    }
   };
 
   const lastPage = paginationRange[paginationRange.length - 1];
