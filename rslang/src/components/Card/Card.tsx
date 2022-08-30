@@ -8,7 +8,13 @@ import { useAuth } from '../../hooks/useAuth';
 import { IWordCardProps } from './Card.interface';
 import './Card.scss';
 
-export function Card({ word, activeColor, wordPlaying, playWordCard }: IWordCardProps) {
+export function Card({
+  word,
+  activeColor,
+  wordPlaying,
+  playWordCard,
+  isDictionary,
+}: IWordCardProps) {
   const [updateWord] = useUpdateUserWordMutation();
   const [createUserWord] = useCreateUserWordMutation();
 
@@ -56,7 +62,8 @@ export function Card({ word, activeColor, wordPlaying, playWordCard }: IWordCard
   };
 
   const isHard = word.userWord?.difficulty === UserWordStatus.HARD;
-  const isWorking = word.userWord?.difficulty === UserWordStatus.WORK;
+
+  const isEasy = word.userWord?.difficulty === UserWordStatus.EASY;
 
   return (
     <div className={cn('dictionary-words__card card', `group${activeColor}`)}>
@@ -82,14 +89,16 @@ export function Card({ word, activeColor, wordPlaying, playWordCard }: IWordCard
           <div className="card-details__btns">
             <button
               className={cn('card-details__btn', { active: isHard })}
-              onClick={() => handlerClick(isHard ? UserWordStatus.WORK : UserWordStatus.HARD)}>
+              onClick={() => handlerClick(isHard ? UserWordStatus.EASY : UserWordStatus.HARD)}>
               {isHard ? 'Простое' : 'Сложное'}
             </button>
-            <button
-              className={cn('card-details__btn', { active: isWorking })}
-              onClick={() => handlerClick(isWorking ? UserWordStatus.WORK : UserWordStatus.NULL)}>
-              {!isWorking && !isHard ? 'В изученное' : 'Не изученное'}
-            </button>
+            {!isDictionary && (
+              <button
+                className={cn('card-details__btn', { active: isEasy })}
+                onClick={() => handlerClick(isEasy ? UserWordStatus.HARD : UserWordStatus.EASY)}>
+                {isEasy ? 'Изученное' : 'Не изученное'}
+              </button>
+            )}
           </div>
         )}
         <h3 className="card-details__text-title">Пример:</h3>

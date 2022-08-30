@@ -26,5 +26,5 @@ export const enum UserWordStatus {
   WORK = 'work',
   HARD = 'hard',
   DELETE = 'delete',
-  NULL = 'null',
+  EASY = 'easy',
 }

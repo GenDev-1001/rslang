@@ -9,6 +9,7 @@ interface IPropsCardList {
   activeColor: number;
   wordPlaying: null | string;
   playWordCard: (value: string | null) => void;
+  isDictionary: boolean;
 }
 
 export const AuthCardList = ({
@@ -17,6 +18,7 @@ export const AuthCardList = ({
   activeColor,
   wordPlaying,
   playWordCard,
+  isDictionary,
 }: IPropsCardList) => {
   const {
     user: { userId },
@@ -34,6 +36,7 @@ export const AuthCardList = ({
         {activeWords?.paginatedResults.map((word) => {
           return (
             <Card
+              isDictionary={isDictionary}
               word={word}
               key={word.id}
               activeColor={activeColor}

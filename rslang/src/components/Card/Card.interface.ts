@@ -5,4 +5,5 @@ export interface IWordCardProps {
   activeColor: number;
   wordPlaying: null | string;
   playWordCard: (value: string | null) => void;
+  isDictionary: boolean;
 }

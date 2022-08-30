@@ -1,6 +1,7 @@
 import cn from 'classnames';
 import { AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { UserWordStatus } from '../../common/interfaces';
 import { AuthCardList } from '../../components/AuthCardList/AuthCardList';
 import { BtnScrool } from '../../components/BtnScrool/BtnScrool';
@@ -16,9 +17,12 @@ import { useAuth } from '../../hooks/useAuth';
 
 import './Dictionary.scss';
 
+const localPage = localStorage.getItem('currentPage');
+const localGroup = localStorage.getItem('currentGroup');
+
 export function Dictionary() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [currentGroup, setCurrentGroup] = useState(0);
+  const [currentPage, setCurrentPage] = useState(localPage ? +localPage : 1);
+  const [currentGroup, setCurrentGroup] = useState(localGroup ? +localGroup : 0);
   const [isDictionary, setIsDictionary] = useState(false);
   const [isDifficulty, setIsDifficulty] = useState(false);
   const [isWorking, setIsWorking] = useState(false);
@@ -26,6 +30,11 @@ export function Dictionary() {
   const [wordPlaying, setWordPlaying] = useState<string | null>(null);
 
   const { user } = useAuth();
+
+  useEffect(() => {
+    localStorage.setItem('currentPage', String(currentPage));
+    localStorage.setItem('currentGroup', String(currentGroup));
+  }, [currentPage, currentGroup]);
 
   const { data: activeWords } = useGetWordsQuery({
     group: currentGroup,
@@ -43,7 +52,7 @@ export function Dictionary() {
     userId: user.userId || '',
     group: currentGroup,
     page: currentPage - 1,
-    difficulty: UserWordStatus.WORK,
+    difficulty: UserWordStatus.EASY,
   });
 
   const handlerClickDictionary = (prev: boolean) => {
@@ -145,10 +154,24 @@ export function Dictionary() {
             </li>
           </div>
         )}
+        <h4 className="dictionary-lvl__title">Игры</h4>
+        <ul className="dictionary-games">
+          <li className="dictionary-games__item">
+            <Link to="/audio" className="dictionary-games__link">
+              <LevelCard levelWord="Аудиовызов" range="Тренировка" levelIndex="play" />
+            </Link>
+          </li>
+          <li className="dictionary-games__item">
+            <Link to="/sprint" className="dictionary-games__link">
+              <LevelCard levelWord="Спринт" range="Тренировка" levelIndex="play" />
+            </Link>
+          </li>
+        </ul>
         <h4 className="dictionary-words__title">Слова</h4>
         {isDifficulty && difficultyWords ? (
           <>
             <DifficultyCardList
+              isDictionary={isDictionary}
               difficultyWords={difficultyWords?.paginatedResults}
               activeColor={activeColor}
               wordPlaying={wordPlaying}
@@ -165,6 +188,7 @@ export function Dictionary() {
         ) : isWorking && workingWords ? (
           <>
             <WorkingCardList
+              isDictionary={isDictionary}
               workingWords={workingWords?.paginatedResults}
               activeColor={activeColor}
               wordPlaying={wordPlaying}
@@ -182,6 +206,7 @@ export function Dictionary() {
           <>
             <AuthCardList
               currentGroup={currentGroup}
+              isDictionary={isDictionary}
               currentPage={currentPage}
               activeColor={activeColor}
               wordPlaying={wordPlaying}
@@ -202,6 +227,7 @@ export function Dictionary() {
                 <AnimatePresence>
                   <Card
                     word={word}
+                    isDictionary={isDictionary}
                     key={word.id}
                     activeColor={activeColor}
                     wordPlaying={wordPlaying}

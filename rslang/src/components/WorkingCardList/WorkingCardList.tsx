@@ -7,6 +7,7 @@ interface IPropsWorkingCardList {
   activeColor: number;
   wordPlaying: null | string;
   playWordCard: (value: string | null) => void;
+  isDictionary: boolean;
 }
 
 export const WorkingCardList = ({
@@ -14,6 +15,7 @@ export const WorkingCardList = ({
   activeColor,
   wordPlaying,
   playWordCard,
+  isDictionary,
 }: IPropsWorkingCardList) => {
   return workingWords.length === 0 ? (
     <p className="no-results">There are no workings words at the moment</p>
@@ -29,6 +31,7 @@ export const WorkingCardList = ({
         {workingWords.map((word) => {
           return (
             <Card
+              isDictionary={isDictionary}
               word={word}
               key={word.id}
               activeColor={activeColor}

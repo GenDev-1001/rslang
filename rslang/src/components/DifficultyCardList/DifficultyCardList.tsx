@@ -7,6 +7,7 @@ interface IPropsDifficultyCardList {
   activeColor: number;
   wordPlaying: null | string;
   playWordCard: (value: string | null) => void;
+  isDictionary: boolean;
 }
 
 export const DifficultyCardList = ({
@@ -14,6 +15,7 @@ export const DifficultyCardList = ({
   activeColor,
   wordPlaying,
   playWordCard,
+  isDictionary,
 }: IPropsDifficultyCardList) => {
   return difficultyWords.length === 0 ? (
     <p className="no-results">There are no difficult words at the moment</p>
@@ -29,6 +31,7 @@ export const DifficultyCardList = ({
         {difficultyWords.map((word) => {
           return (
             <Card
+              isDictionary={isDictionary}
               word={word}
               key={word.id}
               activeColor={activeColor}
