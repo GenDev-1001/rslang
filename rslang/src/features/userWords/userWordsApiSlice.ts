@@ -10,8 +10,8 @@ const userWordsApiSlice = apiSlice
   .enhanceEndpoints({ addTagTypes: ['Words', 'WordsAggregate'] })
   .injectEndpoints({
     endpoints: (builder) => ({
-      getUserWords: builder.query<IUserWordResponse[], string>({
-        query: (id) => `/users/${id}/words`,
+      getUserWords: builder.query<IUserWordResponse[], { userId: string }>({
+        query: ({ userId }) => `/users/${userId}/words`,
         providesTags: (result) =>
           result
             ? [
