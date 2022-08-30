@@ -2,7 +2,6 @@ import { FC, useState, MouseEvent } from 'react';
 import { Loading, Greetings, Game, Statistics } from './components';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import { useAuth } from '../../hooks/useAuth';
-import { useGetUserWordsQuery } from '../../features/userWords/userWordsApiSlice';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import './Sprint.scss';
 
@@ -19,31 +18,6 @@ const Sprint: FC = () => {
     group,
     page,
   });
-
-  console.log('unauthorizedWords ===', unauthorizedWords);
-
-  const test = () => {
-    const arr = [];
-
-    for (let i = 0; i < 6; i += 1) {
-      const { data: testUnauthorizedWords } = useGetWordsQuery({
-        group,
-        page,
-      });
-
-      arr.push(testUnauthorizedWords);
-    }
-
-    Promise.all(arr).then((value) => console.log(value));
-  };
-
-  test();
-
-  const { data: authorizedWords } = useGetUserWordsQuery({
-    userId: user.userId || '',
-  });
-
-  console.log('useGetUserWordsQuery ===', authorizedWords);
 
   const handleLoading = () => {
     setIsLoading(true);

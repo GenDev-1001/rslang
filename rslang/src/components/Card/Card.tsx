@@ -21,8 +21,6 @@ export function Card({ word }: IWordCardProps) {
       userId: user.userId || '',
     };
 
-    console.log('word ===', word);
-
     if (word?.userWord) {
       updateWord(wordRequest);
     } else {
