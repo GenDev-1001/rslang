@@ -83,6 +83,15 @@
   margin: 0 auto 50px;
 }
 
+.no-results {
+  width: 320px;
+  margin: 0 auto;
+  padding-top: 135px;
+  color: var(--color-yellow);
+  font-size: 22px;
+  text-align: center;
+}
+
 @media (max-width: 1350px) {
   .dictionary-words__wrapper {
     grid-gap: 30px;

@@ -3,4 +3,6 @@ import { IActivePaginatedResult } from '../../features/aggregaredWords/aggregare
 export interface IWordCardProps {
   word: IActivePaginatedResult;
   activeColor: number;
+  wordPlaying: null | string;
+  playWordCard: (value: string | null) => void;
 }

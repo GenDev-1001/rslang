@@ -23,6 +23,7 @@ export function Dictionary() {
   const [isDifficulty, setIsDifficulty] = useState(false);
   const [isWorking, setIsWorking] = useState(false);
   const [activeColor, setActiveColor] = useState(0);
+  const [wordPlaying, setWordPlaying] = useState<string | null>(null);
 
   const { user } = useAuth();
 
@@ -150,6 +151,8 @@ export function Dictionary() {
             <DifficultyCardList
               difficultyWords={difficultyWords?.paginatedResults}
               activeColor={activeColor}
+              wordPlaying={wordPlaying}
+              playWordCard={setWordPlaying}
             />
             <Pagination
               className="pagination"
@@ -164,6 +167,8 @@ export function Dictionary() {
             <WorkingCardList
               workingWords={workingWords?.paginatedResults}
               activeColor={activeColor}
+              wordPlaying={wordPlaying}
+              playWordCard={setWordPlaying}
             />
             <Pagination
               className="pagination"
@@ -179,6 +184,8 @@ export function Dictionary() {
               currentGroup={currentGroup}
               currentPage={currentPage}
               activeColor={activeColor}
+              wordPlaying={wordPlaying}
+              playWordCard={setWordPlaying}
             />
             <Pagination
               className="pagination"
@@ -193,7 +200,13 @@ export function Dictionary() {
             <div className="dictionary-words__wrapper">
               {activeWords?.map((word) => (
                 <AnimatePresence>
-                  <Card word={word} key={word.id} activeColor={activeColor} />
+                  <Card
+                    word={word}
+                    key={word.id}
+                    activeColor={activeColor}
+                    wordPlaying={wordPlaying}
+                    playWordCard={setWordPlaying}
+                  />
                 </AnimatePresence>
               ))}
             </div>

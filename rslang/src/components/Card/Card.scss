@@ -3,6 +3,7 @@
   flex-direction: column-reverse;
   justify-content: flex-end;
   width: 300px;
+  min-height: 550px;
   max-height: 640px;
   color: var(--color-white);
   background-color: var(--color-green);
@@ -202,4 +203,16 @@
 .card-details__text-title {
   margin-bottom: 5px;
   font-size: 16px;
+}
+
+.translate-audio.disabled {
+  cursor: default;
+}
+
+.translate-audio.disabled:hover {
+  background-color: transparent;
+}
+
+.translate-audio__svg.disabled {
+  cursor: default;
 }

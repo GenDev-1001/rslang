@@ -19,6 +19,7 @@ export function Header({ isMain, handler }: IHeaderProps) {
   };
 
   const hendlerAuth = () => {
+    setIsBurger(false);
     if (user.token) {
       toast.success('User Logout Successfully');
       dispatch(logOut());
@@ -33,7 +34,7 @@ export function Header({ isMain, handler }: IHeaderProps) {
       <div className="header__container">
         <div className="header__inner">
           <h1 className="logo">
-            <Link to="/" className="logo-link">
+            <Link to="/" className="logo-link" onClick={() => setIsBurger(false)}>
               RSLang
             </Link>
           </h1>
@@ -44,27 +45,27 @@ export function Header({ isMain, handler }: IHeaderProps) {
           </div>
           <ul className={cn('menu-list', { active: isBurger })}>
             <li className="menu-list__item">
-              <Link to="/dictionary" className="menu-list__link">
+              <Link to="/dictionary" className="menu-list__link" onClick={() => setIsBurger(false)}>
                 Учебник
               </Link>
             </li>
             <li className="menu-list__item">
-              <Link to="/audio" className="menu-list__link">
+              <Link to="/audio" className="menu-list__link" onClick={() => setIsBurger(false)}>
                 Аудиовызов
               </Link>
             </li>
             <li className="menu-list__item">
-              <Link to="/sprint" className="menu-list__link">
+              <Link to="/sprint" className="menu-list__link" onClick={() => setIsBurger(false)}>
                 Спринт
               </Link>
             </li>
             <li className="menu-list__item">
-              <Link to="/statistics" className="menu-list__link">
+              <Link to="/statistics" className="menu-list__link" onClick={() => setIsBurger(false)}>
                 Статистика
               </Link>
             </li>
             <li className="menu-list__item">
-              <Link to="/about" className="menu-list__link">
+              <Link to="/about" className="menu-list__link" onClick={() => setIsBurger(false)}>
                 О нас
               </Link>
             </li>
