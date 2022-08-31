@@ -9,7 +9,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { IHeaderProps } from './Header.interface';
 import './Header.scss';
 
-export function Header({ isMain, handler }: IHeaderProps) {
+export function Header({ isMain, handler, handleGameOpenFromMenu }: IHeaderProps) {
   const [isBurger, setIsBurger] = useState(false);
   const dispatch = useAppDispatch();
   const { user } = useAuth();
@@ -27,6 +27,11 @@ export function Header({ isMain, handler }: IHeaderProps) {
     }
 
     handler();
+  };
+
+  const handlerLink = () => {
+    setIsBurger(false);
+    handleGameOpenFromMenu(true);
   };
 
   return (
@@ -50,12 +55,12 @@ export function Header({ isMain, handler }: IHeaderProps) {
               </Link>
             </li>
             <li className="menu-list__item">
-              <Link to="/audio" className="menu-list__link" onClick={() => setIsBurger(false)}>
+              <Link to="/audio" className="menu-list__link" onClick={handlerLink}>
                 Аудиовызов
               </Link>
             </li>
             <li className="menu-list__item">
-              <Link to="/sprint" className="menu-list__link" onClick={() => setIsBurger(false)}>
+              <Link to="/sprint" className="menu-list__link" onClick={handlerLink}>
                 Спринт
               </Link>
             </li>

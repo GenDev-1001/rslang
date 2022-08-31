@@ -16,7 +16,11 @@ export interface IStatistics {
   result: boolean;
 }
 
-const Sprint: FC = () => {
+export interface ISprint {
+  isGameOpenFromMenu: boolean;
+}
+
+const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
   const [group, setGroup] = useState<number>(0);
   const [page, setPage] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
