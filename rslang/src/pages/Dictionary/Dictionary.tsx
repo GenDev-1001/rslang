@@ -26,7 +26,7 @@ export function Dictionary() {
   const [isDictionary, setIsDictionary] = useState(false);
   const [isDifficulty, setIsDifficulty] = useState(false);
   const [isWorking, setIsWorking] = useState(false);
-  const [activeColor, setActiveColor] = useState(0);
+  const [activeColor, setActiveColor] = useState(localGroup ? +localGroup : 0);
   const [wordPlaying, setWordPlaying] = useState<string | null>(null);
 
   const { user } = useAuth();
@@ -102,32 +102,44 @@ export function Dictionary() {
         <h4 className="dictionary-lvl__title">Уровни сложности слов</h4>
         <div className="dictionary-lvls__wrapper">
           <li
-            className={cn('dictionary-lvls__wrapper-li', { active: currentGroup === 0 })}
+            className={cn('dictionary-lvls__wrapper-li', {
+              active: currentGroup === 0,
+            })}
             onClick={() => handleClickGroup(0)}>
             <LevelCard levelWord="Easy" range="1-600" levelIndex="A1" />
           </li>
           <li
-            className={cn('dictionary-lvls__wrapper-li', { active: currentGroup === 1 })}
+            className={cn('dictionary-lvls__wrapper-li', {
+              active: currentGroup === 1,
+            })}
             onClick={() => handleClickGroup(1)}>
             <LevelCard levelWord="Easy" range="601-1200" levelIndex="A1" />
           </li>
           <li
-            className={cn('dictionary-lvls__wrapper-li', { active: currentGroup === 2 })}
+            className={cn('dictionary-lvls__wrapper-li', {
+              active: currentGroup === 2,
+            })}
             onClick={() => handleClickGroup(2)}>
             <LevelCard levelWord="Medium" range="1201-1800" levelIndex="B1" />
           </li>
           <li
-            className={cn('dictionary-lvls__wrapper-li', { active: currentGroup === 3 })}
+            className={cn('dictionary-lvls__wrapper-li', {
+              active: currentGroup === 3,
+            })}
             onClick={() => handleClickGroup(3)}>
             <LevelCard levelWord="Medium" range="1801-2400" levelIndex="B2" />
           </li>
           <li
-            className={cn('dictionary-lvls__wrapper-li', { active: currentGroup === 4 })}
+            className={cn('dictionary-lvls__wrapper-li', {
+              active: currentGroup === 4,
+            })}
             onClick={() => handleClickGroup(4)}>
             <LevelCard levelWord="Hard" range="2401-3000" levelIndex="C1" />
           </li>
           <li
-            className={cn('dictionary-lvls__wrapper-li', { active: currentGroup === 5 })}
+            className={cn('dictionary-lvls__wrapper-li', {
+              active: currentGroup === 5,
+            })}
             onClick={() => handleClickGroup(5)}>
             <LevelCard levelWord="Hard" range="3001-3600" levelIndex="C2" />
           </li>
