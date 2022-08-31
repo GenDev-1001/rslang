@@ -23,18 +23,24 @@ const Statistics: FC<IStatistics> = ({ statistics, endGame, resetGame }) => {
         <h2 className="sprint-frame__header">Statistics</h2>
         <table className="sprint-table">
           <tbody>
-            {statistics.map(({ id, audio, word, wordTranslate, transcription, result }) => {
-              return (
-                <TableRow
-                  key={id}
-                  audio={audio}
-                  word={word}
-                  wordTranslate={wordTranslate}
-                  transcription={transcription}
-                  result={result}
-                />
-              );
-            })}
+            {statistics.length > 0 &&
+              statistics.map(({ id, audio, word, wordTranslate, transcription, result }) => {
+                return (
+                  <TableRow
+                    key={id}
+                    audio={audio}
+                    word={word}
+                    wordTranslate={wordTranslate}
+                    transcription={transcription}
+                    result={result}
+                  />
+                );
+              })}
+            {statistics.length === 0 && (
+              <h2 className="sprint-frame__error">
+                You could not manage to choose a single word, try again!
+              </h2>
+            )}
           </tbody>
         </table>
       </div>

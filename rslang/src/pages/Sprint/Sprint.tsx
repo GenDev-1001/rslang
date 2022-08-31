@@ -20,9 +20,12 @@ export interface ISprint {
   isGameOpenFromMenu: boolean;
 }
 
+const localGroup = localStorage.getItem('currentGroup') || 0;
+const localPage = localStorage.getItem('currentPage') || 0;
+
 const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
-  const [group, setGroup] = useState<number>(0);
-  const [page, setPage] = useState<number>(0);
+  const [group, setGroup] = useState<number>(!isGameOpenFromMenu ? +localGroup : 0);
+  const [page, setPage] = useState<number>(!isGameOpenFromMenu ? +localPage : 0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isStartGame, setIsStartGame] = useState<boolean>(true);
   const [isEndGame, setIsEndGame] = useState<boolean>(false);
