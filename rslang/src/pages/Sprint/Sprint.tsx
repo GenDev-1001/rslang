@@ -2,7 +2,6 @@ import { FC, useState, MouseEvent } from 'react';
 import { Loading, Greetings, Game, Statistics } from './components';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import { useAuth } from '../../hooks/useAuth';
-import { random } from '../../common/utils/random';
 import { coinToss } from '../../common/utils/coinToss';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import './Sprint.scss';
@@ -40,18 +39,17 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
 
   console.log('unauthorizedWords ===', unauthorizedWords);
 
-  const getArrayOfCoins = () => {
+  const getArrayOfCoins = (value: number) => {
     const arr = [];
 
-    for (let i = 0; i < 20; i += 1) {
+    for (let i = 0; i < value; i += 1) {
       arr.push(coinToss());
     }
 
-    console.log('arr ===', arr);
     return arr;
   };
 
-  const arrayOfCoins = getArrayOfCoins();
+  const arrayOfCoins = getArrayOfCoins(200);
 
   const handleStatistics = ({
     id,
