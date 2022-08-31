@@ -2,8 +2,19 @@ import { FC, useState, MouseEvent } from 'react';
 import { Loading, Greetings, Game, Statistics } from './components';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import { useAuth } from '../../hooks/useAuth';
+import { random } from '../../common/utils/random';
+import { coinToss } from '../../common/utils/coinToss';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import './Sprint.scss';
+
+export interface IStatistics {
+  id: string;
+  word: string;
+  audio: string;
+  transcription: string;
+  wordTranslate: string;
+  result: boolean;
+}
 
 const Sprint: FC = () => {
   const [group, setGroup] = useState<number>(0);
@@ -11,6 +22,7 @@ const Sprint: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isStartGame, setIsStartGame] = useState<boolean>(true);
   const [isEndGame, setIsEndGame] = useState<boolean>(false);
+  const [statistics, setStatistics] = useState<IStatistics[]>([]);
 
   const { user } = useAuth();
 
@@ -18,6 +30,32 @@ const Sprint: FC = () => {
     group,
     page,
   });
+
+  console.log('unauthorizedWords ===', unauthorizedWords);
+
+  const getArrayOfCoins = () => {
+    const arr = [];
+
+    for (let i = 0; i < 20; i += 1) {
+      arr.push(coinToss());
+    }
+
+    console.log('arr ===', arr);
+    return arr;
+  };
+
+  const arrayOfCoins = getArrayOfCoins();
+
+  const handleStatistics = ({
+    id,
+    audio,
+    word,
+    wordTranslate,
+    transcription,
+    result,
+  }: IStatistics) => {
+    setStatistics([...statistics, { id, audio, word, wordTranslate, transcription, result }]);
+  };
 
   const handleLoading = () => {
     setIsLoading(true);
@@ -53,12 +91,14 @@ const Sprint: FC = () => {
       {!isStartGame && !isLoading && !isEndGame && (
         <Game
           data={unauthorizedWords}
+          arrayOfCoins={arrayOfCoins}
           group={group}
           resetGame={resetGame}
           handleIsEndGame={handleIsEndGame}
+          handleStatistics={handleStatistics}
         />
       )}
-      {isEndGame && <Statistics endGame={endGame} resetGame={resetGame} />}
+      {isEndGame && <Statistics statistics={statistics} endGame={endGame} resetGame={resetGame} />}
     </div>
   );
 };

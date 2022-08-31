@@ -1,16 +1,34 @@
 import { FC, useState, useEffect, MouseEvent } from 'react';
 import { ButtonReset, ButtonSpeak, ButtonSelect, Multiplier, Circle } from '..';
 import { IWordsResponse } from '../../../../features/words/wordsSlice.interface';
+import { random } from '../../../../common/utils/random';
+import { IStatistics } from '../../Sprint';
 import './Game.scss';
 
 export interface IGame {
   data: IWordsResponse[] | undefined;
+  arrayOfCoins: boolean[];
   group: number;
   resetGame: () => void;
   handleIsEndGame: (value: boolean) => void;
+  handleStatistics: ({
+    id,
+    audio,
+    word,
+    wordTranslate,
+    transcription,
+    result,
+  }: IStatistics) => void;
 }
 
-const Game: FC<IGame> = ({ data, group, resetGame, handleIsEndGame }) => {
+const Game: FC<IGame> = ({
+  data,
+  arrayOfCoins,
+  group,
+  resetGame,
+  handleIsEndGame,
+  handleStatistics,
+}) => {
   const [timer, setTimer] = useState<number>(20);
   const [score, setScore] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
@@ -28,10 +46,8 @@ const Game: FC<IGame> = ({ data, group, resetGame, handleIsEndGame }) => {
   };
 
   const getRandomWordTranslation = () => {
-    const min = 0;
-    const max = 20;
-    const random = Math.floor(Math.random() * (max - min)) + min;
-    const randomWordTranlation = data ? data[random].wordTranslate : '';
+    const randomNumber = random(0, 20);
+    const randomWordTranlation = data ? data[randomNumber].wordTranslate : '';
     setRandomWordTranslation(randomWordTranlation);
   };
 
@@ -44,10 +60,18 @@ const Game: FC<IGame> = ({ data, group, resetGame, handleIsEndGame }) => {
   };
 
   const handleAnswer = (textContent: string) => {
+    const id = data ? data[wordIndex].id : '';
+    const audio = data ? data[wordIndex].audio : '';
+    const word = data ? data[wordIndex].word : '';
+    const wordTranslate = data ? data[wordIndex].wordTranslate : '';
+    const transcription = data ? data[wordIndex].transcription : '';
+
     if (
-      (textContent === 'true' && englishWordTranslation === randomWordTranslation) ||
-      (textContent === 'false' && englishWordTranslation !== randomWordTranslation)
+      ((textContent === 'true' || textContent === 'ArrowRight') && arrayOfCoins[wordIndex]) ||
+      ((textContent === 'false' || textContent === 'ArrowLeft') && !arrayOfCoins[wordIndex])
     ) {
+      const result = true;
+
       if (streak === 3) {
         if (multiplier !== 4) {
           setMultiplier((prevState) => prevState + 1);
@@ -60,7 +84,18 @@ const Game: FC<IGame> = ({ data, group, resetGame, handleIsEndGame }) => {
       }
 
       setScore((prevState) => prevState + 10 * multiplier);
+      handleStatistics({
+        id,
+        audio,
+        word,
+        wordTranslate,
+        transcription,
+        result,
+      });
     } else {
+      const result = false;
+      handleStatistics({ id, audio, word, wordTranslate, transcription, result });
+
       setStreak(0);
       setMultiplier(1);
     }
@@ -76,15 +111,10 @@ const Game: FC<IGame> = ({ data, group, resetGame, handleIsEndGame }) => {
   const handleKeySelect = (event: globalThis.KeyboardEvent) => {
     const { code } = event;
 
-    switch (code) {
-      case 'ArrowRight':
-        handleAnswer('ArrowRight');
-        break;
-      case 'ArrowLeft':
-        handleAnswer('ArrowLeft');
-        break;
-      default:
-        break;
+    if (code === 'ArrowRight') {
+      handleAnswer('ArrowRight');
+    } else if (code === 'ArrowLeft') {
+      handleAnswer('ArrowLeft');
     }
   };
 
@@ -139,8 +169,10 @@ const Game: FC<IGame> = ({ data, group, resetGame, handleIsEndGame }) => {
           <Circle title="Score:" value={score} />
         </div>
         <h2 className="sprint-frame__header">{englishWord}</h2>
-        <h2 className="sprint-frame__header">{randomWordTranslation}</h2>
-        <ButtonSpeak data={data ? data[wordIndex] : undefined} />
+        <h2 className="sprint-frame__header">
+          {arrayOfCoins[wordIndex] ? englishWordTranslation : randomWordTranslation}
+        </h2>
+        <ButtonSpeak audio={data ? data[wordIndex].audio : ''} />
         <div className="button-select__wrapper">
           <ButtonSelect description="false" bgColor="bg_red" onClick={handleButtonSelect} />
           <ButtonSelect description="true" bgColor="bg_green" onClick={handleButtonSelect} />
