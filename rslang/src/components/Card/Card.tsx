@@ -123,7 +123,9 @@ export function Card({
               </div>
               <div className="games-block">
                 <span className="games-block__name">Спринт</span>
-                <span className="games-block__stat">0</span>
+                <span className="games-block__stat">
+                  {word.userWord?.optional.correctCount || 0}
+                </span>
               </div>
             </div>
           </div>
