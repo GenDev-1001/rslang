@@ -1,12 +1,19 @@
 import { FC, useState, useEffect, MouseEvent } from 'react';
 import { ButtonReset, ButtonSpeak, ButtonSelect, Multiplier, Circle } from '..';
 import { IWordsResponse } from '../../../../features/words/wordsSlice.interface';
+import { IActivePaginatedResult } from '../../../../features/aggregaredWords/aggregaredWordsApiSlice.inteface';
 import { random } from '../../../../common/utils/random';
+import {
+  useUpdateUserWordMutation,
+  useCreateUserWordMutation,
+} from '../../../../features/userWords/userWordsApiSlice';
+import { UserWordStatus } from '../../../../common/interfaces';
+import { useAuth } from '../../../../hooks/useAuth';
 import { IStatistics } from '../../Sprint';
 import './Game.scss';
 
 export interface IGame {
-  data: IWordsResponse[] | undefined;
+  data: IWordsResponse[] | IActivePaginatedResult[] | undefined;
   arrayOfCoins: boolean[];
   group: number;
   resetGame: () => void;
@@ -29,7 +36,7 @@ const Game: FC<IGame> = ({
   handleIsEndGame,
   handleStatistics,
 }) => {
-  const [timer, setTimer] = useState<number>(60);
+  const [timer, setTimer] = useState<number>(20);
   const [score, setScore] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
   const [multiplier, setMultiplier] = useState<number>(1);
@@ -37,6 +44,11 @@ const Game: FC<IGame> = ({
   const [englishWord, setEnglishWord] = useState<string>('');
   const [englishWordTranslation, setEnglishWordTranslation] = useState<string>('');
   const [randomWordTranslation, setRandomWordTranslation] = useState<string>('');
+
+  const { user } = useAuth();
+
+  const [updateWord] = useUpdateUserWordMutation();
+  const [createUserWord] = useCreateUserWordMutation();
 
   const getEnglishWord = () => {
     const word = data ? data[wordIndex].word : '';
@@ -56,6 +68,29 @@ const Game: FC<IGame> = ({
       setWordIndex(wordIndex + 1);
     } else {
       handleIsEndGame(true);
+    }
+  };
+
+  const handleAccuracy = (value: boolean) => {
+    const word = data![wordIndex];
+    const difficulty = word?.userWord ? word?.userWord.difficulty : UserWordStatus.EASY;
+    let correctCountValue = word?.userWord ? word?.userWord.optional.correctCount : 0;
+    let errorCountValue = word?.userWord ? word?.userWord.optional.errorCount : 0;
+    const optional = {
+      correctCount: value ? (correctCountValue += 1) : correctCountValue,
+      errorCount: !value ? (errorCountValue += 1) : errorCountValue,
+    };
+
+    const wordRequest = {
+      word: { difficulty, optional },
+      wordId: word.id,
+      userId: user.userId || '',
+    };
+
+    if (word?.userWord) {
+      updateWord(wordRequest);
+    } else {
+      createUserWord(wordRequest);
     }
   };
 
@@ -84,6 +119,11 @@ const Game: FC<IGame> = ({
       }
 
       setScore((prevState) => prevState + 10 * multiplier);
+
+      if (user.token) {
+        handleAccuracy(true);
+      }
+
       handleStatistics({
         id,
         audio,
@@ -94,6 +134,11 @@ const Game: FC<IGame> = ({
       });
     } else {
       const result = false;
+
+      if (user.token) {
+        handleAccuracy(false);
+      }
+
       handleStatistics({ id, audio, word, wordTranslate, transcription, result });
 
       setStreak(0);

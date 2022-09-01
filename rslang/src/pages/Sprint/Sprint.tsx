@@ -1,6 +1,7 @@
 import { FC, useState, MouseEvent } from 'react';
 import { Loading, Greetings, Game, Statistics } from './components';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
+import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
 import { useAuth } from '../../hooks/useAuth';
 import { coinToss } from '../../common/utils/coinToss';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
@@ -39,6 +40,14 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
 
   console.log('unauthorizedWords ===', unauthorizedWords);
 
+  const { data: authorizedWords } = useActiveWordsByUserQuery({
+    userId: user.userId || '',
+    group,
+    page,
+  });
+
+  console.log('authorizedWords ===', authorizedWords);
+
   const getArrayOfCoins = (value: number) => {
     const arr = [];
 
@@ -49,7 +58,7 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
     return arr;
   };
 
-  const arrayOfCoins = getArrayOfCoins(200);
+  const arrayOfCoins = getArrayOfCoins(20);
 
   const handleStatistics = ({
     id,
@@ -95,7 +104,7 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
       {isLoading && <Loading />}
       {!isStartGame && !isLoading && !isEndGame && (
         <Game
-          data={unauthorizedWords}
+          data={user.token ? authorizedWords?.paginatedResults : unauthorizedWords}
           arrayOfCoins={arrayOfCoins}
           group={group}
           resetGame={resetGame}
