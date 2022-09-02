@@ -73,12 +73,16 @@ const Game: FC<IGame> = ({
 
   const handleAccuracy = (value: boolean) => {
     const word = data![wordIndex];
-    const difficulty = word?.userWord ? word?.userWord.difficulty : UserWordStatus.EASY;
-    let correctCountValue = word?.userWord ? word?.userWord.optional.correctCount : 0;
-    let errorCountValue = word?.userWord ? word?.userWord.optional.errorCount : 0;
+    const difficulty = word!.userWord!.difficulty as UserWordStatus;
+    let correctCountSprintValue = word?.userWord ? word?.userWord.optional.correctCountSprint : 0;
+    let errorCountSprintValue = word?.userWord ? word?.userWord.optional.errorCountSprint : 0;
+    const correctCountAudioValue = word?.userWord ? word?.userWord.optional.correctCountAudio : 0;
+    const errorCountAudioValue = word?.userWord ? word?.userWord.optional.errorCountAudio : 0;
     const optional = {
-      correctCount: value ? (correctCountValue += 1) : correctCountValue,
-      errorCount: !value ? (errorCountValue += 1) : errorCountValue,
+      correctCountSprint: value ? (correctCountSprintValue += 1) : correctCountSprintValue,
+      errorCountSprint: !value ? (errorCountSprintValue += 1) : errorCountSprintValue,
+      correctCountAudio: correctCountAudioValue,
+      errorCountAudio: errorCountAudioValue,
     };
 
     const wordRequest = {

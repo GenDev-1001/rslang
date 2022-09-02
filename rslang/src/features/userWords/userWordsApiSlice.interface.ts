@@ -1,8 +1,10 @@
 import { UserWordStatus } from '../../common/interfaces';
 
 export interface IUserWordOptional {
-  correctCount: number;
-  errorCount: number;
+  correctCountSprint: number;
+  errorCountSprint: number;
+  correctCountAudio: number;
+  errorCountAudio: number;
 }
 
 export interface IUserWordData {
