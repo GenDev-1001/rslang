@@ -1,8 +1,8 @@
 import { FC, useState, MouseEvent } from 'react';
-import { Loading, Greetings, Game, Statistics } from './components';
+import { Loading, Greetings, Game, GameAuth, Statistics } from './components';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
+import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
 import { useAuth } from '../../hooks/useAuth';
-import { random } from '../../common/utils/random';
 import { coinToss } from '../../common/utils/coinToss';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import './Sprint.scss';
@@ -16,9 +16,16 @@ export interface IStatistics {
   result: boolean;
 }
 
-const Sprint: FC = () => {
-  const [group, setGroup] = useState<number>(0);
-  const [page, setPage] = useState<number>(0);
+export interface ISprint {
+  isGameOpenFromMenu: boolean;
+}
+
+const localGroup = localStorage.getItem('currentGroup') || 0;
+const localPage = localStorage.getItem('currentPage') || 0;
+
+const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
+  const [group, setGroup] = useState<number>(!isGameOpenFromMenu ? +localGroup : 0);
+  const [page, setPage] = useState<number>(!isGameOpenFromMenu ? +localPage : 0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isStartGame, setIsStartGame] = useState<boolean>(true);
   const [isEndGame, setIsEndGame] = useState<boolean>(false);
@@ -33,18 +40,25 @@ const Sprint: FC = () => {
 
   console.log('unauthorizedWords ===', unauthorizedWords);
 
-  const getArrayOfCoins = () => {
+  const { data: authorizedWords } = useActiveWordsByUserQuery({
+    userId: user.userId || '',
+    group,
+    page,
+  });
+
+  console.log('authorizedWords ===', authorizedWords?.paginatedResults);
+
+  const getArrayOfCoins = (value: number) => {
     const arr = [];
 
-    for (let i = 0; i < 20; i += 1) {
+    for (let i = 0; i < value; i += 1) {
       arr.push(coinToss());
     }
 
-    console.log('arr ===', arr);
     return arr;
   };
 
-  const arrayOfCoins = getArrayOfCoins();
+  const arrayOfCoins = getArrayOfCoins(20);
 
   const handleStatistics = ({
     id,
@@ -88,9 +102,19 @@ const Sprint: FC = () => {
       <img src={sprintBg} alt="Sprint Background" className="sprint-wrapper__bg" />
       {isStartGame && <Greetings onClick={handleGroup} />}
       {isLoading && <Loading />}
-      {!isStartGame && !isLoading && !isEndGame && (
+      {!isStartGame && !isLoading && !isEndGame && !user.token && (
         <Game
           data={unauthorizedWords}
+          arrayOfCoins={arrayOfCoins}
+          group={group}
+          resetGame={resetGame}
+          handleIsEndGame={handleIsEndGame}
+          handleStatistics={handleStatistics}
+        />
+      )}
+      {!isStartGame && !isLoading && !isEndGame && user.token && (
+        <GameAuth
+          data={authorizedWords?.paginatedResults}
           arrayOfCoins={arrayOfCoins}
           group={group}
           resetGame={resetGame}
