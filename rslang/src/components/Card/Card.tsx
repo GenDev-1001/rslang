@@ -21,7 +21,9 @@ export function Card({
   const { user } = useAuth();
 
   const handlerClick = (difficulty: UserWordStatus) => {
-    const optional = word?.userWord ? word.userWord.optional : { correctCount: 0, errorCount: 0 };
+    const optional = word?.userWord
+      ? word.userWord.optional
+      : { correctCountSprint: 0, errorCountSprint: 0, correctCountAudio: 0, errorCountAudio: 0 };
     const wordRequest = {
       word: { difficulty, optional },
       wordId: word.id,
@@ -119,11 +121,15 @@ export function Card({
             <div className="card-details__result-games games">
               <div className="games-block">
                 <span className="games-block__name">Аудиовызов</span>
-                <span className="games-block__stat">0</span>
+                <span className="games-block__stat">
+                  {word.userWord?.optional.correctCountAudio || 0}
+                </span>
               </div>
               <div className="games-block">
                 <span className="games-block__name">Спринт</span>
-                <span className="games-block__stat">0</span>
+                <span className="games-block__stat">
+                  {word.userWord?.optional.correctCountSprint || 0}
+                </span>
               </div>
             </div>
           </div>

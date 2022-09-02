@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserWordStatus } from '../../common/interfaces';
 import { AuthCardList } from '../../components/AuthCardList/AuthCardList';
@@ -14,13 +14,16 @@ import { WorkingCardList } from '../../components/WorkingCardList/WorkingCardLis
 import { useDictionaryWordsQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import { useAuth } from '../../hooks/useAuth';
-
 import './Dictionary.scss';
+
+export interface IDictionary {
+  handleGameOpenFromMenu: (value: boolean) => void;
+}
 
 const localPage = localStorage.getItem('currentPage');
 const localGroup = localStorage.getItem('currentGroup');
 
-export function Dictionary() {
+const Dictionary: FC<IDictionary> = ({ handleGameOpenFromMenu }) => {
   const [currentPage, setCurrentPage] = useState(localPage ? +localPage : 1);
   const [currentGroup, setCurrentGroup] = useState(localGroup ? +localGroup : 0);
   const [isDictionary, setIsDictionary] = useState(false);
@@ -169,12 +172,18 @@ export function Dictionary() {
         <h4 className="dictionary-lvl__title">Игры</h4>
         <ul className="dictionary-games">
           <li className="dictionary-games__item">
-            <Link to="/audio" className="dictionary-games__link">
+            <Link
+              to="/audio"
+              className="dictionary-games__link"
+              onClick={() => handleGameOpenFromMenu(false)}>
               <LevelCard levelWord="Аудиовызов" range="Тренировка" levelIndex="play" />
             </Link>
           </li>
           <li className="dictionary-games__item">
-            <Link to="/sprint" className="dictionary-games__link">
+            <Link
+              to="/sprint"
+              className="dictionary-games__link"
+              onClick={() => handleGameOpenFromMenu(false)}>
               <LevelCard levelWord="Спринт" range="Тренировка" levelIndex="play" />
             </Link>
           </li>
@@ -262,4 +271,6 @@ export function Dictionary() {
       <Footer />
     </>
   );
-}
+};
+
+export { Dictionary };
