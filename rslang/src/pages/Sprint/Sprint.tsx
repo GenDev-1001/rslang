@@ -1,5 +1,5 @@
 import { FC, useState, MouseEvent } from 'react';
-import { Loading, Greetings, Game, Statistics } from './components';
+import { Loading, Greetings, Game, GameAuth, Statistics } from './components';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
 import { useAuth } from '../../hooks/useAuth';
@@ -46,7 +46,7 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
     page,
   });
 
-  console.log('authorizedWords ===', authorizedWords);
+  console.log('authorizedWords ===', authorizedWords?.paginatedResults);
 
   const getArrayOfCoins = (value: number) => {
     const arr = [];
@@ -102,9 +102,19 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
       <img src={sprintBg} alt="Sprint Background" className="sprint-wrapper__bg" />
       {isStartGame && <Greetings onClick={handleGroup} />}
       {isLoading && <Loading />}
-      {!isStartGame && !isLoading && !isEndGame && (
+      {!isStartGame && !isLoading && !isEndGame && !user.token && (
         <Game
-          data={user.token ? authorizedWords?.paginatedResults : unauthorizedWords}
+          data={unauthorizedWords}
+          arrayOfCoins={arrayOfCoins}
+          group={group}
+          resetGame={resetGame}
+          handleIsEndGame={handleIsEndGame}
+          handleStatistics={handleStatistics}
+        />
+      )}
+      {!isStartGame && !isLoading && !isEndGame && user.token && (
+        <GameAuth
+          data={authorizedWords?.paginatedResults}
           arrayOfCoins={arrayOfCoins}
           group={group}
           resetGame={resetGame}

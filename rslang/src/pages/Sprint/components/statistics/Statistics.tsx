@@ -37,9 +37,9 @@ const Statistics: FC<IStatistics> = ({ statistics, endGame, resetGame }) => {
                 );
               })}
             {statistics.length === 0 && (
-              <h2 className="sprint-frame__error">
+              <p className="sprint-frame__error">
                 You could not manage to choose a single word, try again!
-              </h2>
+              </p>
             )}
           </tbody>
         </table>
