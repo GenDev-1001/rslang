@@ -13,6 +13,7 @@ import { IStatistics } from '../../Sprint';
 export interface IGameAuth {
   data: IActivePaginatedResult[] | undefined;
   arrayOfCoins: boolean[];
+  page: number;
   group: number;
   resetGame: () => void;
   handleIsEndGame: (value: boolean) => void;
@@ -24,15 +25,18 @@ export interface IGameAuth {
     transcription,
     result,
   }: IStatistics) => void;
+  handlePage: () => void;
 }
 
 const GameAuth: FC<IGameAuth> = ({
   data,
   arrayOfCoins,
+  page,
   group,
   resetGame,
   handleIsEndGame,
   handleStatistics,
+  handlePage,
 }) => {
   const [timer, setTimer] = useState<number>(20);
   const [score, setScore] = useState<number>(0);
@@ -65,7 +69,12 @@ const GameAuth: FC<IGameAuth> = ({
     if (wordIndex < 19) {
       setWordIndex(wordIndex + 1);
     } else {
-      handleIsEndGame(true);
+      setWordIndex(0);
+      handlePage();
+
+      if (!page) {
+        handleIsEndGame(true);
+      }
     }
   };
 
