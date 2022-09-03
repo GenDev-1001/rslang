@@ -42,15 +42,15 @@ const Game: FC<IGame> = ({
   const [streak, setStreak] = useState<number>(0);
   const [multiplier, setMultiplier] = useState<number>(1);
   const [wordIndex, setWordIndex] = useState<number>(0);
-  const [rightWord, setRightWord] = useState<string>('');
-  const [rightWordTranslation, setRightWordTranslation] = useState<string>('');
+  const [englishWord, setEnglishWord] = useState<string>('');
+  const [englishWordTranslation, setEnglishWordTranslation] = useState<string>('');
   const [randomWordTranslation, setRandomWordTranslation] = useState<string>('');
 
-  const getrightWord = () => {
+  const getEnglishWord = () => {
     const word = data ? data[wordIndex].word : '';
     const wordTranslate = data ? data[wordIndex].wordTranslate : '';
-    setRightWord(word);
-    setRightWordTranslation(wordTranslate);
+    setEnglishWord(word);
+    setEnglishWordTranslation(wordTranslate);
   };
 
   const getRandomWordTranslation = () => {
@@ -133,7 +133,7 @@ const Game: FC<IGame> = ({
   };
 
   useEffect(() => {
-    getrightWord();
+    getEnglishWord();
     getRandomWordTranslation();
     handleTimeStartGame();
 
@@ -144,7 +144,7 @@ const Game: FC<IGame> = ({
   }, []);
 
   useEffect(() => {
-    getrightWord();
+    getEnglishWord();
     getRandomWordTranslation();
   }, [wordIndex]);
 
