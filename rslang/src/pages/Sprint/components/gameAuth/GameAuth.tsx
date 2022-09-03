@@ -69,13 +69,14 @@ const GameAuth: FC<IGameAuth> = ({
     }
   };
 
-  const handleAccuracy = (value: boolean) => {
+  const handleAccuracy = (value: boolean, difficulty: UserWordStatus) => {
     const word = data![wordIndex];
-    const difficulty = word?.userWord ? word?.userWord.difficulty : UserWordStatus.HARD;
+
     let correctCountSprintValue = word?.userWord ? word?.userWord.optional.correctCountSprint : 0;
     let errorCountSprintValue = word?.userWord ? word?.userWord.optional.errorCountSprint : 0;
     const correctCountAudioValue = word?.userWord ? word?.userWord.optional.correctCountAudio : 0;
     const errorCountAudioValue = word?.userWord ? word?.userWord.optional.errorCountAudio : 0;
+
     const optional = {
       correctCountSprint: value ? (correctCountSprintValue += 1) : correctCountSprintValue,
       errorCountSprint: !value ? (errorCountSprintValue += 1) : errorCountSprintValue,
@@ -123,7 +124,7 @@ const GameAuth: FC<IGameAuth> = ({
       setScore((prevState) => prevState + 10 * multiplier);
 
       if (user.token) {
-        handleAccuracy(true);
+        handleAccuracy(true, UserWordStatus.EASY);
       }
 
       handleStatistics({
@@ -138,7 +139,7 @@ const GameAuth: FC<IGameAuth> = ({
       const result = false;
 
       if (user.token) {
-        handleAccuracy(false);
+        handleAccuracy(false, UserWordStatus.HARD);
       }
 
       handleStatistics({ id, audio, word, wordTranslate, transcription, result });
