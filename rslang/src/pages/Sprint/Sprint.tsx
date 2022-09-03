@@ -34,8 +34,6 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
   const [timeStartGame, setTimeStartGame] = useState<string>('');
   const [timeEndGame, setTimeEndGame] = useState<string>('');
 
-  // console.log('page', page);
-
   const { user } = useAuth();
 
   const { data: unauthorizedWords } = useGetWordsQuery({
@@ -43,15 +41,11 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
     page,
   });
 
-  // console.log('unauthorizedWords ===', unauthorizedWords);
-
   const { data: authorizedWords } = useActiveWordsByUserQuery({
     userId: user.userId || '',
     group,
     page,
   });
-
-  // console.log('authorizedWords ===', authorizedWords?.paginatedResults);
 
   const getArrayOfCoins = (value: number) => {
     const arr = [];

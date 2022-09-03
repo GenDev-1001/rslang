@@ -44,8 +44,6 @@ const Dictionary: FC<IDictionary> = ({ handleGameOpenFromMenu }) => {
     page: currentPage - 1,
   });
 
-  console.log('activeWords', activeWords);
-
   const { data: difficultyWords } = useDictionaryWordsQuery({
     userId: user.userId || '',
     group: currentGroup,
@@ -53,16 +51,12 @@ const Dictionary: FC<IDictionary> = ({ handleGameOpenFromMenu }) => {
     difficulty: UserWordStatus.HARD,
   });
 
-  console.log('difficultyWords', difficultyWords);
-
   const { data: workingWords } = useDictionaryWordsQuery({
     userId: user.userId || '',
     group: currentGroup,
     page: currentPage - 1,
     difficulty: UserWordStatus.EASY,
   });
-
-  console.log('workingWords', workingWords);
 
   const handlerClickDictionary = (prev: boolean) => {
     setIsDictionary(!prev);
