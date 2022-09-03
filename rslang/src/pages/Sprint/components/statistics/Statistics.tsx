@@ -37,9 +37,13 @@ const Statistics: FC<IStatistics> = ({ statistics, endGame, resetGame }) => {
                 );
               })}
             {statistics.length === 0 && (
-              <p className="sprint-frame__error">
-                You could not manage to choose a single word, try again!
-              </p>
+              <tr>
+                <td>
+                  <p className="sprint-frame__error">
+                    You could not manage to choose a single word, try again!
+                  </p>
+                </td>
+              </tr>
             )}
           </tbody>
         </table>

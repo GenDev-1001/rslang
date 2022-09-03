@@ -2,6 +2,8 @@ import { FC, useState, MouseEvent } from 'react';
 import { Loading, Greetings, Game, GameAuth, Statistics } from './components';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
+// import { useDictionaryWordsQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
+// import { UserWordStatus } from '../../common/interfaces';
 import { useAuth } from '../../hooks/useAuth';
 import { coinToss } from '../../common/utils/coinToss';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
