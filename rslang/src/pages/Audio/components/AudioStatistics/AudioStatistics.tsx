@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { ButtonReset } from '../buttons';
 import { TableRow } from '../tableRow/TableRow';
 

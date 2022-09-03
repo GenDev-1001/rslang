@@ -28,8 +28,8 @@
   align-items: center;
   justify-content: space-between;
   width: 80vw;
-  max-width: $base * 240;
-  min-height: 70vh;
+  max-width: $base * 245;
+  min-height: 75vh;
   margin: auto;
   padding: $base * 5;
   background-color: $color-white;
@@ -88,10 +88,12 @@
 }
 
 .audio-btn-select__wrapper {
+  min-height: 10vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+
   gap: $base * 4;
 }
 
@@ -107,4 +109,44 @@
   width: $base * 25;
   height: 100%;
   background-color: $color-white-02;
+}
+
+.select-wrapper {
+  height: 17vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg_white {
+  background-color: $color-white-09;
+  cursor: default;
+  &:hover {
+    transform: unset;
+  }
+  &:active {
+    transform: unset;
+  }
+}
+.bg_grey {
+  background-color: rgb(222, 219, 219);
+  cursor: default;
+  &:hover {
+    transform: unset;
+  }
+  &:active {
+    transform: unset;
+  }
+}
+
+.answer_wrong {
+  background-color: rgb(222, 219, 219);
+  text-decoration: line-through;
+  cursor: default;
+  &:hover {
+    transform: unset;
+  }
+  &:active {
+    transform: unset;
+  }
 }

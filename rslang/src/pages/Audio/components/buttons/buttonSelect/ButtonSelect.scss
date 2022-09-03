@@ -1,7 +1,8 @@
 @import '../../../../../sass/Constants.scss';
 
 .audio-btn-select {
-  width: $base * 40;
+  padding: 0px 10px;
+  min-width: $base * 40;
   height: $base * 15;
   font-size: $base * 5;
   font-weight: $fw-semi-bold;

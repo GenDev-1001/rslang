@@ -16,15 +16,15 @@ const Game: FC<IGame> = ({ data, group, resetGame, handleIsEndGame }) => {
   const [streak, setStreak] = useState<number>(0);
   const [multiplier, setMultiplier] = useState<number>(1);
   const [wordIndex, setWordIndex] = useState<number>(0);
-  const [englishWord, setEnglishWord] = useState<string>('');
-  const [englishWordTranslation, setEnglishWordTranslation] = useState<string>('');
+  const [rightWord, setRightWord] = useState<string>('');
+  const [rightWordTranslation, setRightWordTranslation] = useState<string>('');
   const [randomWordTranslation, setRandomWordTranslation] = useState<string>('');
 
-  const getEnglishWord = () => {
+  const getrightWord = () => {
     const word = data ? data[wordIndex].word : '';
     const wordTranslate = data ? data[wordIndex].wordTranslate : '';
-    setEnglishWord(word);
-    setEnglishWordTranslation(wordTranslate);
+    setRightWord(word);
+    setRightWordTranslation(wordTranslate);
   };
 
   const getRandomWordTranslation = () => {
@@ -45,8 +45,8 @@ const Game: FC<IGame> = ({ data, group, resetGame, handleIsEndGame }) => {
 
   const handleAnswer = (textContent: string) => {
     if (
-      (textContent === 'true' && englishWordTranslation === randomWordTranslation) ||
-      (textContent === 'false' && englishWordTranslation !== randomWordTranslation)
+      (textContent === 'true' && rightWordTranslation === randomWordTranslation) ||
+      (textContent === 'false' && rightWordTranslation !== randomWordTranslation)
     ) {
       if (streak === 3) {
         if (multiplier !== 4) {
@@ -89,7 +89,7 @@ const Game: FC<IGame> = ({ data, group, resetGame, handleIsEndGame }) => {
   };
 
   useEffect(() => {
-    getEnglishWord();
+    getrightWord();
     getRandomWordTranslation();
 
     document.addEventListener('keydown', handleKeySelect);
@@ -99,7 +99,7 @@ const Game: FC<IGame> = ({ data, group, resetGame, handleIsEndGame }) => {
   }, []);
 
   useEffect(() => {
-    getEnglishWord();
+    getrightWord();
     getRandomWordTranslation();
   }, [wordIndex]);
 
@@ -138,7 +138,7 @@ const Game: FC<IGame> = ({ data, group, resetGame, handleIsEndGame }) => {
           </div>
           <Circle title="Score:" value={score} />
         </div>
-        <h2 className="sprint-frame__header">{englishWord}</h2>
+        <h2 className="sprint-frame__header">{rightWord}</h2>
         <h2 className="sprint-frame__header">{randomWordTranslation}</h2>
         <ButtonSpeak data={data ? data[wordIndex] : undefined} />
         <div className="button-select__wrapper">

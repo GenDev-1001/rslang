@@ -20,7 +20,7 @@ export const Audio: FC = () => {
 
   const handleLoading = () => {
     setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 2000);
+    setTimeout(() => setIsLoading(false), 2500);
   };
 
   const handleGroup = (event: MouseEvent<HTMLButtonElement>) => {
@@ -42,6 +42,9 @@ export const Audio: FC = () => {
     endGame();
     setGroup('');
   };
+  // useEffect(() => {
+  //   console.log('data ===', data);
+  // }, []);
 
   return (
     <div className="audio-wrapper">
