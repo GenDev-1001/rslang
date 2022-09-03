@@ -6,6 +6,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { coinToss } from '../../common/utils/coinToss';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import './Sprint.scss';
+import { random } from '../../common/utils/random';
 
 export interface IStatistics {
   id: string;
@@ -25,11 +26,13 @@ const localPage = localStorage.getItem('currentPage') || 0;
 
 const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
   const [group, setGroup] = useState<number>(!isGameOpenFromMenu ? +localGroup : 0);
-  const [page, setPage] = useState<number>(!isGameOpenFromMenu ? +localPage : 0);
+  const [page, setPage] = useState<number>(!isGameOpenFromMenu ? +localPage : random(0, 29));
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isStartGame, setIsStartGame] = useState<boolean>(true);
   const [isEndGame, setIsEndGame] = useState<boolean>(false);
   const [statistics, setStatistics] = useState<IStatistics[]>([]);
+  const [timeStartGame, setTimeStartGame] = useState<string>('');
+  const [timeEndGame, setTimeEndGame] = useState<string>('');
 
   const { user } = useAuth();
 
@@ -38,15 +41,11 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
     page,
   });
 
-  console.log('unauthorizedWords ===', unauthorizedWords);
-
   const { data: authorizedWords } = useActiveWordsByUserQuery({
     userId: user.userId || '',
     group,
     page,
   });
-
-  console.log('authorizedWords ===', authorizedWords?.paginatedResults);
 
   const getArrayOfCoins = (value: number) => {
     const arr = [];
@@ -97,6 +96,20 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
     setIsStartGame(true);
   };
 
+  const handlePage = () => {
+    if (page > 0) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleTimeStartGame = () => {
+    setTimeStartGame(new Date().toISOString());
+  };
+
+  const handleTimeEndGame = () => {
+    setTimeEndGame(new Date().toISOString());
+  };
+
   return (
     <div className="sprint-wrapper">
       <img src={sprintBg} alt="Sprint Background" className="sprint-wrapper__bg" />
@@ -106,20 +119,28 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
         <Game
           data={unauthorizedWords}
           arrayOfCoins={arrayOfCoins}
+          page={page}
           group={group}
           resetGame={resetGame}
           handleIsEndGame={handleIsEndGame}
           handleStatistics={handleStatistics}
+          handlePage={handlePage}
+          handleTimeStartGame={handleTimeStartGame}
+          handleTimeEndGame={handleTimeEndGame}
         />
       )}
       {!isStartGame && !isLoading && !isEndGame && user.token && (
         <GameAuth
           data={authorizedWords?.paginatedResults}
           arrayOfCoins={arrayOfCoins}
+          page={page}
           group={group}
           resetGame={resetGame}
           handleIsEndGame={handleIsEndGame}
           handleStatistics={handleStatistics}
+          handlePage={handlePage}
+          handleTimeStartGame={handleTimeStartGame}
+          handleTimeEndGame={handleTimeEndGame}
         />
       )}
       {isEndGame && <Statistics statistics={statistics} endGame={endGame} resetGame={resetGame} />}

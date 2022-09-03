@@ -8,6 +8,7 @@ import './Game.scss';
 export interface IGame {
   data: IWordsResponse[] | undefined;
   arrayOfCoins: boolean[];
+  page: number;
   group: number;
   resetGame: () => void;
   handleIsEndGame: (value: boolean) => void;
@@ -19,15 +20,22 @@ export interface IGame {
     transcription,
     result,
   }: IStatistics) => void;
+  handlePage: () => void;
+  handleTimeStartGame: () => void;
+  handleTimeEndGame: () => void;
 }
 
 const Game: FC<IGame> = ({
   data,
   arrayOfCoins,
+  page,
   group,
   resetGame,
   handleIsEndGame,
   handleStatistics,
+  handlePage,
+  handleTimeStartGame,
+  handleTimeEndGame,
 }) => {
   const [timer, setTimer] = useState<number>(20);
   const [score, setScore] = useState<number>(0);
@@ -55,7 +63,13 @@ const Game: FC<IGame> = ({
     if (wordIndex < 19) {
       setWordIndex(wordIndex + 1);
     } else {
-      handleIsEndGame(true);
+      setWordIndex(0);
+      handlePage();
+
+      if (!page) {
+        handleIsEndGame(true);
+        handleTimeEndGame();
+      }
     }
   };
 
@@ -121,6 +135,7 @@ const Game: FC<IGame> = ({
   useEffect(() => {
     getEnglishWord();
     getRandomWordTranslation();
+    handleTimeStartGame();
 
     document.addEventListener('keydown', handleKeySelect);
     return () => {
@@ -143,6 +158,7 @@ const Game: FC<IGame> = ({
 
       setTimeout(() => {
         handleIsEndGame(true);
+        handleTimeEndGame();
       }, 1000);
     }
   }, [timer]);

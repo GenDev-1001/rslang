@@ -13,6 +13,7 @@ import { IStatistics } from '../../Sprint';
 export interface IGameAuth {
   data: IActivePaginatedResult[] | undefined;
   arrayOfCoins: boolean[];
+  page: number;
   group: number;
   resetGame: () => void;
   handleIsEndGame: (value: boolean) => void;
@@ -24,15 +25,22 @@ export interface IGameAuth {
     transcription,
     result,
   }: IStatistics) => void;
+  handlePage: () => void;
+  handleTimeStartGame: () => void;
+  handleTimeEndGame: () => void;
 }
 
 const GameAuth: FC<IGameAuth> = ({
   data,
   arrayOfCoins,
+  page,
   group,
   resetGame,
   handleIsEndGame,
   handleStatistics,
+  handlePage,
+  handleTimeStartGame,
+  handleTimeEndGame,
 }) => {
   const [timer, setTimer] = useState<number>(20);
   const [score, setScore] = useState<number>(0);
@@ -65,17 +73,24 @@ const GameAuth: FC<IGameAuth> = ({
     if (wordIndex < 19) {
       setWordIndex(wordIndex + 1);
     } else {
-      handleIsEndGame(true);
+      setWordIndex(0);
+      handlePage();
+
+      if (!page) {
+        handleIsEndGame(true);
+        handleTimeEndGame();
+      }
     }
   };
 
-  const handleAccuracy = (value: boolean) => {
+  const handleAccuracy = (value: boolean, difficulty: UserWordStatus) => {
     const word = data![wordIndex];
-    const difficulty = word?.userWord ? word?.userWord.difficulty : UserWordStatus.HARD;
+
     let correctCountSprintValue = word?.userWord ? word?.userWord.optional.correctCountSprint : 0;
     let errorCountSprintValue = word?.userWord ? word?.userWord.optional.errorCountSprint : 0;
     const correctCountAudioValue = word?.userWord ? word?.userWord.optional.correctCountAudio : 0;
     const errorCountAudioValue = word?.userWord ? word?.userWord.optional.errorCountAudio : 0;
+
     const optional = {
       correctCountSprint: value ? (correctCountSprintValue += 1) : correctCountSprintValue,
       errorCountSprint: !value ? (errorCountSprintValue += 1) : errorCountSprintValue,
@@ -123,7 +138,7 @@ const GameAuth: FC<IGameAuth> = ({
       setScore((prevState) => prevState + 10 * multiplier);
 
       if (user.token) {
-        handleAccuracy(true);
+        handleAccuracy(true, UserWordStatus.EASY);
       }
 
       handleStatistics({
@@ -138,7 +153,7 @@ const GameAuth: FC<IGameAuth> = ({
       const result = false;
 
       if (user.token) {
-        handleAccuracy(false);
+        handleAccuracy(false, UserWordStatus.HARD);
       }
 
       handleStatistics({ id, audio, word, wordTranslate, transcription, result });
@@ -168,6 +183,7 @@ const GameAuth: FC<IGameAuth> = ({
   useEffect(() => {
     getEnglishWord();
     getRandomWordTranslation();
+    handleTimeStartGame();
 
     document.addEventListener('keydown', handleKeySelect);
     return () => {
@@ -190,6 +206,7 @@ const GameAuth: FC<IGameAuth> = ({
 
       setTimeout(() => {
         handleIsEndGame(true);
+        handleTimeEndGame();
       }, 1000);
     }
   }, [timer]);
