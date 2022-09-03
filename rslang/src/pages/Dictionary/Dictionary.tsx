@@ -1,8 +1,10 @@
 import cn from 'classnames';
 import { AnimatePresence } from 'framer-motion';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { UserWordStatus } from '../../common/interfaces';
+import { navData } from '../../common/utils/defaultData';
 import { AuthCardList } from '../../components/AuthCardList/AuthCardList';
 import { BtnScrool } from '../../components/BtnScrool/BtnScrool';
 import { Card } from '../../components/Card/Card';
@@ -12,6 +14,7 @@ import { LevelCard } from '../../components/LevelCard/LevelCard';
 import Pagination from '../../components/Pagination/Pagination';
 import { WorkingCardList } from '../../components/WorkingCardList/WorkingCardList';
 import { useDictionaryWordsQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
+import { selectSettings, setGroup, setPage } from '../../features/settings/settingsSlice';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import { useAuth } from '../../hooks/useAuth';
 import './Dictionary.scss';
@@ -20,43 +23,39 @@ export interface IDictionary {
   handleGameOpenFromMenu: (value: boolean) => void;
 }
 
-const localPage = localStorage.getItem('currentPage');
-const localGroup = localStorage.getItem('currentGroup');
-
 const Dictionary: FC<IDictionary> = ({ handleGameOpenFromMenu }) => {
-  const [currentPage, setCurrentPage] = useState(localPage ? +localPage : 1);
-  const [currentGroup, setCurrentGroup] = useState(localGroup ? +localGroup : 0);
+  const { page, group } = useAppSelector(selectSettings);
   const [isDictionary, setIsDictionary] = useState(false);
   const [isDifficulty, setIsDifficulty] = useState(false);
   const [isWorking, setIsWorking] = useState(false);
-  const [activeColor, setActiveColor] = useState(0);
+  const [activeColor, setActiveColor] = useState(group);
   const [wordPlaying, setWordPlaying] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
 
   const { user } = useAuth();
 
-  useEffect(() => {
-    localStorage.setItem('currentPage', String(currentPage));
-    localStorage.setItem('currentGroup', String(currentGroup));
-  }, [currentPage, currentGroup]);
-
   const { data: activeWords } = useGetWordsQuery({
-    group: currentGroup,
-    page: currentPage - 1,
+    group,
+    page: page - 1,
   });
 
   const { data: difficultyWords } = useDictionaryWordsQuery({
     userId: user.userId || '',
-    group: currentGroup,
-    page: currentPage - 1,
+    page: page - 1,
+    group,
     difficulty: UserWordStatus.HARD,
   });
 
   const { data: workingWords } = useDictionaryWordsQuery({
     userId: user.userId || '',
-    group: currentGroup,
-    page: currentPage - 1,
+    page: page - 1,
+    group,
     difficulty: UserWordStatus.EASY,
   });
+
+  const handlePage = (pageNumber: number) => {
+    dispatch(setPage(pageNumber));
+  };
 
   const handlerClickDictionary = (prev: boolean) => {
     setIsDictionary(!prev);
@@ -66,19 +65,19 @@ const Dictionary: FC<IDictionary> = ({ handleGameOpenFromMenu }) => {
 
   const handlerClickDifficulty = () => {
     setIsDifficulty(true);
-    setCurrentPage(1);
+    handlePage(1);
     setIsWorking(false);
   };
 
   const handlerClickWorking = () => {
     setIsWorking(true);
-    setCurrentPage(1);
+    handlePage(1);
     setIsDifficulty(false);
   };
 
-  const handleClickGroup = (group: number) => {
-    setCurrentGroup(group);
-    setActiveColor(group);
+  const handleClickGroup = (groupNumber: number) => {
+    dispatch(setGroup(groupNumber));
+    setActiveColor(groupNumber);
   };
 
   return (
@@ -104,36 +103,20 @@ const Dictionary: FC<IDictionary> = ({ handleGameOpenFromMenu }) => {
         </div>
         <h4 className="dictionary-lvl__title">Уровни сложности слов</h4>
         <div className="dictionary-lvls__wrapper">
-          <li
-            className={cn('dictionary-lvls__wrapper-li', { active: currentGroup === 0 })}
-            onClick={() => handleClickGroup(0)}>
-            <LevelCard levelWord="Easy" range="1-600" levelIndex="A1" />
-          </li>
-          <li
-            className={cn('dictionary-lvls__wrapper-li', { active: currentGroup === 1 })}
-            onClick={() => handleClickGroup(1)}>
-            <LevelCard levelWord="Easy" range="601-1200" levelIndex="A2" />
-          </li>
-          <li
-            className={cn('dictionary-lvls__wrapper-li', { active: currentGroup === 2 })}
-            onClick={() => handleClickGroup(2)}>
-            <LevelCard levelWord="Medium" range="1201-1800" levelIndex="B1" />
-          </li>
-          <li
-            className={cn('dictionary-lvls__wrapper-li', { active: currentGroup === 3 })}
-            onClick={() => handleClickGroup(3)}>
-            <LevelCard levelWord="Medium" range="1801-2400" levelIndex="B2" />
-          </li>
-          <li
-            className={cn('dictionary-lvls__wrapper-li', { active: currentGroup === 4 })}
-            onClick={() => handleClickGroup(4)}>
-            <LevelCard levelWord="Hard" range="2401-3000" levelIndex="C1" />
-          </li>
-          <li
-            className={cn('dictionary-lvls__wrapper-li', { active: currentGroup === 5 })}
-            onClick={() => handleClickGroup(5)}>
-            <LevelCard levelWord="Hard" range="3001-3600" levelIndex="C2" />
-          </li>
+          {navData.map((navItem) => (
+            <li
+              key={navItem.id}
+              className={cn('dictionary-lvls__wrapper-li', {
+                active: group === navItem.id,
+              })}
+              onClick={() => handleClickGroup(navItem.id)}>
+              <LevelCard
+                levelWord={navItem.levelWord}
+                range={navItem.range}
+                levelIndex={navItem.levelIndex}
+              />
+            </li>
+          ))}
         </div>
         {isDictionary && (
           <div className="dictionary-lvls-custom__wrapper">
@@ -188,10 +171,10 @@ const Dictionary: FC<IDictionary> = ({ handleGameOpenFromMenu }) => {
             />
             <Pagination
               className="pagination"
-              currentPage={currentPage}
+              currentPage={page}
               total={difficultyWords?.totalCount}
               pageSize={20}
-              onPageChange={(page) => setCurrentPage(page)}
+              onPageChange={(pageNumber) => handlePage(pageNumber)}
             />
           </>
         ) : isWorking && workingWords ? (
@@ -205,28 +188,28 @@ const Dictionary: FC<IDictionary> = ({ handleGameOpenFromMenu }) => {
             />
             <Pagination
               className="pagination"
-              currentPage={currentPage}
+              currentPage={page}
               total={workingWords?.totalCount}
               pageSize={20}
-              onPageChange={(page) => setCurrentPage(page)}
+              onPageChange={(pageNumber) => handlePage(pageNumber)}
             />
           </>
         ) : user.token ? (
           <>
             <AuthCardList
-              currentGroup={currentGroup}
+              currentGroup={group}
               isDictionary={isDictionary}
-              currentPage={currentPage}
+              currentPage={page}
               activeColor={activeColor}
               wordPlaying={wordPlaying}
               playWordCard={setWordPlaying}
             />
             <Pagination
               className="pagination"
-              currentPage={currentPage}
+              currentPage={page}
               total={600}
               pageSize={20}
-              onPageChange={(page) => setCurrentPage(page)}
+              onPageChange={(pageNumber) => handlePage(pageNumber)}
             />
           </>
         ) : (
@@ -247,10 +230,10 @@ const Dictionary: FC<IDictionary> = ({ handleGameOpenFromMenu }) => {
             </div>
             <Pagination
               className="pagination"
-              currentPage={currentPage}
+              currentPage={page}
               total={600}
               pageSize={20}
-              onPageChange={(page) => setCurrentPage(page)}
+              onPageChange={(pageNumber) => handlePage(pageNumber)}
             />
           </>
         )}

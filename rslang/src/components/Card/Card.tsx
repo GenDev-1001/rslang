@@ -20,10 +20,20 @@ export function Card({
 
   const { user } = useAuth();
 
+  const correctSprint = word.userWord?.optional.correctCountSprint || 0;
+  const errorSprint = word.userWord?.optional.errorCountSprint || 0;
+  const sumCorrectError = correctSprint + errorSprint;
+
   const handlerClick = (difficulty: UserWordStatus) => {
     const optional = word?.userWord
       ? word.userWord.optional
-      : { correctCountSprint: 0, errorCountSprint: 0, correctCountAudio: 0, errorCountAudio: 0 };
+      : {
+          correctCountSprint: 0,
+          errorCountSprint: 0,
+          correctCountAudio: 0,
+          errorCountAudio: 0,
+        };
+
     const wordRequest = {
       word: { difficulty, optional },
       wordId: word.id,
@@ -116,42 +126,23 @@ export function Card({
         </div>
 
         {user.token && (
-          <>
-            <div className="card-details__result">
-              <h3 className="card-details__result-title">Ответы в играх:</h3>
-              <div className="card-details__result-games games">
-                <div className="games-block">
-                  <span className="games-block__name">Аудиовызов</span>
-                  <span className="games-block__stat">
-                    {word.userWord?.optional.correctCountAudio || 0}
-                  </span>
-                </div>
-                <div className="games-block">
-                  <span className="games-block__name">Спринт</span>
-                  <span className="games-block__stat">
-                    {word.userWord?.optional.correctCountSprint || 0}
-                  </span>
-                </div>
+          <div className="card-details__result">
+            <h3 className="card-details__result-title">Ответы в играх:</h3>
+            <div className="card-details__result-games games">
+              <div className="games-block">
+                <span className="games-block__name">Аудиовызов</span>
+                <span className="games-block__stat">
+                  {word.userWord?.optional.correctCountAudio || 0}
+                </span>
+              </div>
+              <div className="games-block">
+                <span className="games-block__name">Спринт</span>
+                <span className="games-block__stat">
+                  {sumCorrectError && `${correctSprint} из ${correctSprint + errorSprint}`}
+                </span>
               </div>
             </div>
-            <div className="card-details__result">
-              <h3 className="card-details__result-title">Ошибки в играх:</h3>
-              <div className="card-details__result-games games">
-                <div className="games-block">
-                  <span className="games-block__name">Аудиовызов</span>
-                  <span className="games-block__stat">
-                    {word.userWord?.optional.errorCountAudio || 0}
-                  </span>
-                </div>
-                <div className="games-block">
-                  <span className="games-block__name">Спринт</span>
-                  <span className="games-block__stat">
-                    {word.userWord?.optional.errorCountSprint || 0}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </>
+          </div>
         )}
       </div>
       <img
