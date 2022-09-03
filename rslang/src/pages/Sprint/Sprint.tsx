@@ -31,8 +31,10 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
   const [isStartGame, setIsStartGame] = useState<boolean>(true);
   const [isEndGame, setIsEndGame] = useState<boolean>(false);
   const [statistics, setStatistics] = useState<IStatistics[]>([]);
+  const [timeStartGame, setTimeStartGame] = useState<string>('');
+  const [timeEndGame, setTimeEndGame] = useState<string>('');
 
-  console.log('page', page);
+  // console.log('page', page);
 
   const { user } = useAuth();
 
@@ -41,7 +43,7 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
     page,
   });
 
-  console.log('unauthorizedWords ===', unauthorizedWords);
+  // console.log('unauthorizedWords ===', unauthorizedWords);
 
   const { data: authorizedWords } = useActiveWordsByUserQuery({
     userId: user.userId || '',
@@ -49,7 +51,7 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
     page,
   });
 
-  console.log('authorizedWords ===', authorizedWords?.paginatedResults);
+  // console.log('authorizedWords ===', authorizedWords?.paginatedResults);
 
   const getArrayOfCoins = (value: number) => {
     const arr = [];
@@ -106,6 +108,14 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
     }
   };
 
+  const handleTimeStartGame = () => {
+    setTimeStartGame(new Date().toISOString());
+  };
+
+  const handleTimeEndGame = () => {
+    setTimeEndGame(new Date().toISOString());
+  };
+
   return (
     <div className="sprint-wrapper">
       <img src={sprintBg} alt="Sprint Background" className="sprint-wrapper__bg" />
@@ -115,10 +125,14 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
         <Game
           data={unauthorizedWords}
           arrayOfCoins={arrayOfCoins}
+          page={page}
           group={group}
           resetGame={resetGame}
           handleIsEndGame={handleIsEndGame}
           handleStatistics={handleStatistics}
+          handlePage={handlePage}
+          handleTimeStartGame={handleTimeStartGame}
+          handleTimeEndGame={handleTimeEndGame}
         />
       )}
       {!isStartGame && !isLoading && !isEndGame && user.token && (
@@ -131,6 +145,8 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
           handleIsEndGame={handleIsEndGame}
           handleStatistics={handleStatistics}
           handlePage={handlePage}
+          handleTimeStartGame={handleTimeStartGame}
+          handleTimeEndGame={handleTimeEndGame}
         />
       )}
       {isEndGame && <Statistics statistics={statistics} endGame={endGame} resetGame={resetGame} />}

@@ -26,6 +26,8 @@ export interface IGameAuth {
     result,
   }: IStatistics) => void;
   handlePage: () => void;
+  handleTimeStartGame: () => void;
+  handleTimeEndGame: () => void;
 }
 
 const GameAuth: FC<IGameAuth> = ({
@@ -37,6 +39,8 @@ const GameAuth: FC<IGameAuth> = ({
   handleIsEndGame,
   handleStatistics,
   handlePage,
+  handleTimeStartGame,
+  handleTimeEndGame,
 }) => {
   const [timer, setTimer] = useState<number>(20);
   const [score, setScore] = useState<number>(0);
@@ -74,6 +78,7 @@ const GameAuth: FC<IGameAuth> = ({
 
       if (!page) {
         handleIsEndGame(true);
+        handleTimeEndGame();
       }
     }
   };
@@ -178,6 +183,7 @@ const GameAuth: FC<IGameAuth> = ({
   useEffect(() => {
     getEnglishWord();
     getRandomWordTranslation();
+    handleTimeStartGame();
 
     document.addEventListener('keydown', handleKeySelect);
     return () => {
@@ -200,6 +206,7 @@ const GameAuth: FC<IGameAuth> = ({
 
       setTimeout(() => {
         handleIsEndGame(true);
+        handleTimeEndGame();
       }, 1000);
     }
   }, [timer]);
