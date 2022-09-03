@@ -1,12 +1,12 @@
-import { FC, useState, MouseEvent } from 'react';
-import { Loading, Greetings, Game, GameAuth, Statistics } from './components';
-import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
-import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
-import { useAuth } from '../../hooks/useAuth';
+import { FC, MouseEvent, useState } from 'react';
 import { coinToss } from '../../common/utils/coinToss';
-import sprintBg from '../../images/sprint-greetings-bg.jpg';
-import './Sprint.scss';
 import { random } from '../../common/utils/random';
+import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
+import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
+import { useAuth } from '../../hooks/useAuth';
+import sprintBg from '../../images/sprint-greetings-bg.jpg';
+import { Game, GameAuth, Greetings, Loading, Statistics } from './components';
+import './Sprint.scss';
 
 export interface IStatistics {
   id: string;
@@ -113,7 +113,7 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
   return (
     <div className="sprint-wrapper">
       <img src={sprintBg} alt="Sprint Background" className="sprint-wrapper__bg" />
-      {isStartGame && <Greetings onClick={handleGroup} />}
+      {isStartGame && <Greetings onClick={handleGroup} isGameOpenFromMenu={isGameOpenFromMenu} />}
       {isLoading && <Loading />}
       {!isStartGame && !isLoading && !isEndGame && !user.token && (
         <Game
