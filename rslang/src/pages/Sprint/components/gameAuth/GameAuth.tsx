@@ -1,12 +1,12 @@
-import { FC, useState, useEffect, MouseEvent } from 'react';
-import { ButtonReset, ButtonSpeak, ButtonSelect, Multiplier, Circle } from '..';
-import { IActivePaginatedResult } from '../../../../features/aggregaredWords/aggregaredWordsApiSlice.inteface';
-import { random } from '../../../../common/utils/random';
-import {
-  useUpdateUserWordMutation,
-  useCreateUserWordMutation,
-} from '../../../../features/userWords/userWordsApiSlice';
+import { FC, MouseEvent, useEffect, useState } from 'react';
+import { ButtonReset, ButtonSelect, ButtonSpeak, Circle, Multiplier } from '..';
 import { UserWordStatus } from '../../../../common/interfaces';
+import { random } from '../../../../common/utils/random';
+import { IActivePaginatedResult } from '../../../../features/aggregaredWords/aggregaredWordsApiSlice.inteface';
+import {
+  useCreateUserWordMutation,
+  useUpdateUserWordMutation,
+} from '../../../../features/userWords/userWordsApiSlice';
 import { useAuth } from '../../../../hooks/useAuth';
 import { IStatistics } from '../../Sprint';
 
@@ -99,7 +99,13 @@ const GameAuth: FC<IGameAuth> = ({
     };
 
     const wordRequest = {
-      word: { difficulty, optional },
+      word: {
+        difficulty:
+          correctCountSprintValue === 5 && errorCountSprintValue === 0
+            ? UserWordStatus.EASY
+            : UserWordStatus.HARD,
+        optional,
+      },
       wordId: word.id,
       userId: user.userId || '',
     };

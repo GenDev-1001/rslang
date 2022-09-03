@@ -1,7 +1,8 @@
 import { FC, MouseEvent, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { coinToss } from '../../common/utils/coinToss';
-import { random } from '../../common/utils/random';
 import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
+import { selectSettings, setGroup, setPage } from '../../features/settings/settingsSlice';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import { useAuth } from '../../hooks/useAuth';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
@@ -21,12 +22,14 @@ export interface ISprint {
   isGameOpenFromMenu: boolean;
 }
 
-const localGroup = localStorage.getItem('currentGroup') || 0;
-const localPage = localStorage.getItem('currentPage') || 0;
+// const localGroup = localStorage.getItem('currentGroup') || 0;
+// const localPage = localStorage.getItem('currentPage') || 0;
 
 const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
-  const [group, setGroup] = useState<number>(!isGameOpenFromMenu ? +localGroup : 0);
-  const [page, setPage] = useState<number>(!isGameOpenFromMenu ? +localPage : random(0, 29));
+  const { page, group } = useAppSelector(selectSettings);
+  const dispatch = useAppDispatch();
+  // const [group, setGroup] = useState<number>(!isGameOpenFromMenu ? +localGroup : 0);
+  // const [page, setPage] = useState<number>(!isGameOpenFromMenu ? +localPage : random(0, 29));
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isStartGame, setIsStartGame] = useState<boolean>(true);
   const [isEndGame, setIsEndGame] = useState<boolean>(false);
@@ -34,17 +37,20 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
   const [timeStartGame, setTimeStartGame] = useState<string>('');
   const [timeEndGame, setTimeEndGame] = useState<string>('');
 
+  console.log('group', group);
+  console.log('page', page);
+
   const { user } = useAuth();
 
   const { data: unauthorizedWords } = useGetWordsQuery({
     group,
-    page,
+    page: page - 1,
   });
 
   const { data: authorizedWords } = useActiveWordsByUserQuery({
     userId: user.userId || '',
     group,
-    page,
+    page: page - 1,
   });
 
   const getArrayOfCoins = (value: number) => {
@@ -76,9 +82,14 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
   };
 
   const handleGroup = (event: MouseEvent<HTMLButtonElement>) => {
-    const target = event.target as HTMLButtonElement;
-    const textContent = target.textContent as string;
-    setGroup(+textContent - 1);
+    if (isGameOpenFromMenu) {
+      const target = event.target as HTMLButtonElement;
+      const textContent = target.textContent as string;
+      dispatch(setGroup(+textContent - 1));
+    } else {
+      dispatch(setGroup(group));
+    }
+
     setIsStartGame(false);
     handleLoading();
   };
@@ -97,8 +108,10 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
   };
 
   const handlePage = () => {
-    if (page > 0) {
-      setPage(page - 1);
+    if (page > 1) {
+      dispatch(setPage(page - 1));
+    } else {
+      dispatch(setPage(30));
     }
   };
 
