@@ -6,9 +6,10 @@ export interface IButtonSelect {
   bgColor: string;
   onClick: (event: MouseEvent<HTMLButtonElement>) => void;
   disabled: boolean;
+  ref: any;
 }
 
-const ButtonSelect: FC<IButtonSelect> = ({ description, bgColor, disabled, onClick }) => {
+const ButtonSelect: FC<IButtonSelect> = ({ description, bgColor, disabled, onClick, ref }) => {
   return (
     <button className={`audio-btn-select ${bgColor}`} disabled={disabled} onClick={onClick}>
       {description}

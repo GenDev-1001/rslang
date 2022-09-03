@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, MouseEvent, KeyboardEvent } from 'react';
+import React, { FC, useState, useEffect, useRef, KeyboardEvent } from 'react';
 import { ButtonReset, ButtonSpeak, ButtonSelect } from '../buttons';
 import { Circle } from '../circle/Circle';
 import { Multiplier } from '../multiplier/Multiplier';
@@ -33,7 +33,7 @@ export const Game: FC<IGame> = ({
   const [randomWord, setRandomWord] = useState<WordsType>(wordsArrayFilds);
   const [gameBtn, setGameBtn] = useState<string>('не знаю');
   const [disable, setDisable] = useState(false);
-
+  const prevBtn = useRef(null);
   const createRightWord = (wordslist: WordsType[]) => {
     let array: WordsType[] = wordslist;
     let result: WordsType;
@@ -159,8 +159,6 @@ export const Game: FC<IGame> = ({
   };
 
   const handleButtonSelect = (selectedWord: WordsType) => {
-    console.log('asdasdasdasd');
-
     setWordIndex(wordIndex + 1);
     setRandomWord(selectedWord);
     checkAnswer(selectedWord);
@@ -168,22 +166,32 @@ export const Game: FC<IGame> = ({
     setDisable(true);
   };
 
+  // const addEvent = () => {
+  //   document.addEventListener('keydown', (e: KeyboardEventInit) => onKeydown(e));
+  // };
+  console.log('asd', disable);
   const onKeydown = (event: KeyboardEventInit) => {
     const code: number | undefined = event.keyCode;
-    console.log('disable before if', disable);
+    console.log(wordsArr);
+
+    console.log('aaaaaaaaaaaaaaaaa', disable);
     if (!disable && wordsArr.length && code && keyCodesArr.includes(code)) {
       const keyValue = Number(event.key);
       handleButtonSelect(wordsArr[keyValue - 1]);
     }
+
     console.log(event);
   };
 
   useEffect(() => {
     createWordsArray();
-    document.addEventListener('keydown', (e: KeyboardEventInit) => onKeydown(e));
-    return document.removeEventListener('keydown', (e: KeyboardEventInit) => onKeydown(e));
+    return function cleanup() {
+      document.removeEventListener('keydown', navigation);
+    };
   }, []);
-
+  useEffect(() => {
+    document.addEventListener('keypress', (e: KeyboardEventInit) => onKeydown(e));
+  }, []);
   return (
     <div className="audio-frame">
       <div className="audio-ui">
@@ -220,6 +228,7 @@ export const Game: FC<IGame> = ({
             bgColor={elem.status || ''}
             disabled={disable}
             onClick={() => handleButtonSelect(elem)}
+            ref={prevBtn}
           />
         ))}
       </div>
