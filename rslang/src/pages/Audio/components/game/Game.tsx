@@ -100,7 +100,6 @@ export const Game: FC<IGame> = ({
     }
   };
 
-  // добавить упр с клавы, добавить звук
   const continueGame = () => {
     const wordsArrCopy = JSON.parse(JSON.stringify(wordsArr));
     let modWordsArr: WordsType[];
@@ -166,32 +165,22 @@ export const Game: FC<IGame> = ({
     setDisable(true);
   };
 
-  // const addEvent = () => {
-  //   document.addEventListener('keydown', (e: KeyboardEventInit) => onKeydown(e));
-  // };
-  console.log('asd', disable);
   const onKeydown = (event: KeyboardEventInit) => {
     const code: number | undefined = event.keyCode;
-    console.log(wordsArr);
-
-    console.log('aaaaaaaaaaaaaaaaa', disable);
     if (!disable && wordsArr.length && code && keyCodesArr.includes(code)) {
       const keyValue = Number(event.key);
       handleButtonSelect(wordsArr[keyValue - 1]);
     }
-
-    console.log(event);
   };
 
   useEffect(() => {
     createWordsArray();
+    document.addEventListener('keypress', (e: KeyboardEventInit) => onKeydown(e));
     return function cleanup() {
-      document.removeEventListener('keydown', navigation);
+      document.addEventListener('keypress', (e: KeyboardEventInit) => onKeydown(e));
     };
   }, []);
-  useEffect(() => {
-    document.addEventListener('keypress', (e: KeyboardEventInit) => onKeydown(e));
-  }, []);
+
   return (
     <div className="audio-frame">
       <div className="audio-ui">
@@ -228,7 +217,6 @@ export const Game: FC<IGame> = ({
             bgColor={elem.status || ''}
             disabled={disable}
             onClick={() => handleButtonSelect(elem)}
-            ref={prevBtn}
           />
         ))}
       </div>
