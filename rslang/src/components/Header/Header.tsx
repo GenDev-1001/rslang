@@ -9,7 +9,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { IHeaderProps } from './Header.interface';
 import './Header.scss';
 
-export function Header({ isMain, handler }: IHeaderProps) {
+export function Header({ isMain, handler, handleGameOpenFromMenu }: IHeaderProps) {
   const [isBurger, setIsBurger] = useState(false);
   const dispatch = useAppDispatch();
   const { user } = useAuth();
@@ -19,6 +19,7 @@ export function Header({ isMain, handler }: IHeaderProps) {
   };
 
   const hendlerAuth = () => {
+    setIsBurger(false);
     if (user.token) {
       toast.success('User Logout Successfully');
       dispatch(logOut());
@@ -28,12 +29,17 @@ export function Header({ isMain, handler }: IHeaderProps) {
     handler();
   };
 
+  const handlerLink = () => {
+    setIsBurger(false);
+    handleGameOpenFromMenu(true);
+  };
+
   return (
     <header className={cn('header', { header_main: isMain })}>
       <div className="header__container">
         <div className="header__inner">
           <h1 className="logo">
-            <Link to="/" className="logo-link">
+            <Link to="/" className="logo-link" onClick={() => setIsBurger(false)}>
               RSLang
             </Link>
           </h1>
@@ -44,27 +50,27 @@ export function Header({ isMain, handler }: IHeaderProps) {
           </div>
           <ul className={cn('menu-list', { active: isBurger })}>
             <li className="menu-list__item">
-              <Link to="/dictionary" className="menu-list__link">
+              <Link to="/dictionary" className="menu-list__link" onClick={() => setIsBurger(false)}>
                 Учебник
               </Link>
             </li>
             <li className="menu-list__item">
-              <Link to="/audio" className="menu-list__link">
+              <Link to="/audio" className="menu-list__link" onClick={handlerLink}>
                 Аудиовызов
               </Link>
             </li>
             <li className="menu-list__item">
-              <Link to="/sprint" className="menu-list__link">
+              <Link to="/sprint" className="menu-list__link" onClick={handlerLink}>
                 Спринт
               </Link>
             </li>
             <li className="menu-list__item">
-              <Link to="/statistics" className="menu-list__link">
+              <Link to="/statistics" className="menu-list__link" onClick={() => setIsBurger(false)}>
                 Статистика
               </Link>
             </li>
             <li className="menu-list__item">
-              <Link to="/about" className="menu-list__link">
+              <Link to="/about" className="menu-list__link" onClick={() => setIsBurger(false)}>
                 О нас
               </Link>
             </li>

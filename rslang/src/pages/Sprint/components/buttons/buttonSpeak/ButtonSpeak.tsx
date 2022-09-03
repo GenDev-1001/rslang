@@ -4,13 +4,13 @@ import cat from '../../../../../images/cat-speak.svg';
 import './ButtonSpeak.scss';
 
 export interface IButtonSpeak {
-  data: IWordsResponse | undefined;
+  audio: IWordsResponse | undefined | string;
 }
 
-const ButtonSpeak: FC<IButtonSpeak> = ({ data }) => {
+const ButtonSpeak: FC<IButtonSpeak> = ({ audio }) => {
   const handleAudio = () => {
-    const audio = new Audio(`https://rs-lang-team-84.herokuapp.com/${data ? data.audio : ''}`);
-    audio.play();
+    const sound = new Audio(`https://rs-lang-team-84.herokuapp.com/${audio}`);
+    sound.play();
   };
 
   return (

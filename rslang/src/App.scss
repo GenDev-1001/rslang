@@ -1,7 +1,7 @@
 /* main style */
 
 :root {
-  --color-pink: #e56c78;
+  --color-pink: #ff6db1;
   --color-black: #000;
   --color-white: #fff;
   --color-grey: #f3f4f8;
@@ -69,6 +69,7 @@ li {
 
 .container {
   max-width: 1420px;
+  min-height: calc(100vh - 140px);
   margin: 0 auto;
   padding: 0 10px;
 }

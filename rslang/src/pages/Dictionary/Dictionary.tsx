@@ -1,7 +1,10 @@
 import cn from 'classnames';
-import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { FC, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { UserWordStatus } from '../../common/interfaces';
 import { AuthCardList } from '../../components/AuthCardList/AuthCardList';
+import { BtnScrool } from '../../components/BtnScrool/BtnScrool';
 import { Card } from '../../components/Card/Card';
 import { DifficultyCardList } from '../../components/DifficultyCardList/DifficultyCardList';
 import { Footer } from '../../components/Footer/Footer';
@@ -11,17 +14,30 @@ import { WorkingCardList } from '../../components/WorkingCardList/WorkingCardLis
 import { useDictionaryWordsQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import { useAuth } from '../../hooks/useAuth';
-
 import './Dictionary.scss';
 
-export function Dictionary() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [currentGroup, setCurrentGroup] = useState(0);
+export interface IDictionary {
+  handleGameOpenFromMenu: (value: boolean) => void;
+}
+
+const localPage = localStorage.getItem('currentPage');
+const localGroup = localStorage.getItem('currentGroup');
+
+const Dictionary: FC<IDictionary> = ({ handleGameOpenFromMenu }) => {
+  const [currentPage, setCurrentPage] = useState(localPage ? +localPage : 1);
+  const [currentGroup, setCurrentGroup] = useState(localGroup ? +localGroup : 0);
   const [isDictionary, setIsDictionary] = useState(false);
   const [isDifficulty, setIsDifficulty] = useState(false);
   const [isWorking, setIsWorking] = useState(false);
+  const [activeColor, setActiveColor] = useState(0);
+  const [wordPlaying, setWordPlaying] = useState<string | null>(null);
 
   const { user } = useAuth();
+
+  useEffect(() => {
+    localStorage.setItem('currentPage', String(currentPage));
+    localStorage.setItem('currentGroup', String(currentGroup));
+  }, [currentPage, currentGroup]);
 
   const { data: activeWords } = useGetWordsQuery({
     group: currentGroup,
@@ -39,7 +55,7 @@ export function Dictionary() {
     userId: user.userId || '',
     group: currentGroup,
     page: currentPage - 1,
-    difficulty: UserWordStatus.WORK,
+    difficulty: UserWordStatus.EASY,
   });
 
   const handlerClickDictionary = (prev: boolean) => {
@@ -50,30 +66,37 @@ export function Dictionary() {
 
   const handlerClickDifficulty = () => {
     setIsDifficulty(true);
+    setCurrentPage(1);
     setIsWorking(false);
   };
 
   const handlerClickWorking = () => {
     setIsWorking(true);
+    setCurrentPage(1);
     setIsDifficulty(false);
   };
 
   const handleClickGroup = (group: number) => {
     setCurrentGroup(group);
+    setActiveColor(group);
   };
 
   return (
     <>
       <div className="container">
         <div className="dictionary-block">
-          <a className="dictionary-block-title" onClick={() => handlerClickDictionary(true)}>
+          <a
+            className={cn('dictionary-block-title', { active: !isDictionary })}
+            onClick={() => handlerClickDictionary(true)}>
             Учебник
           </a>
 
           {user.token && (
             <>
               <span className="dictionary-block-title__dev">|</span>
-              <a className="dictionary-block-title" onClick={() => handlerClickDictionary(false)}>
+              <a
+                className={cn('dictionary-block-title', { active: isDictionary })}
+                onClick={() => handlerClickDictionary(false)}>
                 Словарь
               </a>
             </>
@@ -89,7 +112,7 @@ export function Dictionary() {
           <li
             className={cn('dictionary-lvls__wrapper-li', { active: currentGroup === 1 })}
             onClick={() => handleClickGroup(1)}>
-            <LevelCard levelWord="Easy" range="601-1200" levelIndex="A1" />
+            <LevelCard levelWord="Easy" range="601-1200" levelIndex="A2" />
           </li>
           <li
             className={cn('dictionary-lvls__wrapper-li', { active: currentGroup === 2 })}
@@ -134,10 +157,35 @@ export function Dictionary() {
             </li>
           </div>
         )}
+        <h4 className="dictionary-lvl__title">Игры</h4>
+        <ul className="dictionary-games">
+          <li className="dictionary-games__item">
+            <Link
+              to="/audio"
+              className="dictionary-games__link"
+              onClick={() => handleGameOpenFromMenu(false)}>
+              <LevelCard levelWord="Аудиовызов" range="Тренировка" levelIndex="play" />
+            </Link>
+          </li>
+          <li className="dictionary-games__item">
+            <Link
+              to="/sprint"
+              className="dictionary-games__link"
+              onClick={() => handleGameOpenFromMenu(false)}>
+              <LevelCard levelWord="Спринт" range="Тренировка" levelIndex="play" />
+            </Link>
+          </li>
+        </ul>
         <h4 className="dictionary-words__title">Слова</h4>
         {isDifficulty && difficultyWords ? (
           <>
-            <DifficultyCardList difficultyWords={difficultyWords?.paginatedResults} />
+            <DifficultyCardList
+              isDictionary={isDictionary}
+              difficultyWords={difficultyWords?.paginatedResults}
+              activeColor={activeColor}
+              wordPlaying={wordPlaying}
+              playWordCard={setWordPlaying}
+            />
             <Pagination
               className="pagination"
               currentPage={currentPage}
@@ -148,7 +196,13 @@ export function Dictionary() {
           </>
         ) : isWorking && workingWords ? (
           <>
-            <WorkingCardList workingWords={workingWords?.paginatedResults} />
+            <WorkingCardList
+              isDictionary={isDictionary}
+              workingWords={workingWords?.paginatedResults}
+              activeColor={activeColor}
+              wordPlaying={wordPlaying}
+              playWordCard={setWordPlaying}
+            />
             <Pagination
               className="pagination"
               currentPage={currentPage}
@@ -159,7 +213,14 @@ export function Dictionary() {
           </>
         ) : user.token ? (
           <>
-            <AuthCardList currentGroup={currentGroup} currentPage={currentPage} />
+            <AuthCardList
+              currentGroup={currentGroup}
+              isDictionary={isDictionary}
+              currentPage={currentPage}
+              activeColor={activeColor}
+              wordPlaying={wordPlaying}
+              playWordCard={setWordPlaying}
+            />
             <Pagination
               className="pagination"
               currentPage={currentPage}
@@ -172,7 +233,16 @@ export function Dictionary() {
           <>
             <div className="dictionary-words__wrapper">
               {activeWords?.map((word) => (
-                <Card word={word} key={word.id} />
+                <AnimatePresence>
+                  <Card
+                    word={word}
+                    isDictionary={isDictionary}
+                    key={word.id}
+                    activeColor={activeColor}
+                    wordPlaying={wordPlaying}
+                    playWordCard={setWordPlaying}
+                  />
+                </AnimatePresence>
               ))}
             </div>
             <Pagination
@@ -185,8 +255,10 @@ export function Dictionary() {
           </>
         )}
       </div>
-
+      <BtnScrool />
       <Footer />
     </>
   );
-}
+};
+
+export { Dictionary };

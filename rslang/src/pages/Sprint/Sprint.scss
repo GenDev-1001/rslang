@@ -43,6 +43,13 @@
   text-align: center;
 }
 
+.sprint-frame__error {
+  font-weight: $fw-regular;
+  font-size: $base * 15;
+  color: $color-red;
+  text-align: center;
+}
+
 .sprint-frame__description {
   font-size: $base * 8;
   text-align: center;

@@ -1,3 +1,5 @@
+import { IUserWordData } from '../userWords/userWordsApiSlice.interface';
+
 export interface IWordsResponse {
   audio: string;
   audioExample: string;
@@ -13,6 +15,7 @@ export interface IWordsResponse {
   transcription: string;
   word: string;
   wordTranslate: string;
+  userWord?: IUserWordData;
 }
 
 export interface IWordsRequest {
