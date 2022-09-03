@@ -81,8 +81,8 @@ const Game: FC<IGame> = ({
     const transcription = data ? data[wordIndex].transcription : '';
 
     if (
-      (textContent === 'true' && rightWordTranslation === randomWordTranslation) ||
-      (textContent === 'false' && rightWordTranslation !== randomWordTranslation)
+      ((textContent === 'true' || textContent === 'ArrowRight') && arrayOfCoins[wordIndex]) ||
+      ((textContent === 'false' || textContent === 'ArrowLeft') && !arrayOfCoins[wordIndex])
     ) {
       const result = true;
 
@@ -184,9 +184,17 @@ const Game: FC<IGame> = ({
           </div>
           <Circle title="Score:" value={score} />
         </div>
+<<<<<<< HEAD
         <h2 className="sprint-frame__header">{rightWord}</h2>
         <h2 className="sprint-frame__header">{randomWordTranslation}</h2>
         <ButtonSpeak data={data ? data[wordIndex] : undefined} />
+=======
+        <h2 className="sprint-frame__header">{englishWord}</h2>
+        <h2 className="sprint-frame__header">
+          {arrayOfCoins[wordIndex] ? englishWordTranslation : randomWordTranslation}
+        </h2>
+        <ButtonSpeak audio={data ? data[wordIndex].audio : ''} />
+>>>>>>> 7cf734049f101d88bf8b068ad5fdae84afa6fcd5
         <div className="button-select__wrapper">
           <ButtonSelect description="false" bgColor="bg_red" onClick={handleButtonSelect} />
           <ButtonSelect description="true" bgColor="bg_green" onClick={handleButtonSelect} />
