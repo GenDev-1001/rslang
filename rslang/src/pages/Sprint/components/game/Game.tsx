@@ -1,7 +1,7 @@
-import { FC, useState, useEffect, MouseEvent } from 'react';
-import { ButtonReset, ButtonSpeak, ButtonSelect, Multiplier, Circle } from '..';
-import { IWordsResponse } from '../../../../features/words/wordsSlice.interface';
+import { FC, MouseEvent, useEffect, useState } from 'react';
+import { ButtonReset, ButtonSelect, ButtonSpeak, Circle, Multiplier } from '..';
 import { random } from '../../../../common/utils/random';
+import { IWordsResponse } from '../../../../features/words/wordsSlice.interface';
 import { IStatistics } from '../../Sprint';
 import './Game.scss';
 

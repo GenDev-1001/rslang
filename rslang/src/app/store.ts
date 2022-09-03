@@ -1,5 +1,6 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/authSlice';
+import settingsReducer from '../features/settings/settingsSlice';
 import statisticReducer from '../features/statistic/statisticSlice';
 import { apiSlice } from './api/apiSlice';
 
@@ -8,6 +9,7 @@ export const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer,
     auth: authReducer,
     statistic: statisticReducer,
+    settings: settingsReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
 });
