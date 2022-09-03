@@ -38,7 +38,7 @@ const userWordsApiSlice = apiSlice
           method: 'PUT',
           body: word,
         }),
-        invalidatesTags: (result, error, { wordId }) => [{ type: 'WordsAggregate', id: wordId }],
+        invalidatesTags: [{ type: 'WordsAggregate', id: 'LIST' }],
       }),
       deleteUserWord: builder.mutation<null, IUserWordRequest>({
         query: ({ userId, wordId }) => ({

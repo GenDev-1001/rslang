@@ -112,7 +112,7 @@ const Dictionary: FC<IDictionary> = ({ handleGameOpenFromMenu }) => {
           <li
             className={cn('dictionary-lvls__wrapper-li', { active: currentGroup === 1 })}
             onClick={() => handleClickGroup(1)}>
-            <LevelCard levelWord="Easy" range="601-1200" levelIndex="A1" />
+            <LevelCard levelWord="Easy" range="601-1200" levelIndex="A2" />
           </li>
           <li
             className={cn('dictionary-lvls__wrapper-li', { active: currentGroup === 2 })}

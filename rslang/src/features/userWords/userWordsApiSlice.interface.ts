@@ -8,7 +8,7 @@ export interface IUserWordOptional {
 }
 
 export interface IUserWordData {
-  difficulty: UserWordStatus;
+  difficulty?: UserWordStatus;
   optional: IUserWordOptional;
 }
 
