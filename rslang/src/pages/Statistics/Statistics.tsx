@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import { useGetStatisticQuery } from '../../features/statistic/statisticApiSlice';
+import { IStatistic } from '../../features/statistic/statisticApiSlice.interface';
 import { selectStatistic } from '../../features/statistic/statisticSlice';
 import { useAuth } from '../../hooks/useAuth';
 import audiocallIcon from '../../images/audiocall.svg';
@@ -14,7 +15,16 @@ const Statistics: FC = () => {
   const { isLoading } = useGetStatisticQuery(user.userId || '');
   const { statistics, learnedWords } = useAppSelector(selectStatistic);
 
-  console.log(statistics, learnedWords);
+  const percentTrueWords = (games: IStatistic[]): number => {
+    let wordsTrue = 0;
+    let wordsFalse = 0;
+    games.forEach((game) => {
+      wordsTrue += game.wordsTrue.length;
+      wordsFalse += game.wordsFalse.length;
+    });
+    return Math.round((wordsTrue * 100) / (wordsTrue + wordsFalse)) || 0;
+  };
+
   return (
     <div className="sprint-wrapper">
       <img src={sprintBg} alt="Statistics Background" className="sprint-wrapper__bg" />
@@ -22,18 +32,18 @@ const Statistics: FC = () => {
         <div className="statistics-wrapper">
           <div className="statistics-wrapper_first">
             <div className="words-learned__wrapper">
-              <h2 className="words-learned">0</h2>
+              <h2 className="words-learned">{learnedWords}</h2>
               <div className="words-learned__wrapper-descrption">
                 <h2>words</h2>
                 <h3>were learned</h3>
               </div>
             </div>
 
-            <Progress progress={50} />
+            <Progress progress={percentTrueWords(statistics)} />
           </div>
           <div className="statistics-wrapper_second">
-            <Game title="Sprint" src={sprintIcon} />
-            <Game title="Audio Call" src={audiocallIcon} />
+            <Game title="Sprint" src={sprintIcon} statistics={statistics} />
+            <Game title="Audio Call" src={audiocallIcon} statistics={statistics} />
           </div>
         </div>
         <Graph title="Новые слова" subtitle="за каждый день изучения" />
