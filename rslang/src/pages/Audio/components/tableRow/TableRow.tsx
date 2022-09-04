@@ -1,18 +1,31 @@
 import { FC } from 'react';
 import { ButtonSpeak } from '../buttons';
 import trueChoise from '../../../../images/true-choise.svg';
+import falseChoise from '../../../../images/false-choise.svg';
 
-const TableRow: FC = () => {
+export interface ITableRow {
+  word: string;
+  audio: string;
+  transcription: string;
+  wordTranslate: string;
+  answer: boolean;
+}
+
+const TableRow: FC<ITableRow> = ({ audio, word, wordTranslate, transcription, answer }) => {
   return (
     <tr className="table-row">
       <td>
-        <ButtonSpeak />
+        <ButtonSpeak audio={audio} />
       </td>
-      <td>English</td>
-      <td>[ˈɪŋglɪʃ]</td>
-      <td>Английский</td>
+      <td>{word}</td>
+      <td>{transcription}</td>
+      <td>{wordTranslate}</td>
       <td>
-        <img src={trueChoise} alt="true" className="sprint-ui__circle sprint-ui__circle_small" />
+        <img
+          src={answer ? trueChoise : falseChoise}
+          alt="true"
+          className="sprint-ui__circle sprint-ui__circle_small"
+        />
       </td>
     </tr>
   );
