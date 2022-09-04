@@ -5,6 +5,7 @@ import { Multiplier } from '../multiplier/Multiplier';
 import { IStatistics, keyCodesArr, wordsArrayFilds, WordsType } from '../../constants';
 import '../../Audio.scss';
 import { WordPicture } from './WordPicture';
+import success from '../../../../audio/success.mp3';
 
 export interface IGame {
   data: WordsType[] | undefined;
@@ -30,10 +31,12 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
   const [wordsArr, setWordsArr] = useState<WordsType[]>([]);
   const [checkWordsArr, setCheckWordsArr] = useState<WordsType[]>([]);
   const [rightWord, setRightWord] = useState<WordsType>(wordsArrayFilds);
-
   const [randomWord, setRandomWord] = useState<WordsType>(wordsArrayFilds);
+  // поменять на skip
   const [gameBtn, setGameBtn] = useState<string>('не знаю');
-  const [disable, setDisable] = useState(false);
+  const [sound, setSound] = useState<string>('');
+  const [disable, setDisable] = useState<boolean>(false);
+  const [skip, setSkip] = useState<boolean>(false);
   const prevBtn = useRef(null);
 
   const createRightWord = (wordslist: WordsType[]) => {
@@ -47,6 +50,10 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
       array.length && // eslint-disable-next-line @typescript-eslint/no-loop-func
       checkWordsArr.findIndex((elem: WordsType) => elem.id === result.id) !== -1
     );
+    if (checkWordsArr.length === 20) {
+      handleIsEndGame(true);
+      return;
+    }
     if (array.length) {
       setRightWord(result);
       const newCheckWordsArr = JSON.parse(JSON.stringify(checkWordsArr));
@@ -119,32 +126,12 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
     }
   };
 
-  const continueGame = () => {
+  const changeBtnStatus = (answer: boolean, selectedWord: WordsType | undefined) => {
     const wordsArrCopy = JSON.parse(JSON.stringify(wordsArr));
+    const selectedIndex = wordsArrCopy.findIndex(
+      (item: WordsType) => selectedWord && item.id === selectedWord.id,
+    );
     let modWordsArr: WordsType[];
-    if (gameBtn === 'не знаю') {
-      modWordsArr = wordsArrCopy.map((elem: WordsType) => {
-        // eslint-disable-next-line @typescript-eslint/dot-notation
-        elem.wordTranslate === rightWord.wordTranslate
-          ? (elem['status'!] = 'bg_white')
-          : (elem['status'!] = 'bg_grey');
-        return elem;
-      });
-      setWordsArr(modWordsArr);
-      setGameBtn('→');
-      setDisable(true);
-    } else {
-      createWordsArray();
-      setGameBtn('не знаю');
-      setDisable(false);
-    }
-  };
-
-  const changeBtnStatus = (answer: boolean, selectedWord: WordsType) => {
-    const wordsArrCopy = JSON.parse(JSON.stringify(wordsArr));
-    const selectedIndex = wordsArrCopy.findIndex((item: WordsType) => item.id === selectedWord.id);
-    let modWordsArr: WordsType[];
-    continueGame();
 
     if (answer) {
       modWordsArr = wordsArrCopy.map((elem: WordsType, index: number) => {
@@ -170,18 +157,22 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
     }
   };
 
-  const checkAnswer = (selectedWord: WordsType) => {
-    const answer = rightWord.wordTranslate === selectedWord.wordTranslate;
+  // const playSound = (answer: boolean) => {
+  //   const sountP = new Audio(success);
+  //   sountP.play();
+  // };
 
-    const id = data ? data[wordIndex].id : '';
-    const audio = data ? data[wordIndex].audio : '';
-    const word = data ? data[wordIndex].word : '';
-    const wordTranslate = data ? data[wordIndex].wordTranslate : '';
-    const transcription = data ? data[wordIndex].transcription : '';
+  const checkAnswer = (selectedWord: WordsType | undefined) => {
+    const answer = !!selectedWord && rightWord.wordTranslate === selectedWord.wordTranslate;
+    const id = data ? rightWord.id : '';
+    const audio = data ? rightWord.audio : '';
+    const word = data ? rightWord.word : '';
+    const wordTranslate = data ? rightWord.wordTranslate : '';
+    const transcription = data ? rightWord.transcription : '';
 
     countSreak(id, audio, word, wordTranslate, transcription, answer);
     changeBtnStatus(answer, selectedWord);
-
+    // playSound(answer);
     handleStatistics({
       id,
       audio,
@@ -191,29 +182,39 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
       answer,
     });
   };
-
+  const continueGame = () => {
+    if (gameBtn === 'не знаю') {
+      checkAnswer(undefined);
+      setDisable(true);
+      handleWordIndex();
+    } else {
+      createWordsArray();
+      setGameBtn('не знаю');
+      setDisable(false);
+    }
+  };
   const handleButtonSelect = (selectedWord: WordsType) => {
-    setWordIndex(wordIndex + 1);
+    handleWordIndex();
     setRandomWord(selectedWord);
     checkAnswer(selectedWord);
-    handleWordIndex();
     setDisable(true);
   };
 
   const onKeydown = (event: KeyboardEventInit) => {
     const code: number | undefined = event.keyCode;
-    if (!disable && wordsArr.length && code && keyCodesArr.includes(code)) {
+    if (!skip && wordsArr.length && code && keyCodesArr.includes(code)) {
       const keyValue = Number(event.key);
       handleButtonSelect(wordsArr[keyValue - 1]);
+      setSkip(true);
     }
   };
 
   useEffect(() => {
+    window.addEventListener('keydown', onKeydown);
+    return () => window.addEventListener('keydown  ', onKeydown);
+  }, [skip, wordsArr]);
+  useEffect(() => {
     createWordsArray();
-    document.addEventListener('keypress', (e: KeyboardEventInit) => onKeydown(e));
-    return function cleanup() {
-      document.addEventListener('keypress', (e: KeyboardEventInit) => onKeydown(e));
-    };
   }, []);
 
   return (
