@@ -3,10 +3,14 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { coinToss } from '../../common/utils/coinToss';
 import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
 import { selectSettings, setGroup, setPage } from '../../features/settings/settingsSlice';
+import { usePutStatisticMutation } from '../../features/statistic/statisticApiSlice';
+import { StatisticGameEnum } from '../../features/statistic/statisticApiSlice.interface';
+import { selectStatistic, setStatistics } from '../../features/statistic/statisticSlice';
+import { getStatistic } from '../../features/statistic/statisticSliceHelper';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import { useAuth } from '../../hooks/useAuth';
-import { Game, GameAuth, Greetings, Loading, Statistics } from './components';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
+import { Game, GameAuth, Greetings, Loading, Statistics } from './components';
 import './Sprint.scss';
 
 export interface IStatistics {
@@ -28,10 +32,12 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isStartGame, setIsStartGame] = useState<boolean>(true);
   const [isEndGame, setIsEndGame] = useState<boolean>(false);
-  const [statistics, setStatistics] = useState<IStatistics[]>([]);
+  const [statisticsGame, setStatisticsGame] = useState<IStatistics[]>([]);
   const [timeStartGame, setTimeStartGame] = useState<string>('');
   const [timeEndGame, setTimeEndGame] = useState<string>('');
   const [arrayOfCoins, setArrayOfCoins] = useState<boolean[]>([]);
+  const { statistics, learnedWords } = useAppSelector(selectStatistic);
+  const [setStatistic, { data }] = usePutStatisticMutation();
 
   const { user } = useAuth();
 
@@ -64,7 +70,31 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
     transcription,
     result,
   }: IStatistics) => {
-    setStatistics([...statistics, { id, audio, word, wordTranslate, transcription, result }]);
+    setStatisticsGame([
+      ...statisticsGame,
+      { id, audio, word, wordTranslate, transcription, result },
+    ]);
+  };
+
+  const handleGameStatistic = (streak: number, score: number, timeStop: string) => {
+    const gameStatistic = {
+      seriesTrueAnswers: streak,
+      score,
+      name: StatisticGameEnum.SPRINT,
+      timeStart: timeStartGame,
+      timeStop,
+      statisticGame: statisticsGame,
+    };
+
+    const newStat = getStatistic(statistics, gameStatistic);
+
+    dispatch(setStatistics(newStat));
+    if (user.userId) {
+      setStatistic({
+        userId: user.userId || '',
+        statistic: newStat,
+      }).unwrap();
+    }
   };
 
   const handleLoading = () => {
@@ -125,6 +155,7 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
       {isLoading && <Loading />}
       {!isStartGame && !isLoading && !isEndGame && !user.token && (
         <Game
+          handleGameStatistic={handleGameStatistic}
           data={unauthorizedWords}
           arrayOfCoins={arrayOfCoins}
           page={page}
@@ -139,6 +170,7 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
       )}
       {!isStartGame && !isLoading && !isEndGame && user.token && (
         <GameAuth
+          handleGameStatistic={handleGameStatistic}
           data={authorizedWords?.paginatedResults}
           arrayOfCoins={arrayOfCoins}
           page={page}
@@ -151,7 +183,9 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
           handleTimeEndGame={handleTimeEndGame}
         />
       )}
-      {isEndGame && <Statistics statistics={statistics} endGame={endGame} resetGame={resetGame} />}
+      {isEndGame && (
+        <Statistics statistics={statisticsGame} endGame={endGame} resetGame={resetGame} />
+      )}
     </div>
   );
 };

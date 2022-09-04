@@ -1,11 +1,10 @@
 export const enum StatisticGameEnum {
-  SPRINT = 'string',
+  SPRINT = 'sprint',
   AUDIOCALL = 'audiocall',
 }
 
 export interface IStatistic {
-  experience: number;
-  name: StatisticGameEnum;
+  name: StatisticGameEnum | string;
   score: number;
   seriesTrueAnswers: number;
   timeStart: string;
