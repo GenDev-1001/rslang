@@ -2,25 +2,26 @@ import React, { FC, useState, useEffect, useRef, KeyboardEvent } from 'react';
 import { ButtonReset, ButtonSpeak, ButtonSelect } from '../buttons';
 import { Circle } from '../circle/Circle';
 import { Multiplier } from '../multiplier/Multiplier';
-import { keyCodesArr, wordsArrayFilds, WordsType } from '../../constants';
+import { IStatistics, keyCodesArr, wordsArrayFilds, WordsType } from '../../constants';
 import '../../Audio.scss';
 import { WordPicture } from './WordPicture';
 
 export interface IGame {
   data: WordsType[] | undefined;
   group: string;
-
-  resetGroup: () => void;
+  handleStatistics: ({
+    id,
+    audio,
+    word,
+    wordTranslate,
+    transcription,
+    answer,
+  }: IStatistics) => void;
+  resetGame: () => void;
   handleIsEndGame: (value: boolean) => void;
 }
 
-export const Game: FC<IGame> = ({
-  data,
-  group,
-
-  resetGroup,
-  handleIsEndGame,
-}) => {
+export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, handleIsEndGame }) => {
   const [score, setScore] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
   const [multiplier, setMultiplier] = useState<number>(1);
@@ -34,6 +35,7 @@ export const Game: FC<IGame> = ({
   const [gameBtn, setGameBtn] = useState<string>('не знаю');
   const [disable, setDisable] = useState(false);
   const prevBtn = useRef(null);
+
   const createRightWord = (wordslist: WordsType[]) => {
     let array: WordsType[] = wordslist;
     let result: WordsType;
@@ -78,7 +80,14 @@ export const Game: FC<IGame> = ({
     }
   };
 
-  const countSreak = (answer: boolean) => {
+  const countSreak = (
+    id: string,
+    audio: string,
+    word: string,
+    wordTranslate: string,
+    transcription: string,
+    answer: boolean,
+  ) => {
     if (!disable) {
       if (answer) {
         if (streak === 3) {
@@ -93,9 +102,19 @@ export const Game: FC<IGame> = ({
         }
 
         setScore((prevState) => prevState + 10 * multiplier);
+
+        handleStatistics({
+          id,
+          audio,
+          word,
+          wordTranslate,
+          transcription,
+          answer,
+        });
       } else {
         setStreak(0);
         setMultiplier(1);
+        handleStatistics({ id, audio, word, wordTranslate, transcription, answer });
       }
     }
   };
@@ -153,8 +172,24 @@ export const Game: FC<IGame> = ({
 
   const checkAnswer = (selectedWord: WordsType) => {
     const answer = rightWord.wordTranslate === selectedWord.wordTranslate;
-    countSreak(answer);
+
+    const id = data ? data[wordIndex].id : '';
+    const audio = data ? data[wordIndex].audio : '';
+    const word = data ? data[wordIndex].word : '';
+    const wordTranslate = data ? data[wordIndex].wordTranslate : '';
+    const transcription = data ? data[wordIndex].transcription : '';
+
+    countSreak(id, audio, word, wordTranslate, transcription, answer);
     changeBtnStatus(answer, selectedWord);
+
+    handleStatistics({
+      id,
+      audio,
+      word,
+      wordTranslate,
+      transcription,
+      answer,
+    });
   };
 
   const handleButtonSelect = (selectedWord: WordsType) => {
@@ -227,7 +262,7 @@ export const Game: FC<IGame> = ({
         onClick={continueGame}
       />
       <nav className="button-menu">
-        <ButtonReset description="Level Reset" onClick={resetGroup} />
+        <ButtonReset description="Level Reset" onClick={resetGame} />
       </nav>
     </div>
   );

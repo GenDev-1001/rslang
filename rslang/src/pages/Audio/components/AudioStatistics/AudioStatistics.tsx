@@ -1,40 +1,59 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { ButtonReset } from '../buttons';
 import { TableRow } from '../tableRow/TableRow';
-
 import './AudioStatistics.scss';
 
-export interface IStatistics {
+interface IAudioStatistics {
+  statistics: {
+    id: string;
+    word: string;
+    audio: string;
+    transcription: string;
+    wordTranslate: string;
+    answer: boolean;
+  }[];
   endGame: () => void;
-  resetGroup: () => void;
+  resetGame: () => void;
 }
 
-const Statistics: FC<IStatistics> = ({ endGame, resetGroup }) => {
+const AudioStatistics: FC<IAudioStatistics> = ({ statistics, endGame, resetGame }) => {
   return (
     <>
-      <div className="sprint-frame sprint-table__wrapper">
-        <h2 className="sprint-frame__header">Statistics</h2>
-        <table className="sprint-table">
+      <div className="audio-frame audio-table__wrapper">
+        <h2 className="audio-frame__header">Statistics</h2>
+        <table className="audio-table">
           <tbody>
-            <TableRow />
-            <TableRow />
-            <TableRow />
-            <TableRow />
-            <TableRow />
-            <TableRow />
-            <TableRow />
-            <TableRow />
-            <TableRow />
-            <TableRow />
+            {statistics.length > 0 &&
+              statistics.map(({ id, audio, word, wordTranslate, transcription, answer }) => {
+                return (
+                  <TableRow
+                    key={id}
+                    audio={audio}
+                    word={word}
+                    wordTranslate={wordTranslate}
+                    transcription={transcription}
+                    answer={answer}
+                  />
+                );
+              })}
+            {statistics.length === 0 && (
+              <tr>
+                <td>
+                  <p className="audio-frame__error">
+                    You could not manage to choose a single word, try again!
+                  </p>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
       <nav className="button-menu">
         <ButtonReset description="Play Again" bgColor="bg_green" onClick={endGame} />
-        <ButtonReset description="Level Reset" onClick={resetGroup} />
+        <ButtonReset description="Level Reset" onClick={resetGame} />
       </nav>
     </>
   );
 };
 
-export { Statistics };
+export { AudioStatistics };
