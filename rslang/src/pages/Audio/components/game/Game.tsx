@@ -157,10 +157,10 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
     }
   };
 
-  const playSound = (answer: boolean) => {
-    const sountP = new Audio(success);
-    sountP.play();
-  };
+  // const playSound = (answer: boolean) => {
+  //   const sountP = new Audio(success);
+  //   sountP.play();
+  // };
 
   const checkAnswer = (selectedWord: WordsType | undefined) => {
     const answer = !!selectedWord && rightWord.wordTranslate === selectedWord.wordTranslate;
@@ -172,7 +172,7 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
 
     countSreak(id, audio, word, wordTranslate, transcription, answer);
     changeBtnStatus(answer, selectedWord);
-    playSound(answer);
+    // playSound(answer);
     handleStatistics({
       id,
       audio,
