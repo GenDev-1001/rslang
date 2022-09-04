@@ -1,0 +1,152 @@
+@import '../../sass/Constants.scss';
+
+.audio-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 70px);
+}
+
+.audio-wrapper__bg {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  transform: translate(-50%, -50%);
+}
+
+.audio-frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 80vw;
+  max-width: $base * 245;
+  min-height: 75vh;
+  margin: auto;
+  padding: $base * 5;
+  background-color: $color-white;
+  border-radius: $base * 5;
+  box-shadow: rgb(0 0 0 / 16%) 0 3px 6px, rgb(0 0 0 / 23%) 0 3px 6px;
+  row-gap: $base * 10;
+  &__header {
+    font-weight: $fw-bold;
+    font-size: $base * 20;
+    text-align: center;
+  }
+  &__description {
+    font-size: $base * 8;
+    text-align: center;
+    .options-list {
+      font-size: $base * 6;
+      display: flex;
+      flex-direction: column;
+      text-align: initial;
+      margin: 20px 140px;
+      gap: 10px;
+      .list-item {
+        list-style-type: disc;
+      }
+    }
+  }
+}
+
+.audio-ui {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: $base;
+  width: 100%;
+  &__streak-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: $base * 2;
+  }
+
+  &__streak {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: $base * 5;
+  }
+
+  &__level {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: $base * 5;
+  }
+}
+
+.audio-btn-select__wrapper {
+  min-height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: $base * 4;
+}
+
+.button-menu {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: $base * 5;
+  width: $base * 25;
+  height: 100%;
+  background-color: $color-white-02;
+}
+
+.select-wrapper {
+  height: 17vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg_white {
+  background-color: $color-white-09;
+  cursor: default;
+  &:hover {
+    transform: unset;
+  }
+  &:active {
+    transform: unset;
+  }
+}
+.bg_grey {
+  background-color: rgb(222, 219, 219);
+  cursor: default;
+  &:hover {
+    transform: unset;
+  }
+  &:active {
+    transform: unset;
+  }
+}
+
+.answer_wrong {
+  background-color: rgb(222, 219, 219);
+  text-decoration: line-through;
+  cursor: default;
+  &:hover {
+    transform: unset;
+  }
+  &:active {
+    transform: unset;
+  }
+}

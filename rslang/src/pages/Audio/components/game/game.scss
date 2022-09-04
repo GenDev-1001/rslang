@@ -1,0 +1,64 @@
+@import '../../../../sass/Constants.scss';
+
+.word_wrapper {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  .word_picture {
+    width: 200px;
+    height: 150px;
+    border-radius: 20px;
+  }
+  .word_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 1.5rem;
+
+    .button-cat-speak {
+      cursor: pointer;
+      transition: all $transition-01 ease-out;
+
+      &:hover {
+        transform: translate(0.063rem, 0.063rem);
+      }
+
+      &:active {
+        transform: translate($base, $base);
+      }
+    }
+
+    .button-cat-speak__img {
+      width: 100%;
+      height: auto;
+    }
+
+    .audio-ui__circle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: $base * 30;
+      width: $base * 30;
+      min-height: $base * 30;
+      height: $base * 30;
+      font-size: $base * 7;
+      font-weight: $fw-bold;
+      text-align: center;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 50%;
+      background-color: $color-white;
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+
+    .audio-ui__circle_small {
+      min-width: $base * 10;
+      width: $base * 10;
+      min-height: $base * 10;
+      height: $base * 10;
+    }
+  }
+}
