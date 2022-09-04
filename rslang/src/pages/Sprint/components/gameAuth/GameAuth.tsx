@@ -125,8 +125,8 @@ const GameAuth: FC<IGameAuth> = ({
     const transcription = data ? data[wordIndex].transcription : '';
 
     if (
-      ((textContent === 'true' || textContent === 'ArrowRight') && arrayOfCoins[wordIndex]) ||
-      ((textContent === 'false' || textContent === 'ArrowLeft') && !arrayOfCoins[wordIndex])
+      (textContent === 'true' && arrayOfCoins[wordIndex]) ||
+      (textContent === 'false' && !arrayOfCoins[wordIndex])
     ) {
       const result = true;
 
@@ -176,13 +176,17 @@ const GameAuth: FC<IGameAuth> = ({
     handleWordIndex();
   };
 
-  const handleKeySelect = (event: globalThis.KeyboardEvent) => {
+  const handleKeySelect = (event: KeyboardEvent) => {
     const { code } = event;
 
-    if (code === 'ArrowRight') {
-      handleAnswer('ArrowRight');
-    } else if (code === 'ArrowLeft') {
-      handleAnswer('ArrowLeft');
+    if (code === 'KeyY') {
+      handleAnswer('true');
+      handleWordIndex();
+    }
+
+    if (code === 'KeyN') {
+      handleAnswer('false');
+      handleWordIndex();
     }
   };
 

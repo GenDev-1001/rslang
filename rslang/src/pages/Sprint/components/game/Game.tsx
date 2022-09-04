@@ -122,13 +122,17 @@ const Game: FC<IGame> = ({
     handleWordIndex();
   };
 
-  const handleKeySelect = (event: globalThis.KeyboardEvent) => {
+  const handleKeySelect = (event: KeyboardEvent) => {
     const { code } = event;
 
-    if (code === 'ArrowRight') {
-      handleAnswer('ArrowRight');
-    } else if (code === 'ArrowLeft') {
-      handleAnswer('ArrowLeft');
+    if (code === 'KeyY') {
+      handleAnswer('true');
+      handleWordIndex();
+    }
+
+    if (code === 'KeyN') {
+      handleAnswer('false');
+      handleWordIndex();
     }
   };
 

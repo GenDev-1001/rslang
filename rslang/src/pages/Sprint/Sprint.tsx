@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useState } from 'react';
+import { FC, MouseEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { coinToss } from '../../common/utils/coinToss';
 import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
@@ -36,6 +36,7 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
   const [statistics, setStatistics] = useState<IStatistics[]>([]);
   const [timeStartGame, setTimeStartGame] = useState<string>('');
   const [timeEndGame, setTimeEndGame] = useState<string>('');
+  const [arrayOfCoins, setArrayOfCoins] = useState<boolean[]>([]);
 
   console.log('group', group);
   console.log('page', page);
@@ -60,10 +61,8 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
       arr.push(coinToss());
     }
 
-    return arr;
+    setArrayOfCoins(arr);
   };
-
-  const arrayOfCoins = getArrayOfCoins(20);
 
   const handleStatistics = ({
     id,
@@ -122,6 +121,10 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
   const handleTimeEndGame = () => {
     setTimeEndGame(new Date().toISOString());
   };
+
+  useEffect(() => {
+    getArrayOfCoins(200);
+  }, []);
 
   return (
     <div className="sprint-wrapper">
