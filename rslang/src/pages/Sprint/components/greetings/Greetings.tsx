@@ -30,9 +30,7 @@ const Greetings: FC<IGreetings> = ({ onClick, isGameOpenFromMenu }) => {
           </div>
         </>
       ) : (
-        <button className="button-level button-start bg_green" onClick={onClick}>
-          Start
-        </button>
+        <ButtonLevel description="Start" bgColor="button-start bg_green" onClick={onClick} />
       )}
     </div>
   );
