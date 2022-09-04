@@ -40,7 +40,6 @@ const Game: FC<IGame> = ({
   const [timer, setTimer] = useState<number>(60);
   const [score, setScore] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
-  const [maxStreak, setMaxStreak] = useState<number>(0);
   const [multiplier, setMultiplier] = useState<number>(1);
   const [wordIndex, setWordIndex] = useState<number>(0);
   const [englishWord, setEnglishWord] = useState<string>('');

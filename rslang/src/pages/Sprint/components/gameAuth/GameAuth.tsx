@@ -45,6 +45,8 @@ const GameAuth: FC<IGameAuth> = ({
   const [timer, setTimer] = useState<number>(60);
   const [score, setScore] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
+  const [counter, setCounter] = useState<number>(0);
+  const [arrayOfCounters, setArrayOfCounters] = useState<number[]>([]);
   const [maxStreak, setMaxStreak] = useState<number>(0);
   const [multiplier, setMultiplier] = useState<number>(1);
   const [wordIndex, setWordIndex] = useState<number>(0);
@@ -143,6 +145,8 @@ const GameAuth: FC<IGameAuth> = ({
       }
 
       setScore((prevState) => prevState + 10 * multiplier);
+      setCounter((prevState) => prevState + 1);
+      setArrayOfCounters([...arrayOfCounters, counter]);
 
       if (user.token) {
         handleAccuracy(true);
@@ -167,6 +171,14 @@ const GameAuth: FC<IGameAuth> = ({
 
       setStreak(0);
       setMultiplier(1);
+      setCounter(0);
+      setArrayOfCounters([...arrayOfCounters, counter]);
+    }
+  };
+
+  const handleMaxStreak = () => {
+    if (counter >= maxStreak) {
+      setMaxStreak(Math.max.apply(null, arrayOfCounters));
     }
   };
 
@@ -203,17 +215,22 @@ const GameAuth: FC<IGameAuth> = ({
   }, []);
 
   useEffect(() => {
+    handleMaxStreak();
+    console.log('maxStreak', maxStreak);
+  }, [counter]);
+
+  useEffect(() => {
     getEnglishWord();
     getRandomWordTranslation();
   }, [wordIndex]);
 
   useEffect(() => {
-    const counter = setTimeout(() => {
+    const counterTimer = setTimeout(() => {
       setTimer(timer - 1);
     }, 1000);
 
     if (!timer) {
-      clearTimeout(counter);
+      clearTimeout(counterTimer);
 
       setTimeout(() => {
         handleIsEndGame(true);
