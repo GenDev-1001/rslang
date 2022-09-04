@@ -1,10 +1,11 @@
 import { FC } from 'react';
-import { IWordsResponse } from '../../../../../features/words/wordsSlice.interface';
 import cat from '../../../../../images/cat-speak.svg';
+import { WordsType } from '../../../constants';
 import './ButtonSpeak.scss';
 
 export interface IButtonSpeak {
-  rightWord: IWordsResponse | undefined;
+  rightWord?: WordsType | undefined;
+  audio?: WordsType | undefined | string;
 }
 
 const ButtonSpeak: FC<IButtonSpeak> = ({ rightWord }) => {

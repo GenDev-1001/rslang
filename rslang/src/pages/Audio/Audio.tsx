@@ -5,14 +5,15 @@ import './Audio.scss';
 import AudioGreetings from './components/AudioGreetings';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import { Loading } from './components/loading/Loading';
-import { Statistics } from './components/AudioStatistics/AudioStatistics';
+import { AudioStatistics } from './components/AudioStatistics/AudioStatistics';
+import { IStatistics } from './constants';
 
 export const Audio: FC = () => {
   const [group, setGroup] = useState<string>('');
   const [page, setPage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEndGame, setIsEndGame] = useState<boolean>(false);
-
+  const [statistics, setStatistics] = useState<IStatistics[]>([]);
   const { data } = useGetWordsQuery({
     group: +group,
     page: +page,
@@ -38,13 +39,21 @@ export const Audio: FC = () => {
     setIsEndGame(false);
   };
 
-  const resetGroup = (): void => {
+  const resetGame = (): void => {
     endGame();
     setGroup('');
   };
-  // useEffect(() => {
-  //   console.log('data ===', data);
-  // }, []);
+
+  const handleStatistics = ({
+    id,
+    audio,
+    word,
+    wordTranslate,
+    transcription,
+    answer,
+  }: IStatistics) => {
+    setStatistics([...statistics, { id, audio, word, wordTranslate, transcription, answer }]);
+  };
 
   return (
     <div className="audio-wrapper">
@@ -52,9 +61,17 @@ export const Audio: FC = () => {
       {!group && <AudioGreetings onClick={handleGroup} />}
       {isLoading && <Loading />}
       {group && !isLoading && !isEndGame && (
-        <Game data={data} group={group} resetGroup={resetGroup} handleIsEndGame={handleIsEndGame} />
+        <Game
+          data={data}
+          group={group}
+          resetGame={resetGame}
+          handleIsEndGame={handleIsEndGame}
+          handleStatistics={handleStatistics}
+        />
       )}
-      {isEndGame && <Statistics endGame={endGame} resetGroup={resetGroup} />}
+      {isEndGame && (
+        <AudioStatistics statistics={statistics} endGame={endGame} resetGame={resetGame} />
+      )}
     </div>
   );
 };

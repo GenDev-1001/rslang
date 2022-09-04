@@ -1,6 +1,6 @@
 @import '../../../../sass/Constants.scss';
 
-.sprint-table__wrapper {
+.audio-table__wrapper {
   min-height: auto !important;
   height: 70vh !important;
   justify-content: flex-start !important;
@@ -8,12 +8,12 @@
   overflow-y: auto;
 }
 
-.sprint-table {
+.audio-table {
   width: 100%;
   border-radius: $base * 5;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 
-  .audio-ui__circle {
+  .sprint-ui__circle {
     box-shadow: none;
   }
 }
@@ -28,7 +28,29 @@
     border-bottom: none;
   }
 
-  .audio-ui__circle {
+  td {
+    &:nth-child(1) {
+      width: 70px;
+    }
+
+    &:nth-child(2) {
+      width: 28%;
+    }
+
+    &:nth-child(3) {
+      width: 28%;
+    }
+
+    &:nth-child(4) {
+      width: 28%;
+    }
+
+    &:nth-child(5) {
+      width: 70px;
+    }
+  }
+
+  .sprint-ui__circle {
     background-color: transparent;
   }
 }

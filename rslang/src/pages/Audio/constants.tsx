@@ -1,3 +1,13 @@
+import { IUserWordData } from '../../features/userWords/userWordsApiSlice.interface';
+
+export interface IStatistics {
+  id: string;
+  word: string;
+  audio: string;
+  transcription: string;
+  wordTranslate: string;
+  answer: boolean;
+}
 export interface WordsType {
   audio: string;
   audioExample: string;
@@ -14,6 +24,7 @@ export interface WordsType {
   word: string;
   wordTranslate: string;
   status?: string;
+  userWord?: IUserWordData;
 }
 
 export const wordsArrayFilds: WordsType = {
