@@ -28,6 +28,7 @@ export interface IGameAuth {
   handlePage: () => void;
   handleTimeStartGame: () => void;
   handleTimeEndGame: () => void;
+  handleGameStatistic: (streak: number, score: number, timeStop: string) => void;
 }
 
 const GameAuth: FC<IGameAuth> = ({
@@ -41,6 +42,7 @@ const GameAuth: FC<IGameAuth> = ({
   handlePage,
   handleTimeStartGame,
   handleTimeEndGame,
+  handleGameStatistic,
 }) => {
   const [timer, setTimer] = useState<number>(60);
   const [score, setScore] = useState<number>(0);
@@ -235,6 +237,7 @@ const GameAuth: FC<IGameAuth> = ({
       setTimeout(() => {
         handleIsEndGame(true);
         handleTimeEndGame();
+        handleGameStatistic(streak, score, new Date().toISOString());
       }, 1000);
     }
   }, [timer]);
