@@ -37,7 +37,7 @@ const Game: FC<IGame> = ({
   handleTimeStartGame,
   handleTimeEndGame,
 }) => {
-  const [timer, setTimer] = useState<number>(20);
+  const [timer, setTimer] = useState<number>(60);
   const [score, setScore] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
   const [multiplier, setMultiplier] = useState<number>(1);
@@ -81,8 +81,8 @@ const Game: FC<IGame> = ({
     const transcription = data ? data[wordIndex].transcription : '';
 
     if (
-      ((textContent === 'true' || textContent === 'ArrowRight') && arrayOfCoins[wordIndex]) ||
-      ((textContent === 'false' || textContent === 'ArrowLeft') && !arrayOfCoins[wordIndex])
+      (textContent === 'true' && arrayOfCoins[wordIndex]) ||
+      (textContent === 'false' && !arrayOfCoins[wordIndex])
     ) {
       const result = true;
 
@@ -122,13 +122,17 @@ const Game: FC<IGame> = ({
     handleWordIndex();
   };
 
-  const handleKeySelect = (event: globalThis.KeyboardEvent) => {
+  const handleKeySelect = (event: KeyboardEvent) => {
     const { code } = event;
 
-    if (code === 'ArrowRight') {
-      handleAnswer('ArrowRight');
-    } else if (code === 'ArrowLeft') {
-      handleAnswer('ArrowLeft');
+    if (code === 'KeyY') {
+      handleAnswer('true');
+      handleWordIndex();
+    }
+
+    if (code === 'KeyN') {
+      handleAnswer('false');
+      handleWordIndex();
     }
   };
 

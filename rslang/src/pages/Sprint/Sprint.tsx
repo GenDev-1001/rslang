@@ -1,12 +1,12 @@
-import { FC, MouseEvent, useState } from 'react';
+import { FC, MouseEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { coinToss } from '../../common/utils/coinToss';
 import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
 import { selectSettings, setGroup, setPage } from '../../features/settings/settingsSlice';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import { useAuth } from '../../hooks/useAuth';
-import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import { Game, GameAuth, Greetings, Loading, Statistics } from './components';
+import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import './Sprint.scss';
 
 export interface IStatistics {
@@ -22,23 +22,16 @@ export interface ISprint {
   isGameOpenFromMenu: boolean;
 }
 
-// const localGroup = localStorage.getItem('currentGroup') || 0;
-// const localPage = localStorage.getItem('currentPage') || 0;
-
 const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
   const { page, group } = useAppSelector(selectSettings);
   const dispatch = useAppDispatch();
-  // const [group, setGroup] = useState<number>(!isGameOpenFromMenu ? +localGroup : 0);
-  // const [page, setPage] = useState<number>(!isGameOpenFromMenu ? +localPage : random(0, 29));
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isStartGame, setIsStartGame] = useState<boolean>(true);
   const [isEndGame, setIsEndGame] = useState<boolean>(false);
   const [statistics, setStatistics] = useState<IStatistics[]>([]);
   const [timeStartGame, setTimeStartGame] = useState<string>('');
   const [timeEndGame, setTimeEndGame] = useState<string>('');
-
-  console.log('group', group);
-  console.log('page', page);
+  const [arrayOfCoins, setArrayOfCoins] = useState<boolean[]>([]);
 
   const { user } = useAuth();
 
@@ -60,10 +53,8 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
       arr.push(coinToss());
     }
 
-    return arr;
+    setArrayOfCoins(arr);
   };
-
-  const arrayOfCoins = getArrayOfCoins(20);
 
   const handleStatistics = ({
     id,
@@ -122,6 +113,10 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
   const handleTimeEndGame = () => {
     setTimeEndGame(new Date().toISOString());
   };
+
+  useEffect(() => {
+    getArrayOfCoins(200);
+  }, []);
 
   return (
     <div className="sprint-wrapper">

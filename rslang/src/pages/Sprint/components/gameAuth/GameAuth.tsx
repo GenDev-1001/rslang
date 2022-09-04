@@ -42,9 +42,12 @@ const GameAuth: FC<IGameAuth> = ({
   handleTimeStartGame,
   handleTimeEndGame,
 }) => {
-  const [timer, setTimer] = useState<number>(20);
+  const [timer, setTimer] = useState<number>(60);
   const [score, setScore] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
+  const [counter, setCounter] = useState<number>(0);
+  const [arrayOfCounters, setArrayOfCounters] = useState<number[]>([]);
+  const [maxStreak, setMaxStreak] = useState<number>(0);
   const [multiplier, setMultiplier] = useState<number>(1);
   const [wordIndex, setWordIndex] = useState<number>(0);
   const [englishWord, setEnglishWord] = useState<string>('');
@@ -83,7 +86,7 @@ const GameAuth: FC<IGameAuth> = ({
     }
   };
 
-  const handleAccuracy = (value: boolean, difficulty: UserWordStatus) => {
+  const handleAccuracy = (value: boolean) => {
     const word = data![wordIndex];
 
     let correctCountSprintValue = word?.userWord ? word?.userWord.optional.correctCountSprint : 0;
@@ -125,8 +128,8 @@ const GameAuth: FC<IGameAuth> = ({
     const transcription = data ? data[wordIndex].transcription : '';
 
     if (
-      ((textContent === 'true' || textContent === 'ArrowRight') && arrayOfCoins[wordIndex]) ||
-      ((textContent === 'false' || textContent === 'ArrowLeft') && !arrayOfCoins[wordIndex])
+      (textContent === 'true' && arrayOfCoins[wordIndex]) ||
+      (textContent === 'false' && !arrayOfCoins[wordIndex])
     ) {
       const result = true;
 
@@ -142,9 +145,11 @@ const GameAuth: FC<IGameAuth> = ({
       }
 
       setScore((prevState) => prevState + 10 * multiplier);
+      setCounter((prevState) => prevState + 1);
+      setArrayOfCounters([...arrayOfCounters, counter]);
 
       if (user.token) {
-        handleAccuracy(true, UserWordStatus.EASY);
+        handleAccuracy(true);
       }
 
       handleStatistics({
@@ -159,13 +164,21 @@ const GameAuth: FC<IGameAuth> = ({
       const result = false;
 
       if (user.token) {
-        handleAccuracy(false, UserWordStatus.HARD);
+        handleAccuracy(false);
       }
 
       handleStatistics({ id, audio, word, wordTranslate, transcription, result });
 
       setStreak(0);
       setMultiplier(1);
+      setCounter(0);
+      setArrayOfCounters([...arrayOfCounters, counter]);
+    }
+  };
+
+  const handleMaxStreak = () => {
+    if (counter >= maxStreak) {
+      setMaxStreak(Math.max.apply(null, arrayOfCounters));
     }
   };
 
@@ -176,13 +189,17 @@ const GameAuth: FC<IGameAuth> = ({
     handleWordIndex();
   };
 
-  const handleKeySelect = (event: globalThis.KeyboardEvent) => {
+  const handleKeySelect = (event: KeyboardEvent) => {
     const { code } = event;
 
-    if (code === 'ArrowRight') {
-      handleAnswer('ArrowRight');
-    } else if (code === 'ArrowLeft') {
-      handleAnswer('ArrowLeft');
+    if (code === 'KeyY') {
+      handleAnswer('true');
+      handleWordIndex();
+    }
+
+    if (code === 'KeyN') {
+      handleAnswer('false');
+      handleWordIndex();
     }
   };
 
@@ -198,17 +215,22 @@ const GameAuth: FC<IGameAuth> = ({
   }, []);
 
   useEffect(() => {
+    handleMaxStreak();
+    console.log('maxStreak', maxStreak);
+  }, [counter]);
+
+  useEffect(() => {
     getEnglishWord();
     getRandomWordTranslation();
   }, [wordIndex]);
 
   useEffect(() => {
-    const counter = setTimeout(() => {
+    const counterTimer = setTimeout(() => {
       setTimer(timer - 1);
     }, 1000);
 
     if (!timer) {
-      clearTimeout(counter);
+      clearTimeout(counterTimer);
 
       setTimeout(() => {
         handleIsEndGame(true);
