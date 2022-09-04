@@ -23,6 +23,7 @@ export interface IGame {
   handlePage: () => void;
   handleTimeStartGame: () => void;
   handleTimeEndGame: () => void;
+  handleGameStatistic: (streak: number, score: number, timeStop: string) => void;
 }
 
 const Game: FC<IGame> = ({
@@ -36,6 +37,7 @@ const Game: FC<IGame> = ({
   handlePage,
   handleTimeStartGame,
   handleTimeEndGame,
+  handleGameStatistic,
 }) => {
   const [timer, setTimer] = useState<number>(60);
   const [score, setScore] = useState<number>(0);
@@ -163,6 +165,7 @@ const Game: FC<IGame> = ({
       setTimeout(() => {
         handleIsEndGame(true);
         handleTimeEndGame();
+        handleGameStatistic(streak, score, new Date().toISOString());
       }, 1000);
     }
   }, [timer]);

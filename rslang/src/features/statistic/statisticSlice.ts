@@ -1,12 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
+import { safeParse } from '../../common/utils/safeParse';
 import { IPersonStatistic } from './statisticApiSlice.interface';
 import { IStatisticState } from './statisticSlice.interface';
 
-export const initialState: IStatisticState = Object.freeze({
+const localStatistic = safeParse<IStatisticState>(localStorage.getItem('statistic') || 'null') || {
   learnedWords: 0,
   statistics: [],
-});
+};
+
+export const initialState: IStatisticState = localStatistic;
 
 export const statisticsSlice = createSlice({
   name: 'statistic',
@@ -15,6 +18,7 @@ export const statisticsSlice = createSlice({
     setStatistics: (state, action: PayloadAction<IPersonStatistic>) => {
       state.learnedWords = action.payload.learnedWords;
       state.statistics = action.payload.statistics;
+      localStorage.setItem('statistic', JSON.stringify(state));
     },
   },
 });

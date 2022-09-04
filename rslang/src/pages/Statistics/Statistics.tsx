@@ -1,11 +1,20 @@
 import { FC } from 'react';
-import { Graph, Progress, Game } from './components';
+import { useAppSelector } from '../../app/hooks';
+import { useGetStatisticQuery } from '../../features/statistic/statisticApiSlice';
+import { selectStatistic } from '../../features/statistic/statisticSlice';
+import { useAuth } from '../../hooks/useAuth';
+import audiocallIcon from '../../images/audiocall.svg';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import sprintIcon from '../../images/sprint.svg';
-import audiocallIcon from '../../images/audiocall.svg';
+import { Game, Graph, Progress } from './components';
 import './Statistics.scss';
 
 const Statistics: FC = () => {
+  const { user } = useAuth();
+  const { isLoading } = useGetStatisticQuery(user.userId || '');
+  const { statistics, learnedWords } = useAppSelector(selectStatistic);
+
+  console.log(statistics, learnedWords);
   return (
     <div className="sprint-wrapper">
       <img src={sprintBg} alt="Statistics Background" className="sprint-wrapper__bg" />
@@ -19,7 +28,7 @@ const Statistics: FC = () => {
                 <h3>were learned</h3>
               </div>
             </div>
-            
+
             <Progress progress={50} />
           </div>
           <div className="statistics-wrapper_second">
