@@ -14,7 +14,6 @@ const WordPicture: FC<IWordPicture> = ({ rightWord }) => {
     );
     audio.play();
   };
-  console.log(rightWord.image);
 
   return (
     <div className="word_wrapper">
