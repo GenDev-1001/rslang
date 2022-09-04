@@ -5,8 +5,8 @@ import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggreg
 import { selectSettings, setGroup, setPage } from '../../features/settings/settingsSlice';
 import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import { useAuth } from '../../hooks/useAuth';
-import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import { Game, GameAuth, Greetings, Loading, Statistics } from './components';
+import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import './Sprint.scss';
 
 export interface IStatistics {

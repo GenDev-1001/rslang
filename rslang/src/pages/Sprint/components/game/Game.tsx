@@ -81,8 +81,8 @@ const Game: FC<IGame> = ({
     const transcription = data ? data[wordIndex].transcription : '';
 
     if (
-      ((textContent === 'true' || textContent === 'ArrowRight') && arrayOfCoins[wordIndex]) ||
-      ((textContent === 'false' || textContent === 'ArrowLeft') && !arrayOfCoins[wordIndex])
+      (textContent === 'true' && arrayOfCoins[wordIndex]) ||
+      (textContent === 'false' && !arrayOfCoins[wordIndex])
     ) {
       const result = true;
 
