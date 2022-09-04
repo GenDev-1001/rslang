@@ -10,7 +10,7 @@ interface IAudioStatistics {
     audio: string;
     transcription: string;
     wordTranslate: string;
-    answer: boolean;
+    result: boolean;
   }[];
   endGame: () => void;
   resetGame: () => void;
@@ -24,7 +24,7 @@ const AudioStatistics: FC<IAudioStatistics> = ({ statistics, endGame, resetGame 
         <table className="audio-table">
           <tbody>
             {statistics.length > 0 &&
-              statistics.map(({ id, audio, word, wordTranslate, transcription, answer }) => {
+              statistics.map(({ id, audio, word, wordTranslate, transcription, result }) => {
                 return (
                   <TableRow
                     key={id}
@@ -32,7 +32,7 @@ const AudioStatistics: FC<IAudioStatistics> = ({ statistics, endGame, resetGame 
                     word={word}
                     wordTranslate={wordTranslate}
                     transcription={transcription}
-                    answer={answer}
+                    result={result}
                   />
                 );
               })}

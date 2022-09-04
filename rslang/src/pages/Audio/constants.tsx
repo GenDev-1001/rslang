@@ -6,8 +6,9 @@ export interface IStatistics {
   audio: string;
   transcription: string;
   wordTranslate: string;
-  answer: boolean;
+  result: boolean;
 }
+
 export interface WordsType {
   audio: string;
   audioExample: string;
