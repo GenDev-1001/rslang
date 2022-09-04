@@ -5,6 +5,7 @@ import { Multiplier } from '../multiplier/Multiplier';
 import { IStatistics, keyCodesArr, wordsArrayFilds, WordsType } from '../../constants';
 import '../../Audio.scss';
 import { WordPicture } from './WordPicture';
+import success from '../../../../audio/success.mp3';
 
 export interface IGame {
   data: WordsType[] | undefined;
@@ -30,9 +31,10 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
   const [wordsArr, setWordsArr] = useState<WordsType[]>([]);
   const [checkWordsArr, setCheckWordsArr] = useState<WordsType[]>([]);
   const [rightWord, setRightWord] = useState<WordsType>(wordsArrayFilds);
-
   const [randomWord, setRandomWord] = useState<WordsType>(wordsArrayFilds);
+  // поменять на skip
   const [gameBtn, setGameBtn] = useState<string>('не знаю');
+  const [sound, setSound] = useState<string>('');
   const [disable, setDisable] = useState<boolean>(false);
   const [skip, setSkip] = useState<boolean>(false);
   const prevBtn = useRef(null);
@@ -155,6 +157,11 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
     }
   };
 
+  const playSound = (answer: boolean) => {
+    const sountP = new Audio(success);
+    sountP.play();
+  };
+
   const checkAnswer = (selectedWord: WordsType | undefined) => {
     const answer = !!selectedWord && rightWord.wordTranslate === selectedWord.wordTranslate;
     const id = data ? rightWord.id : '';
@@ -165,7 +172,7 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
 
     countSreak(id, audio, word, wordTranslate, transcription, answer);
     changeBtnStatus(answer, selectedWord);
-
+    playSound(answer);
     handleStatistics({
       id,
       audio,
