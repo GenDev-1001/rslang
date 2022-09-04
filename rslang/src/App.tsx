@@ -1,13 +1,8 @@
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import './App.scss';
+import { About, Audio, Dictionary, Main, Sprint, Statistics } from './pages';
 import { Layout } from './layout/Layout';
-import { About } from './pages/About/About';
-import { Audio } from './pages/Audio/Audio';
-import { Dictionary } from './pages/Dictionary/Dictionary';
-import { Main } from './pages/Main/Main';
-import { Sprint } from './pages/Sprint/Sprint';
-import { Statistics } from './pages/Statistics/Statistics';
+import './App.scss';
 
 function App() {
   const [isGameOpenFromMenu, setIsGameOpenFromMenu] = useState<boolean>(true);

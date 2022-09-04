@@ -7,7 +7,11 @@ import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
 import { Loading } from './components/loading/Loading';
 import { Statistics } from './components/AudioStatistics/AudioStatistics';
 
-export const Audio: FC = () => {
+export interface IAudio {
+  isGameOpenFromMenu: boolean;
+}
+
+export const Audio: FC<IAudio> = ({ isGameOpenFromMenu }) => {
   const [group, setGroup] = useState<string>('');
   const [page, setPage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);

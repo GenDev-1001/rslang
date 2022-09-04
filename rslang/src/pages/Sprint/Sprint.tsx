@@ -22,14 +22,9 @@ export interface ISprint {
   isGameOpenFromMenu: boolean;
 }
 
-// const localGroup = localStorage.getItem('currentGroup') || 0;
-// const localPage = localStorage.getItem('currentPage') || 0;
-
 const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
   const { page, group } = useAppSelector(selectSettings);
   const dispatch = useAppDispatch();
-  // const [group, setGroup] = useState<number>(!isGameOpenFromMenu ? +localGroup : 0);
-  // const [page, setPage] = useState<number>(!isGameOpenFromMenu ? +localPage : random(0, 29));
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isStartGame, setIsStartGame] = useState<boolean>(true);
   const [isEndGame, setIsEndGame] = useState<boolean>(false);
@@ -37,9 +32,6 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
   const [timeStartGame, setTimeStartGame] = useState<string>('');
   const [timeEndGame, setTimeEndGame] = useState<string>('');
   const [arrayOfCoins, setArrayOfCoins] = useState<boolean[]>([]);
-
-  console.log('group', group);
-  console.log('page', page);
 
   const { user } = useAuth();
 
