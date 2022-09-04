@@ -19,6 +19,7 @@ const Statistics: FC = () => {
                 <h3>were learned</h3>
               </div>
             </div>
+            
             <Progress progress={50} />
           </div>
           <div className="statistics-wrapper_second">
