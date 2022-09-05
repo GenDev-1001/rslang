@@ -1,30 +1,8 @@
 import { FC, MouseEvent, useEffect, useState } from 'react';
 import { ButtonReset, ButtonSelect, ButtonSpeak, Circle, Multiplier } from '..';
 import { random } from '../../../../common/utils/random';
-import { IWordsResponse } from '../../../../features/words/wordsSlice.interface';
-import { IStatistics } from '../../Sprint';
+import { IGame } from './Game.interface';
 import './Game.scss';
-
-export interface IGame {
-  data: IWordsResponse[] | undefined;
-  arrayOfCoins: boolean[];
-  page: number;
-  group: number;
-  resetGame: () => void;
-  handleIsEndGame: (value: boolean) => void;
-  handleStatistics: ({
-    id,
-    audio,
-    word,
-    wordTranslate,
-    transcription,
-    result,
-  }: IStatistics) => void;
-  handlePage: () => void;
-  handleTimeStartGame: () => void;
-  handleTimeEndGame: () => void;
-  handleGameStatistic: (streak: number, score: number, timeStop: string) => void;
-}
 
 const Game: FC<IGame> = ({
   data,

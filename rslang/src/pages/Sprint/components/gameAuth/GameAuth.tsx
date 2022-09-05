@@ -1,35 +1,10 @@
 import { FC, MouseEvent, useEffect, useState } from 'react';
 import { ButtonReset, ButtonSelect, ButtonSpeak, Circle, Multiplier } from '..';
 import { UserWordStatus } from '../../../../common/interfaces';
-import { random } from '../../../../common/utils/random';
-import { IActivePaginatedResult } from '../../../../features/aggregaredWords/aggregaredWordsApiSlice.inteface';
-import {
-  useCreateUserWordMutation,
-  useUpdateUserWordMutation,
-} from '../../../../features/userWords/userWordsApiSlice';
+import { random } from '../../../../common/utils';
+import { useCreateUserWordMutation, useUpdateUserWordMutation } from '../../../../features';
 import { useAuth } from '../../../../hooks/useAuth';
-import { IStatistics } from '../../Sprint';
-
-export interface IGameAuth {
-  data: IActivePaginatedResult[] | undefined;
-  arrayOfCoins: boolean[];
-  page: number;
-  group: number;
-  resetGame: () => void;
-  handleIsEndGame: (value: boolean) => void;
-  handleStatistics: ({
-    id,
-    audio,
-    word,
-    wordTranslate,
-    transcription,
-    result,
-  }: IStatistics) => void;
-  handlePage: () => void;
-  handleTimeStartGame: () => void;
-  handleTimeEndGame: () => void;
-  handleGameStatistic: (streak: number, score: number, timeStop: string) => void;
-}
+import { IGameAuth } from './GameAuth.interface';
 
 const GameAuth: FC<IGameAuth> = ({
   data,

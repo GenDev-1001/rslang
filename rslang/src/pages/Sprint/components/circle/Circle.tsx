@@ -1,9 +1,5 @@
 import { FC } from 'react';
-
-export interface ICircle {
-  title: string;
-  value: string | number;
-}
+import { ICircle } from './Circle.interface';
 
 const Circle: FC<ICircle> = ({ title, value }) => {
   return (

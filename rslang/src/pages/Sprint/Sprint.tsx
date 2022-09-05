@@ -1,30 +1,23 @@
 import { FC, MouseEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { coinToss } from '../../common/utils/coinToss';
-import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
-import { selectSettings, setGroup, setPage } from '../../features/settings/settingsSlice';
-import { usePutStatisticMutation } from '../../features/statistic/statisticApiSlice';
-import { StatisticGameEnum } from '../../features/statistic/statisticApiSlice.interface';
-import { selectStatistic, setStatistics } from '../../features/statistic/statisticSlice';
-import { getStatistic } from '../../features/statistic/statisticSliceHelper';
-import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
+import { coinToss } from '../../common/utils';
+import {
+  useActiveWordsByUserQuery,
+  selectSettings,
+  setGroup,
+  setPage,
+  usePutStatisticMutation,
+  StatisticGameEnum,
+  selectStatistic,
+  setStatistics,
+  getStatistic,
+  useGetWordsQuery,
+} from '../../features';
 import { useAuth } from '../../hooks/useAuth';
-import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import { Game, GameAuth, Greetings, Loading, Statistics } from './components';
+import { IStatistics, ISprint } from './Sprint.interface';
+import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import './Sprint.scss';
-
-export interface IStatistics {
-  id: string;
-  word: string;
-  audio: string;
-  transcription: string;
-  wordTranslate: string;
-  result: boolean;
-}
-
-export interface ISprint {
-  isGameOpenFromMenu: boolean;
-}
 
 const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
   const { page, group } = useAppSelector(selectSettings);
