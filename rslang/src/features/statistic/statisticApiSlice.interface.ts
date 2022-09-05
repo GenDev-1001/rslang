@@ -9,8 +9,8 @@ export interface IStatistic {
   seriesTrueAnswers: number;
   timeStart: string;
   timeStop: string;
-  wordsFalse: string[]; // id words
-  wordsTrue: string[];
+  wordsFalse: number; // id words
+  wordsTrue: number;
 }
 
 export interface IPersonStatistic {

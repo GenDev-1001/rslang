@@ -95,7 +95,7 @@ const GameAuth: FC<IGameAuth> = ({
     const wordRequest = {
       word: {
         difficulty:
-          correctCountSprintValue >= 5 && errorCountSprintValue === 0
+          correctCountSprintValue >= 5 && errorCountSprintValue === 0 && errorCountAudioValue === 0
             ? UserWordStatus.EASY
             : UserWordStatus.HARD,
         optional,

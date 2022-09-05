@@ -10,13 +10,13 @@ export interface IGame {
 
 const Game: FC<IGame> = ({ title, src, statistics }) => {
   const countWords = (games: IStatistic[], nameGame?: string): number => {
-    const countSet = new Set();
+    let wordsTrue = 0;
     games.forEach((game) => {
       if (nameGame ? game.name === nameGame : true) {
-        game.wordsTrue.concat(game.wordsFalse).forEach((id) => countSet.add(id));
+        wordsTrue += game.wordsTrue;
       }
     });
-    return countSet.size;
+    return wordsTrue;
   };
 
   const percentTrueWords = (games: IStatistic[], nameGame?: string): number => {
@@ -24,8 +24,8 @@ const Game: FC<IGame> = ({ title, src, statistics }) => {
     let wordsFalse = 0;
     games.forEach((game) => {
       if (nameGame ? game.name === nameGame : true) {
-        wordsTrue += game.wordsTrue.length;
-        wordsFalse += game.wordsFalse.length;
+        wordsTrue += game.wordsTrue;
+        wordsFalse += game.wordsFalse;
       }
     });
     return Math.round((wordsTrue * 100) / (wordsTrue + wordsFalse)) || 0;

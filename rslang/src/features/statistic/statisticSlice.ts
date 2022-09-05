@@ -20,10 +20,15 @@ export const statisticsSlice = createSlice({
       state.statistics = action.payload.statistics;
       localStorage.setItem('statistic', JSON.stringify(state));
     },
+    resetStatistics: (state) => {
+      state.learnedWords = 0;
+      state.statistics = [];
+      localStorage.removeItem('statistic');
+    },
   },
 });
 
-export const { setStatistics } = statisticsSlice.actions;
+export const { setStatistics, resetStatistics } = statisticsSlice.actions;
 
 export const selectStatistic = (state: RootState) => state.statistic;
 

@@ -29,6 +29,8 @@ export const authSlice = createSlice({
     },
     logOut: (state) => {
       localStorage.removeItem('user');
+      localStorage.removeItem('newUser');
+      localStorage.removeItem('statistic');
       return initialState;
     },
     updateUserTokens: (state, action: PayloadAction<ITokensPayload>) => {
