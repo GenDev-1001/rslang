@@ -91,7 +91,6 @@ export const Audio: FC<IPropsAudio> = ({ isGameOpenFromMenu }) => {
           handleStatistics={handleStatistics}
         />
       )}
-
       {isEndGame && (
         <AudioStatistics statistics={statistics} endGame={endGame} resetGame={resetGame} />
       )}
