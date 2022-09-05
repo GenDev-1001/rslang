@@ -8,7 +8,7 @@ const AudioStatistics: FC<IAudioStatistics> = ({ statistics, endGame, resetGame 
   return (
     <>
       <div className="audio-frame audio-table__wrapper">
-        <h2 className="audio-frame__header">Statistics</h2>
+        <h2 className="sprint-frame__header">Statistics</h2>
         <table className="audio-table">
           <tbody>
             {statistics.length > 0 &&

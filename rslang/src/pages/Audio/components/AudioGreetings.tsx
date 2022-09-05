@@ -5,7 +5,7 @@ import { IGreetings } from './AudioGreetings.interface';
 const AudioGreetings: FC<IGreetings> = ({ onClick, isGameOpenFromMenu }) => {
   return (
     <div className="audio-frame">
-      <h2 className="audio-frame__header">Аудиовызов</h2>
+      <h2 className="sprint-frame__header">Аудиовызов</h2>
       <div className="audio-frame__description">
         «Аудиовызов» - это тренировка, которая улучшает{' '}
         <strong className="strong">восприятие речи на слух</strong>.{' '}
