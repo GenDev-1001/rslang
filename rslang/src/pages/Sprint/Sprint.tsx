@@ -82,6 +82,7 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
     const newStat = getStatistic(statistics, gameStatistic);
 
     dispatch(setStatistics(newStat));
+
     if (user.userId) {
       setStatistic({
         userId: user.userId || '',
@@ -148,7 +149,6 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
       {isLoading && <Loading />}
       {!isStartGame && !isLoading && !isEndGame && !user.token && (
         <Game
-          handleGameStatistic={handleGameStatistic}
           data={unauthorizedWords}
           arrayOfCoins={arrayOfCoins}
           page={page}
@@ -156,6 +156,7 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
           resetGame={resetGame}
           handleIsEndGame={handleIsEndGame}
           handleStatistics={handleStatistics}
+          handleGameStatistic={handleGameStatistic}
           handlePage={handlePage}
           handleTimeStartGame={handleTimeStartGame}
           handleTimeEndGame={handleTimeEndGame}
@@ -163,7 +164,6 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
       )}
       {!isStartGame && !isLoading && !isEndGame && user.token && (
         <GameAuth
-          handleGameStatistic={handleGameStatistic}
           data={authorizedWords?.paginatedResults}
           arrayOfCoins={arrayOfCoins}
           page={page}
@@ -171,6 +171,7 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
           resetGame={resetGame}
           handleIsEndGame={handleIsEndGame}
           handleStatistics={handleStatistics}
+          handleGameStatistic={handleGameStatistic}
           handlePage={handlePage}
           handleTimeStartGame={handleTimeStartGame}
           handleTimeEndGame={handleTimeEndGame}

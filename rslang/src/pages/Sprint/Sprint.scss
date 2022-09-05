@@ -41,6 +41,10 @@
   font-weight: $fw-bold;
   font-size: $base * 20;
   text-align: center;
+
+  @media (max-width: $breakpoint-lg-min) {
+    font-size: $base * 10;
+  }
 }
 
 .sprint-frame__error {
@@ -53,6 +57,10 @@
 .sprint-frame__description {
   font-size: $base * 8;
   text-align: center;
+
+  @media (max-width: $breakpoint-lg-min) {
+    font-size: $base * 6;
+  }
 }
 
 .strong {
