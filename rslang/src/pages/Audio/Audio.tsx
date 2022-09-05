@@ -12,7 +12,7 @@ import {
   StatisticGameEnum,
 } from '../../features';
 import { useAuth } from '../../hooks/useAuth';
-import { AudioGreetings, AudioStatistics, Game, GameAuth, Loading } from './components';
+import { AudioGreetings, AudioStatistics, Game, Loading } from './components';
 import { IStatistics } from './constants';
 import { IPropsAudio } from './Audio.interface';
 import background from '../../images/sprint-greetings-bg.jpg';
