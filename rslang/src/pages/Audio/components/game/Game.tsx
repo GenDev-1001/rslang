@@ -1,22 +1,21 @@
-import React, { FC, useState, useEffect, useRef, KeyboardEvent } from 'react';
-import { ButtonReset, ButtonSpeak, ButtonSelect } from '../buttons';
+import { FC, useEffect, useRef, useState } from 'react';
+import '../../Audio.scss';
+import { IStatistics, keyCodesArr, wordsArrayFilds, WordsType } from '../../constants';
+import { ButtonReset, ButtonSelect, ButtonSpeak } from '../buttons';
 import { Circle } from '../circle/Circle';
 import { Multiplier } from '../multiplier/Multiplier';
-import { IStatistics, keyCodesArr, wordsArrayFilds, WordsType } from '../../constants';
-import '../../Audio.scss';
 import { WordPicture } from './WordPicture';
-import success from '../../../../audio/success.mp3';
 
 export interface IGame {
   data: WordsType[] | undefined;
-  group: string;
+  group: number;
   handleStatistics: ({
     id,
     audio,
     word,
     wordTranslate,
     transcription,
-    answer,
+    result,
   }: IStatistics) => void;
   resetGame: () => void;
   handleIsEndGame: (value: boolean) => void;
@@ -32,12 +31,9 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
   const [checkWordsArr, setCheckWordsArr] = useState<WordsType[]>([]);
   const [rightWord, setRightWord] = useState<WordsType>(wordsArrayFilds);
   const [randomWord, setRandomWord] = useState<WordsType>(wordsArrayFilds);
-  // поменять на skip
+
   const [gameBtn, setGameBtn] = useState<string>('не знаю');
-  const [sound, setSound] = useState<string>('');
   const [disable, setDisable] = useState<boolean>(false);
-  const [skip, setSkip] = useState<boolean>(false);
-  const prevBtn = useRef(null);
 
   const createRightWord = (wordslist: WordsType[]) => {
     let array: WordsType[] = wordslist;
@@ -93,10 +89,10 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
     word: string,
     wordTranslate: string,
     transcription: string,
-    answer: boolean,
+    result: boolean,
   ) => {
     if (!disable) {
-      if (answer) {
+      if (result) {
         if (streak === 3) {
           if (multiplier !== 4) {
             setMultiplier((prevState) => prevState + 1);
@@ -116,12 +112,12 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
           word,
           wordTranslate,
           transcription,
-          answer,
+          result,
         });
       } else {
         setStreak(0);
         setMultiplier(1);
-        handleStatistics({ id, audio, word, wordTranslate, transcription, answer });
+        handleStatistics({ id, audio, word, wordTranslate, transcription, result });
       }
     }
   };
@@ -157,29 +153,40 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
     }
   };
 
-  // const playSound = (answer: boolean) => {
-  //   const sountP = new Audio(success);
-  //   sountP.play();
-  // };
+  const playAudio = (value: boolean) => {
+    if (value) {
+      const successSound = new Audio(`
+        https://allsoundsaround.com/wp-content/uploads/2021/01/zvuk-otkryitiya-pravilnoy-stroki-na-tablo-v-teleshou-100-k-1-5511.mp3?_=1,
+      `);
+      successSound.play();
+    } else {
+      const errorSound = new Audio(`
+      https://allsoundsaround.com/wp-content/uploads/2021/01/zvuk-nevernogo-otveta-v-peredache-sto-k-odnomu-5541.mp3?_=2,
+      `);
+      errorSound.play();
+    }
+  };
 
   const checkAnswer = (selectedWord: WordsType | undefined) => {
-    const answer = !!selectedWord && rightWord.wordTranslate === selectedWord.wordTranslate;
+    const result = !!selectedWord && rightWord.wordTranslate === selectedWord.wordTranslate;
     const id = data ? rightWord.id : '';
     const audio = data ? rightWord.audio : '';
     const word = data ? rightWord.word : '';
     const wordTranslate = data ? rightWord.wordTranslate : '';
     const transcription = data ? rightWord.transcription : '';
 
-    countSreak(id, audio, word, wordTranslate, transcription, answer);
-    changeBtnStatus(answer, selectedWord);
+
+    countSreak(id, audio, word, wordTranslate, transcription, result);
+    changeBtnStatus(result, selectedWord);
     // playSound(answer);
+
     handleStatistics({
       id,
       audio,
       word,
       wordTranslate,
       transcription,
-      answer,
+      result,
     });
   };
   const continueGame = () => {
@@ -195,24 +202,22 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
   };
   const handleButtonSelect = (selectedWord: WordsType) => {
     handleWordIndex();
-    setRandomWord(selectedWord);
     checkAnswer(selectedWord);
     setDisable(true);
   };
 
   const onKeydown = (event: KeyboardEventInit) => {
     const code: number | undefined = event.keyCode;
-    if (!skip && wordsArr.length && code && keyCodesArr.includes(code)) {
+    if (wordsArr.length && code && keyCodesArr.includes(code)) {
       const keyValue = Number(event.key);
       handleButtonSelect(wordsArr[keyValue - 1]);
-      setSkip(true);
     }
   };
 
   useEffect(() => {
     window.addEventListener('keydown', onKeydown);
     return () => window.addEventListener('keydown  ', onKeydown);
-  }, [skip, wordsArr]);
+  }, [wordsArr]);
   useEffect(() => {
     createWordsArray();
   }, []);
@@ -238,7 +243,7 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
       </div>
       <div className="select-wrapper">
         {gameBtn === 'не знаю' ? (
-          <ButtonSpeak rightWord={rightWord} />
+          <ButtonSpeak audioLink={rightWord.audio} />
         ) : (
           <WordPicture rightWord={rightWord} />
         )}

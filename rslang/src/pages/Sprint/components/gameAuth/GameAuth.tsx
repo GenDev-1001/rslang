@@ -234,7 +234,6 @@ const GameAuth: FC<IGameAuth> = ({
 
   useEffect(() => {
     handleMaxStreak();
-    console.log('maxStreak', maxStreak);
   }, [counter]);
 
   useEffect(() => {

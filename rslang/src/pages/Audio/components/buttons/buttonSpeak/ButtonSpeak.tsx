@@ -4,15 +4,12 @@ import { WordsType } from '../../../constants';
 import './ButtonSpeak.scss';
 
 export interface IButtonSpeak {
-  rightWord?: WordsType | undefined;
-  audio?: WordsType | undefined | string;
+  audioLink?: undefined | string;
 }
 
-const ButtonSpeak: FC<IButtonSpeak> = ({ rightWord }) => {
+const ButtonSpeak: FC<IButtonSpeak> = ({ audioLink }) => {
   const handleAudio = () => {
-    const audio = new Audio(
-      `https://rs-lang-team-84.herokuapp.com/${rightWord ? rightWord.audio : ''}`,
-    );
+    const audio = new Audio(`https://rs-lang-team-84.herokuapp.com/${audioLink || ''}`);
     audio.play();
   };
 
