@@ -256,7 +256,7 @@ export const Game: FC<IGame> = ({
 
     countSreak(id, audio, word, wordTranslate, transcription, result);
     changeBtnStatus(result, selectedWord);
-    // playSound(answer);
+    playAudio(!!result);
 
     handleGameStatistics({
       id,
@@ -328,7 +328,7 @@ export const Game: FC<IGame> = ({
   return (
     <div className="audio-frame">
       <div className="audio-ui">
-        <Circle title="Level" value={`№${group}`} />
+        <Circle title="Level" value={`№${group + 1}`} />
         <div className="audio-ui__streak-wrapper">
           <ul className="audio-ui__streak">
             <Multiplier multiplier={streak} value={0} description="&#128293;" />
