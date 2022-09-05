@@ -30,6 +30,12 @@ export function Main() {
               </a>
               &ensp;
             </p>
+            <p className="main-page__text">
+              Learning English has never been so easy. Thanks to our app, you can practice your
+              English every day with Sprint and Audio Call games. You also have a dictionary at your
+              disposal in which you can track your progress. And thanks to Statistics, you can see
+              the accuracy of your correct answers.
+            </p>
             {!user.token && (
               <button className="main-page__button" onClick={() => setIsShowLogin(true)}>
                 Login
