@@ -1,11 +1,20 @@
-import { FC, useEffect, useRef, useState } from 'react';
-import { IStatistics, keyCodesArr, wordsArrayFilds, WordsType } from '../../constants';
+import { FC, useEffect, useState } from 'react';
+import { keyCodesArr, wordsArrayFilds, WordsType } from '../../constants';
 import { ButtonReset, ButtonSelect, ButtonSpeak } from '../buttons';
 import { Circle, Multiplier, WordPicture } from '..';
 import { IGame } from './Game.interface';
 import '../../Audio.scss';
 
-export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, handleIsEndGame }) => {
+export const Game: FC<IGame> = ({
+  data,
+  group,
+  handleGameStatistics,
+  resetGame,
+  handleIsEndGame,
+  handleTimeStartGame,
+  handleTimeEndGame,
+  handleStatistic,
+}) => {
   const [score, setScore] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
   const [multiplier, setMultiplier] = useState<number>(1);
@@ -32,6 +41,8 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
     );
     if (checkWordsArr.length === 20) {
       handleIsEndGame(true);
+      handleTimeEndGame();
+      handleStatistic(streak, score, new Date().toISOString());
       return;
     }
     if (array.length) {
@@ -64,6 +75,8 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
       setWordIndex(wordIndex + 1);
     } else {
       handleIsEndGame(true);
+      handleTimeEndGame();
+      handleStatistic(streak, score, new Date().toISOString());
     }
   };
 
@@ -90,7 +103,7 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
 
         setScore((prevState) => prevState + 10 * multiplier);
 
-        handleStatistics({
+        handleGameStatistics({
           id,
           audio,
           word,
@@ -101,7 +114,7 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
       } else {
         setStreak(0);
         setMultiplier(1);
-        handleStatistics({ id, audio, word, wordTranslate, transcription, result });
+        handleGameStatistics({ id, audio, word, wordTranslate, transcription, result });
       }
     }
   };
@@ -163,7 +176,7 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
     changeBtnStatus(result, selectedWord);
     // playSound(answer);
 
-    handleStatistics({
+    handleGameStatistics({
       id,
       audio,
       word,
@@ -203,6 +216,7 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
   }, [wordsArr]);
   useEffect(() => {
     createWordsArray();
+    handleTimeStartGame();
   }, []);
 
   return (

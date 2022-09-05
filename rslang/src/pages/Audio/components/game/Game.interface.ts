@@ -1,9 +1,10 @@
-import { WordsType, IStatistics } from '../../constants';
+import { IWordsResponse } from '../../../../features/words/wordsSlice.interface';
+import { IStatistics } from '../../constants';
 
 export interface IGame {
-  data: WordsType[] | undefined;
+  data: IWordsResponse[] | undefined;
   group: number;
-  handleStatistics: ({
+  handleGameStatistics: ({
     id,
     audio,
     word,
@@ -12,5 +13,8 @@ export interface IGame {
     result,
   }: IStatistics) => void;
   resetGame: () => void;
+  handleTimeStartGame: () => void;
+  handleTimeEndGame: () => void;
   handleIsEndGame: (value: boolean) => void;
+  handleStatistic: (streak: number, score: number, timeStop: string) => void;
 }

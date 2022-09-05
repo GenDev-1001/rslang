@@ -22,7 +22,10 @@ export function Card({
 
   const correctSprint = word.userWord?.optional.correctCountSprint || 0;
   const errorSprint = word.userWord?.optional.errorCountSprint || 0;
-  const sumCorrectError = correctSprint + errorSprint;
+  const correctAudiocall = word.userWord?.optional.correctCountAudio || 0;
+  const errorAudiocall = word.userWord?.optional.errorCountAudio || 0;
+  const sumCorrectErrorSprint = correctSprint + errorSprint;
+  const sumCorrectErrorAudiocall = correctAudiocall + errorAudiocall;
 
   const handlerClick = (difficulty: UserWordStatus) => {
     const optional = word?.userWord
@@ -132,13 +135,14 @@ export function Card({
               <div className="games-block">
                 <span className="games-block__name">Аудиовызов</span>
                 <span className="games-block__stat">
-                  {word.userWord?.optional.correctCountAudio || 0}
+                  {sumCorrectErrorSprint &&
+                    `${correctAudiocall} из ${correctAudiocall + errorAudiocall}`}
                 </span>
               </div>
               <div className="games-block">
                 <span className="games-block__name">Спринт</span>
                 <span className="games-block__stat">
-                  {sumCorrectError && `${correctSprint} из ${correctSprint + errorSprint}`}
+                  {sumCorrectErrorSprint && `${correctSprint} из ${correctSprint + errorSprint}`}
                 </span>
               </div>
             </div>

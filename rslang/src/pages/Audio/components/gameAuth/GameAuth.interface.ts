@@ -1,9 +1,10 @@
-import { WordsType, IStatistics } from '../../constants';
+import { IActivePaginatedResult } from '../../../../features/aggregaredWords/aggregaredWordsApiSlice.inteface';
+import { IStatistics } from '../../constants';
 
 export interface IGameAuth {
-  data: WordsType[] | undefined;
+  data: IActivePaginatedResult[] | undefined;
   group: number;
-  handleStatistics: ({
+  handleGameStatistics: ({
     id,
     audio,
     word,
@@ -13,4 +14,7 @@ export interface IGameAuth {
   }: IStatistics) => void;
   resetGame: () => void;
   handleIsEndGame: (value: boolean) => void;
+  handleTimeStartGame: () => void;
+  handleTimeEndGame: () => void;
+  handleStatistic: (streak: number, score: number, timeStop: string) => void;
 }
