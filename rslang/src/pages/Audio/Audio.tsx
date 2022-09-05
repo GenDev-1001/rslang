@@ -123,25 +123,13 @@ export const Audio: FC<IPropsAudio> = ({ isGameOpenFromMenu }) => {
         <AudioGreetings onClick={handleGroup} isGameOpenFromMenu={isGameOpenFromMenu} />
       )}
       {isLoading && <Loading />}
-      {!isStartGame && !isLoading && !isEndGame && !user.token && (
+      {!isStartGame && !isLoading && !isEndGame && (
         <Game
-          data={unauthorizedWords}
+          handleStatistic={handleStatistic}
+          data={user.token ? authorizedWords?.paginatedResults : unauthorizedWords}
           group={group}
           resetGame={resetGame}
           handleIsEndGame={handleIsEndGame}
-          handleStatistic={handleStatistic}
-          handleGameStatistics={handleGameStatistics}
-          handleTimeStartGame={handleTimeStartGame}
-          handleTimeEndGame={handleTimeEndGame}
-        />
-      )}
-      {!isStartGame && !isLoading && !isEndGame && user.token && (
-        <GameAuth
-          data={authorizedWords?.paginatedResults}
-          group={group}
-          resetGame={resetGame}
-          handleIsEndGame={handleIsEndGame}
-          handleStatistic={handleStatistic}
           handleGameStatistics={handleGameStatistics}
           handleTimeStartGame={handleTimeStartGame}
           handleTimeEndGame={handleTimeEndGame}
