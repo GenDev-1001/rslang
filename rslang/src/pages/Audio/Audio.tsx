@@ -1,20 +1,17 @@
 import { FC, MouseEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
-import { selectSettings, setGroup } from '../../features/settings/settingsSlice';
-import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
+import {
+  useActiveWordsByUserQuery,
+  selectSettings,
+  setGroup,
+  useGetWordsQuery,
+} from '../../features';
 import { useAuth } from '../../hooks/useAuth';
+import { AudioGreetings, AudioStatistics, Game, Loading } from './components';
+import { IStatistics } from './constants';
+import { IPropsAudio } from './Audio.interface';
 import background from '../../images/sprint-greetings-bg.jpg';
 import './Audio.scss';
-import AudioGreetings from './components/AudioGreetings';
-import { AudioStatistics } from './components/AudioStatistics/AudioStatistics';
-import { Game } from './components/game/Game';
-import { Loading } from './components/loading/Loading';
-import { IStatistics } from './constants';
-
-export interface IPropsAudio {
-  isGameOpenFromMenu: boolean;
-}
 
 export const Audio: FC<IPropsAudio> = ({ isGameOpenFromMenu }) => {
   const { page, group } = useAppSelector(selectSettings);

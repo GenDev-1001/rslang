@@ -39,4 +39,4 @@ const AudioGreetings: FC<IGreetings> = ({ onClick, isGameOpenFromMenu }) => {
   );
 };
 
-export default AudioGreetings;
+export { AudioGreetings };

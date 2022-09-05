@@ -2,10 +2,16 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { IStatistics, keyCodesArr, wordsArrayFilds, WordsType } from '../../constants';
 import { ButtonReset, ButtonSelect, ButtonSpeak } from '../buttons';
 import { Circle, Multiplier, WordPicture } from '..';
-import { IGame } from './Game.interface';
+import { IGameAuth } from './GameAuth.interface';
 import '../../Audio.scss';
 
-export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, handleIsEndGame }) => {
+export const GameAuth: FC<IGameAuth> = ({
+  data,
+  group,
+  handleStatistics,
+  resetGame,
+  handleIsEndGame,
+}) => {
   const [score, setScore] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
   const [multiplier, setMultiplier] = useState<number>(1);
