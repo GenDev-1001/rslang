@@ -1,14 +1,20 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import { IWordsResponse } from '../../../../features/words/wordsSlice.interface';
+import { UserWordStatus } from '../../../../common/interfaces';
+import { IActivePaginatedResult } from '../../../../features/aggregaredWords/aggregaredWordsApiSlice.inteface';
+import {
+  useCreateUserWordMutation,
+  useUpdateUserWordMutation,
+} from '../../../../features/userWords/userWordsApiSlice';
+import { useAuth } from '../../../../hooks/useAuth';
 import '../../Audio.scss';
 import { IStatistics, keyCodesArr, wordsArrayFilds, WordsType } from '../../constants';
 import { ButtonReset, ButtonSelect, ButtonSpeak } from '../buttons';
 import { Circle } from '../circle/Circle';
+import { WordPicture } from '../game/WordPicture';
 import { Multiplier } from '../multiplier/Multiplier';
-import { WordPicture } from './WordPicture';
 
 export interface IGame {
-  data: IWordsResponse[] | undefined;
+  data: IActivePaginatedResult[] | undefined;
   group: number;
   handleGameStatistics: ({
     id,
@@ -19,13 +25,13 @@ export interface IGame {
     result,
   }: IStatistics) => void;
   resetGame: () => void;
+  handleIsEndGame: (value: boolean) => void;
   handleTimeStartGame: () => void;
   handleTimeEndGame: () => void;
-  handleIsEndGame: (value: boolean) => void;
   handleStatistic: (streak: number, score: number, timeStop: string) => void;
 }
 
-export const Game: FC<IGame> = ({
+export const GameAuth: FC<IGame> = ({
   data,
   group,
   handleGameStatistics,
@@ -50,6 +56,11 @@ export const Game: FC<IGame> = ({
   const [disable, setDisable] = useState<boolean>(false);
   const [skip, setSkip] = useState<boolean>(false);
   const prevBtn = useRef(null);
+
+  const { user } = useAuth();
+
+  const [updateWord] = useUpdateUserWordMutation();
+  const [createUserWord] = useCreateUserWordMutation();
 
   const createRightWord = (wordslist: WordsType[]) => {
     let array: WordsType[] = wordslist;
@@ -103,6 +114,40 @@ export const Game: FC<IGame> = ({
     }
   };
 
+  const handleAccuracy = (value: boolean) => {
+    const word = data![wordIndex];
+
+    const correctCountSprintValue = word?.userWord ? word?.userWord.optional.correctCountSprint : 0;
+    const errorCountSprintValue = word?.userWord ? word?.userWord.optional.errorCountSprint : 0;
+    let correctCountAudioValue = word?.userWord ? word?.userWord.optional.correctCountAudio : 0;
+    let errorCountAudioValue = word?.userWord ? word?.userWord.optional.errorCountAudio : 0;
+
+    const optional = {
+      correctCountSprint: correctCountSprintValue,
+      errorCountSprint: errorCountSprintValue,
+      correctCountAudio: value ? (correctCountAudioValue += 1) : correctCountAudioValue,
+      errorCountAudio: !value ? (errorCountAudioValue += 1) : errorCountAudioValue,
+    };
+
+    const wordRequest = {
+      word: {
+        difficulty:
+          correctCountAudioValue >= 5 && correctCountAudioValue === 0
+            ? UserWordStatus.EASY
+            : UserWordStatus.HARD,
+        optional,
+      },
+      wordId: word.id,
+      userId: user.userId || '',
+    };
+
+    if (word?.userWord) {
+      updateWord(wordRequest);
+    } else {
+      createUserWord(wordRequest);
+    }
+  };
+
   const countSreak = (
     id: string,
     audio: string,
@@ -126,6 +171,10 @@ export const Game: FC<IGame> = ({
 
         setScore((prevState) => prevState + 10 * multiplier);
 
+        if (user.token) {
+          handleAccuracy(true);
+        }
+
         handleGameStatistics({
           id,
           audio,
@@ -135,6 +184,9 @@ export const Game: FC<IGame> = ({
           result,
         });
       } else {
+        if (user.token) {
+          handleAccuracy(false);
+        }
         setStreak(0);
         setMultiplier(1);
         handleGameStatistics({ id, audio, word, wordTranslate, transcription, result });
@@ -189,6 +241,7 @@ export const Game: FC<IGame> = ({
     countSreak(id, audio, word, wordTranslate, transcription, result);
     changeBtnStatus(result, selectedWord);
     // playSound(answer);
+
     handleGameStatistics({
       id,
       audio,
