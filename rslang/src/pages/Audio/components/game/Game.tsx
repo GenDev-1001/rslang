@@ -1,5 +1,12 @@
 import { FC, useEffect, useState } from 'react';
+import { UserWordStatus } from '../../../../common/interfaces';
+import { IActivePaginatedResult } from '../../../../features/aggregaredWords/aggregaredWordsApiSlice.inteface';
+import {
+  useCreateUserWordMutation,
+  useUpdateUserWordMutation,
+} from '../../../../features/userWords/userWordsApiSlice';
 import { IWordsResponse } from '../../../../features/words/wordsSlice.interface';
+import { useAuth } from '../../../../hooks/useAuth';
 import '../../Audio.scss';
 import { IStatistics, keyCodesArr, wordsArrayFilds, WordsType } from '../../constants';
 import { ButtonReset, ButtonSelect, ButtonSpeak } from '../buttons';
@@ -8,8 +15,10 @@ import { Multiplier } from '../multiplier/Multiplier';
 import { WordPicture } from './WordPicture';
 
 export interface IGame {
-  data: IWordsResponse[] | undefined;
+  data: IWordsResponse[] | undefined | IActivePaginatedResult[];
   group: number;
+  globslState: number;
+  setGlobalState: Function;
   handleGameStatistics: ({
     id,
     audio,
@@ -34,6 +43,8 @@ export const Game: FC<IGame> = ({
   handleTimeStartGame,
   handleTimeEndGame,
   handleStatistic,
+  globslState,
+  setGlobalState,
 }) => {
   const [score, setScore] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
@@ -43,10 +54,22 @@ export const Game: FC<IGame> = ({
   const [wordsArr, setWordsArr] = useState<WordsType[]>([]);
   const [checkWordsArr, setCheckWordsArr] = useState<WordsType[]>([]);
   const [rightWord, setRightWord] = useState<WordsType>(wordsArrayFilds);
-  const [randomWord, setRandomWord] = useState<WordsType>(wordsArrayFilds);
 
   const [gameBtn, setGameBtn] = useState<string>('не знаю');
   const [disable, setDisable] = useState<boolean>(false);
+
+  const { user } = useAuth();
+  const [updateWord] = useUpdateUserWordMutation();
+  const [createUserWord] = useCreateUserWordMutation();
+
+  const playRightWordAudio = (wordSound?: string) => {
+    if (rightWord) {
+      const audio = new Audio(
+        `https://rs-lang-team-84.herokuapp.com/${wordSound || rightWord.audio || ''}`,
+      );
+      audio.play();
+    }
+  };
 
   const createRightWord = (wordslist: WordsType[]) => {
     let array: WordsType[] = wordslist;
@@ -67,9 +90,12 @@ export const Game: FC<IGame> = ({
     }
     if (array.length) {
       setRightWord(result);
+      // playRightWordAudio(result.audio);
       const newCheckWordsArr = JSON.parse(JSON.stringify(checkWordsArr));
       newCheckWordsArr.push(result);
       setCheckWordsArr(newCheckWordsArr);
+
+      playRightWordAudio(result.audio);
     } else {
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       createWordsArray();
@@ -184,6 +210,46 @@ export const Game: FC<IGame> = ({
     }
   };
 
+  const handleAccuracy = (value: boolean) => {
+    let correctCountSprintValue = rightWord?.userWord
+      ? rightWord?.userWord.optional.correctCountSprint
+      : 0;
+    let errorCountSprintValue = rightWord?.userWord
+      ? rightWord?.userWord.optional.errorCountSprint
+      : 0;
+    const correctCountAudioValue = rightWord?.userWord
+      ? rightWord?.userWord.optional.correctCountAudio
+      : 0;
+    const errorCountAudioValue = rightWord?.userWord
+      ? rightWord?.userWord.optional.errorCountAudio
+      : 0;
+
+    const optional = {
+      correctCountSprint: value ? (correctCountSprintValue += 1) : correctCountSprintValue,
+      errorCountSprint: !value ? (errorCountSprintValue += 1) : errorCountSprintValue,
+      correctCountAudio: correctCountAudioValue,
+      errorCountAudio: errorCountAudioValue,
+    };
+
+    const wordRequest = {
+      word: {
+        difficulty:
+          correctCountSprintValue >= 5 && errorCountSprintValue === 0
+            ? UserWordStatus.EASY
+            : UserWordStatus.HARD,
+        optional,
+      },
+      wordId: rightWord.id,
+      userId: user.userId || '',
+    };
+
+    if (rightWord?.userWord) {
+      updateWord(wordRequest);
+    } else {
+      createUserWord(wordRequest);
+    }
+  };
+
   const checkAnswer = (selectedWord: WordsType | undefined) => {
     const result = !!selectedWord && rightWord.wordTranslate === selectedWord.wordTranslate;
     const id = data ? rightWord.id : '';
@@ -204,12 +270,15 @@ export const Game: FC<IGame> = ({
       transcription,
       result,
     });
+    user.token && handleAccuracy(!!user.token);
   };
+
   const continueGame = () => {
     if (gameBtn === 'не знаю') {
       checkAnswer(undefined);
       setDisable(true);
       handleWordIndex();
+      playRightWordAudio();
     } else {
       createWordsArray();
       setGameBtn('не знаю');
@@ -222,8 +291,28 @@ export const Game: FC<IGame> = ({
     setDisable(true);
   };
 
+  const onSpacedown = (code: number | undefined) => {
+    const spaceCode = 32;
+    if (code === spaceCode) {
+      playRightWordAudio();
+    }
+  };
+
   const onKeydown = (event: KeyboardEventInit) => {
     const code: number | undefined = event.keyCode;
+    const enterCode = 13;
+
+    onSpacedown(code);
+
+    if (code === enterCode) {
+      continueGame();
+      return;
+    }
+
+    if (disable) {
+      return;
+    }
+
     if (wordsArr.length && code && keyCodesArr.includes(code)) {
       const keyValue = Number(event.key);
       handleButtonSelect(wordsArr[keyValue - 1]);
@@ -232,8 +321,9 @@ export const Game: FC<IGame> = ({
 
   useEffect(() => {
     window.addEventListener('keydown', onKeydown);
-    return () => window.addEventListener('keydown  ', onKeydown);
+    return () => window.removeEventListener('keydown', onKeydown);
   }, [wordsArr]);
+
   useEffect(() => {
     createWordsArray();
     handleTimeStartGame();

@@ -32,6 +32,7 @@ export const Audio: FC<IPropsAudio> = ({ isGameOpenFromMenu }) => {
   const [timeEndGame, setTimeEndGame] = useState<string>('');
   const { statistics, learnedWords } = useAppSelector(selectStatistic);
   const [setStatistic, { data }] = usePutStatisticMutation();
+  const [globslState, setGlobalState] = useState<number>(0);
 
   const { user } = useAuth();
 
@@ -126,22 +127,12 @@ export const Audio: FC<IPropsAudio> = ({ isGameOpenFromMenu }) => {
         <AudioGreetings onClick={handleGroup} isGameOpenFromMenu={isGameOpenFromMenu} />
       )}
       {isLoading && <Loading />}
-      {!isStartGame && !isLoading && !isEndGame && !user.token && (
+      {!isStartGame && !isLoading && !isEndGame && (
         <Game
+          globslState={globslState}
+          setGlobalState={setGlobalState}
           handleStatistic={handleStatistic}
-          data={unauthorizedWords}
-          group={group}
-          resetGame={resetGame}
-          handleIsEndGame={handleIsEndGame}
-          handleGameStatistics={handleGameStatistics}
-          handleTimeStartGame={handleTimeStartGame}
-          handleTimeEndGame={handleTimeEndGame}
-        />
-      )}
-      {!isStartGame && !isLoading && !isEndGame && user.token && (
-        <GameAuth
-          handleStatistic={handleStatistic}
-          data={authorizedWords?.paginatedResults}
+          data={user.token ? authorizedWords?.paginatedResults : unauthorizedWords}
           group={group}
           resetGame={resetGame}
           handleIsEndGame={handleIsEndGame}
