@@ -40,6 +40,7 @@
     width: 95vw;
     min-height: 80vh;
     padding: $base * 3;
+    row-gap: $base * 2;
   }
 
   .audio-frame__description {
@@ -89,9 +90,12 @@
   width: 100%;
 
   @media (max-width: $breakpoint-lg-min) {
-    justify-content: center;
     flex-wrap: wrap;
     gap: $base;
+  }
+
+  @media (max-width: $breakpoint-xs-min) {
+    justify-content: center;
   }
 
   &__streak-wrapper {
@@ -124,6 +128,10 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: $base * 4;
+
+  @media (max-width: $breakpoint-xs-min) {
+    gap: $base * 2;
+  }
 }
 
 .button-menu {
@@ -141,7 +149,6 @@
 }
 
 .select-wrapper {
-  height: 17vh;
   display: flex;
   align-items: center;
   justify-content: center;
