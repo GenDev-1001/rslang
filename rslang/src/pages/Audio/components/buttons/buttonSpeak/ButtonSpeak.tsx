@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import cat from '../../../../../images/cat-speak.svg';
-import { WordsType } from '../../../constants';
+
 import './ButtonSpeak.scss';
 
 export interface IButtonSpeak {

@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { IWordsResponse } from '../../../../features/words/wordsSlice.interface';
 import '../../Audio.scss';
 import { IStatistics, keyCodesArr, wordsArrayFilds, WordsType } from '../../constants';
@@ -192,16 +192,11 @@ export const Game: FC<IGame> = ({
     const wordTranslate = data ? rightWord.wordTranslate : '';
     const transcription = data ? rightWord.transcription : '';
 
-
     countSreak(id, audio, word, wordTranslate, transcription, result);
     changeBtnStatus(result, selectedWord);
     // playSound(answer);
-<<<<<<< HEAD
-    handleGameStatistics({
-=======
 
-    handleStatistics({
->>>>>>> 818654a23138eb14ffc096baf5e607928d4ffb68
+    handleGameStatistics({
       id,
       audio,
       word,

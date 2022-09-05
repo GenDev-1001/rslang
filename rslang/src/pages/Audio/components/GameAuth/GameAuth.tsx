@@ -308,7 +308,7 @@ export const GameAuth: FC<IGame> = ({
       </div>
       <div className="select-wrapper">
         {gameBtn === 'не знаю' ? (
-          <ButtonSpeak rightWord={rightWord} />
+          <ButtonSpeak audioLink={rightWord.audio} />
         ) : (
           <WordPicture rightWord={rightWord} />
         )}
