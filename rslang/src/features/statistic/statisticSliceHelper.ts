@@ -1,4 +1,4 @@
-import { IStatistics } from '../../pages/Sprint/Sprint';
+import { IStatistics } from '../../pages/Sprint/Sprint.interface';
 import { IStatistic } from './statisticApiSlice.interface';
 import { IAnswersWords, ICurrentStatistic, IStatisticState } from './statisticSlice.interface';
 
@@ -8,20 +8,20 @@ const getAnswers = (words: IStatistics[]) =>
       if (curr.result) {
         acc = {
           ...acc,
-          wordsTrue: [...acc.wordsTrue, curr.id],
+          wordsTrue: acc.wordsTrue + 1,
         };
       } else {
         acc = {
           ...acc,
-          wordsFalse: [...acc.wordsFalse, curr.id],
+          wordsFalse: acc.wordsFalse + 1,
         };
       }
 
       return acc;
     },
     {
-      wordsFalse: [],
-      wordsTrue: [],
+      wordsFalse: 0,
+      wordsTrue: 0,
     } as IAnswersWords,
   );
 
@@ -33,8 +33,9 @@ export const getStatistic = (
   const answers = getAnswers(statisticGame);
 
   const allStatistics = statistics.concat({ ...rest, ...answers });
-  const learnedWords = new Set(
-    allStatistics.map((stat) => stat.wordsTrue.concat(stat.wordsFalse)).flat(),
-  ).size;
+  const learnedWords = allStatistics.reduce((acc, stat) => {
+    acc += stat.wordsTrue;
+    return acc;
+  }, 0);
   return { learnedWords, statistics: allStatistics };
 };
