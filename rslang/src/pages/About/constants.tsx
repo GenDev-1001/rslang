@@ -11,22 +11,20 @@ export const membersArray: MemberType[] = [
     gitImg: githubImg,
     gitName: 'gendev-1001',
     link: 'https://github.com/gendev-1001',
-    position: 'Team Lead',
+    position: 'Developer',
     contribution:
       'Разработал архитектуру приложения и занимался организацией командной работы. Сделал страницу учебника, настроил аутентификацию и общую статистику игр.',
   },
-
   {
     img: dzmitryK,
     name: 'Dzmitry Karakulka',
     gitImg: githubImg,
     gitName: 'mitrofanzxc',
     link: `https://github.com/mitrofanzxc`,
-    position: 'Developer',
+    position: 'Team Lead',
     contribution:
-      'Разработал игру Спринт, участвовал в разработке страницы статистики, отвечал за адаптивный режим приложения.',
+      'Разработал игру Спринт, участвовал в разработке страницы статистики, отвечал за адаптивный режим приложения, задеплоил бекенд.',
   },
-
   {
     img: anastasiaC,
     name: 'Anastasia Chernova',
