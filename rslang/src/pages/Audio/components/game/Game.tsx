@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { UserWordStatus } from '../../../../common/interfaces';
 import { IActivePaginatedResult } from '../../../../features/aggregaredWords/aggregaredWordsApiSlice.inteface';
 import {
@@ -287,19 +287,15 @@ export const Game: FC<IGame> = ({
     setDisable(true);
   };
 
-  const onSpacedown = (code: number | undefined) => {
+  const onKeydown = (event: KeyboardEventInit) => {
+    event.preventDefault();
+    const code: number = event.keyCode!;
+    const enterCode = 13;
     const spaceCode = 32;
+
     if (code === spaceCode) {
       playRightWordAudio();
     }
-  };
-
-  const onKeydown = (event: KeyboardEventInit) => {
-    const code: number | undefined = event.keyCode;
-    const enterCode = 13;
-
-    onSpacedown(code);
-
     if (code === enterCode) {
       continueGame();
       return;
@@ -316,8 +312,8 @@ export const Game: FC<IGame> = ({
   };
 
   useEffect(() => {
-    window.addEventListener('keydown', onKeydown);
-    return () => window.removeEventListener('keydown', onKeydown);
+    document.addEventListener('keydown', onKeydown);
+    return () => document.removeEventListener('keydown', onKeydown);
   }, [wordsArr]);
 
   useEffect(() => {
@@ -368,7 +364,7 @@ export const Game: FC<IGame> = ({
         description={gameBtn}
         bgColor="bg_red"
         disabled={false}
-        onClick={continueGame}
+        onClick={() => continueGame()}
       />
       <nav className="button-menu">
         <ButtonReset description="Level Reset" onClick={resetGame} />
