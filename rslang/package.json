@@ -2,7 +2,7 @@
   "name": "rs-lang-team-84",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://GenDev-1001/rslang/rs-lang-team-84",
+  "homepage": "https://GenDev-1001.github.io/rslang/rs-lang-team-84",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d ./dist -e rs-lang-team-84",
