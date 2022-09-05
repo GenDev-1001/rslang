@@ -1,11 +1,7 @@
 import { FC } from 'react';
 import cat from '../../../../../images/cat-speak.svg';
-
+import { IButtonSpeak } from './ButtonSpeak.interface';
 import './ButtonSpeak.scss';
-
-export interface IButtonSpeak {
-  audioLink?: undefined | string;
-}
 
 const ButtonSpeak: FC<IButtonSpeak> = ({ audioLink }) => {
   const handleAudio = () => {

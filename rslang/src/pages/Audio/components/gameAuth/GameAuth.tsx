@@ -1,11 +1,37 @@
-import { FC, useEffect, useState } from 'react';
-import { keyCodesArr, wordsArrayFilds, WordsType } from '../../constants';
-import { ButtonReset, ButtonSelect, ButtonSpeak } from '../buttons';
-import { Circle, Multiplier, WordPicture } from '..';
-import { IGame } from './Game.interface';
+import { FC, useEffect, useRef, useState } from 'react';
+import { UserWordStatus } from '../../../../common/interfaces';
+import { IActivePaginatedResult } from '../../../../features/aggregaredWords/aggregaredWordsApiSlice.inteface';
+import {
+  useCreateUserWordMutation,
+  useUpdateUserWordMutation,
+} from '../../../../features/userWords/userWordsApiSlice';
+import { useAuth } from '../../../../hooks/useAuth';
 import '../../Audio.scss';
+import { IStatistics, keyCodesArr, wordsArrayFilds, WordsType } from '../../constants';
+import { ButtonReset, ButtonSelect, ButtonSpeak } from '../buttons';
+import { Circle } from '../circle/Circle';
+import { WordPicture } from '../game/WordPicture';
+import { Multiplier } from '../multiplier/Multiplier';
 
-export const Game: FC<IGame> = ({
+export interface IGame {
+  data: IActivePaginatedResult[] | undefined;
+  group: number;
+  handleGameStatistics: ({
+    id,
+    audio,
+    word,
+    wordTranslate,
+    transcription,
+    result,
+  }: IStatistics) => void;
+  resetGame: () => void;
+  handleIsEndGame: (value: boolean) => void;
+  handleTimeStartGame: () => void;
+  handleTimeEndGame: () => void;
+  handleStatistic: (streak: number, score: number, timeStop: string) => void;
+}
+
+export const GameAuth: FC<IGame> = ({
   data,
   group,
   handleGameStatistics,
@@ -26,7 +52,15 @@ export const Game: FC<IGame> = ({
   const [randomWord, setRandomWord] = useState<WordsType>(wordsArrayFilds);
 
   const [gameBtn, setGameBtn] = useState<string>('не знаю');
+  const [sound, setSound] = useState<string>('');
   const [disable, setDisable] = useState<boolean>(false);
+  const [skip, setSkip] = useState<boolean>(false);
+  const prevBtn = useRef(null);
+
+  const { user } = useAuth();
+
+  const [updateWord] = useUpdateUserWordMutation();
+  const [createUserWord] = useCreateUserWordMutation();
 
   const createRightWord = (wordslist: WordsType[]) => {
     let array: WordsType[] = wordslist;
@@ -80,6 +114,40 @@ export const Game: FC<IGame> = ({
     }
   };
 
+  const handleAccuracy = (value: boolean) => {
+    const word = data![wordIndex];
+
+    const correctCountSprintValue = word?.userWord ? word?.userWord.optional.correctCountSprint : 0;
+    const errorCountSprintValue = word?.userWord ? word?.userWord.optional.errorCountSprint : 0;
+    let correctCountAudioValue = word?.userWord ? word?.userWord.optional.correctCountAudio : 0;
+    let errorCountAudioValue = word?.userWord ? word?.userWord.optional.errorCountAudio : 0;
+
+    const optional = {
+      correctCountSprint: correctCountSprintValue,
+      errorCountSprint: errorCountSprintValue,
+      correctCountAudio: value ? (correctCountAudioValue += 1) : correctCountAudioValue,
+      errorCountAudio: !value ? (errorCountAudioValue += 1) : errorCountAudioValue,
+    };
+
+    const wordRequest = {
+      word: {
+        difficulty:
+          correctCountAudioValue >= 5 && correctCountAudioValue === 0
+            ? UserWordStatus.EASY
+            : UserWordStatus.HARD,
+        optional,
+      },
+      wordId: word.id,
+      userId: user.userId || '',
+    };
+
+    if (word?.userWord) {
+      updateWord(wordRequest);
+    } else {
+      createUserWord(wordRequest);
+    }
+  };
+
   const countSreak = (
     id: string,
     audio: string,
@@ -103,6 +171,10 @@ export const Game: FC<IGame> = ({
 
         setScore((prevState) => prevState + 10 * multiplier);
 
+        if (user.token) {
+          handleAccuracy(true);
+        }
+
         handleGameStatistics({
           id,
           audio,
@@ -112,6 +184,9 @@ export const Game: FC<IGame> = ({
           result,
         });
       } else {
+        if (user.token) {
+          handleAccuracy(false);
+        }
         setStreak(0);
         setMultiplier(1);
         handleGameStatistics({ id, audio, word, wordTranslate, transcription, result });
@@ -150,19 +225,10 @@ export const Game: FC<IGame> = ({
     }
   };
 
-  const playAudio = (value: boolean) => {
-    if (value) {
-      const successSound = new Audio(`
-        https://allsoundsaround.com/wp-content/uploads/2021/01/zvuk-otkryitiya-pravilnoy-stroki-na-tablo-v-teleshou-100-k-1-5511.mp3?_=1,
-      `);
-      successSound.play();
-    } else {
-      const errorSound = new Audio(`
-      https://allsoundsaround.com/wp-content/uploads/2021/01/zvuk-nevernogo-otveta-v-peredache-sto-k-odnomu-5541.mp3?_=2,
-      `);
-      errorSound.play();
-    }
-  };
+  // const playSound = (answer: boolean) => {
+  //   const sountP = new Audio(success);
+  //   sountP.play();
+  // };
 
   const checkAnswer = (selectedWord: WordsType | undefined) => {
     const result = !!selectedWord && rightWord.wordTranslate === selectedWord.wordTranslate;
@@ -198,22 +264,24 @@ export const Game: FC<IGame> = ({
   };
   const handleButtonSelect = (selectedWord: WordsType) => {
     handleWordIndex();
+    setRandomWord(selectedWord);
     checkAnswer(selectedWord);
     setDisable(true);
   };
 
   const onKeydown = (event: KeyboardEventInit) => {
     const code: number | undefined = event.keyCode;
-    if (wordsArr.length && code && keyCodesArr.includes(code)) {
+    if (!skip && wordsArr.length && code && keyCodesArr.includes(code)) {
       const keyValue = Number(event.key);
       handleButtonSelect(wordsArr[keyValue - 1]);
+      setSkip(true);
     }
   };
 
   useEffect(() => {
     window.addEventListener('keydown', onKeydown);
     return () => window.addEventListener('keydown  ', onKeydown);
-  }, [wordsArr]);
+  }, [skip, wordsArr]);
   useEffect(() => {
     createWordsArray();
     handleTimeStartGame();

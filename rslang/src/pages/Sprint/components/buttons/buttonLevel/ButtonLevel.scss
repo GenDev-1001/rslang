@@ -17,6 +17,11 @@
   &:active {
     transform: translate($base, $base);
   }
+
+  @media (max-width: $breakpoint-lg-min) {
+    width: $base * 15;
+    height: $base * 15;
+  }
 }
 
 .button-start {

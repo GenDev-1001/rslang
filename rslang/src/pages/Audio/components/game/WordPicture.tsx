@@ -1,11 +1,8 @@
 import { FC } from 'react';
 import { wordsArrayFilds, WordsType } from '../../constants';
+import { IWordPicture } from './WordPicture.interface';
 import cat from '../../../../images/cat-speak.svg';
 import './game.scss';
-
-export interface IWordPicture {
-  rightWord: WordsType;
-}
 
 const WordPicture: FC<IWordPicture> = ({ rightWord }) => {
   const handleAudio = () => {

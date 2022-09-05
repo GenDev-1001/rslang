@@ -1,10 +1,5 @@
 import { FC } from 'react';
-
-export interface IMultiplier {
-  multiplier: number;
-  value: number;
-  description: string;
-}
+import { IMultiplier } from './Multiplier.interface';
 
 const Multiplier: FC<IMultiplier> = ({ multiplier, value, description }) => {
   return (

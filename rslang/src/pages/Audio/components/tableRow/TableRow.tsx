@@ -1,15 +1,8 @@
 import { FC } from 'react';
-import falseChoise from '../../../../images/false-choise.svg';
-import trueChoise from '../../../../images/true-choise.svg';
 import { ButtonSpeak } from '../buttons';
-
-export interface ITableRow {
-  word: string;
-  audio: string;
-  transcription: string;
-  wordTranslate: string;
-  result: boolean;
-}
+import { ITableRow } from './TableRow.interface';
+import trueChoise from '../../../../images/true-choise.svg';
+import falseChoise from '../../../../images/false-choise.svg';
 
 const TableRow: FC<ITableRow> = ({ audio, word, wordTranslate, transcription, result }) => {
   return (

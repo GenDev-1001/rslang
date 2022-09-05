@@ -1,12 +1,6 @@
 import { FC } from 'react';
+import { IButtonReset } from './ButtonReset.interface';
 import './ButtonReset.scss';
-
-export interface IButtonReset {
-  description: string;
-  bgColor?: string;
-  disabled?: boolean;
-  onClick: () => void;
-}
 
 const ButtonReset: FC<IButtonReset> = ({ description, bgColor, disabled, onClick }) => {
   return (

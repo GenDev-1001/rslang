@@ -1,25 +1,22 @@
 import { FC, MouseEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
-import { selectSettings, setGroup } from '../../features/settings/settingsSlice';
-import { usePutStatisticMutation } from '../../features/statistic/statisticApiSlice';
-import { StatisticGameEnum } from '../../features/statistic/statisticApiSlice.interface';
-import { selectStatistic, setStatistics } from '../../features/statistic/statisticSlice';
-import { getStatistic } from '../../features/statistic/statisticSliceHelper';
-import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
+import {
+  useActiveWordsByUserQuery,
+  selectSettings,
+  setGroup,
+  useGetWordsQuery,
+  usePutStatisticMutation,
+  selectStatistic,
+  setStatistics,
+  getStatistic,
+  StatisticGameEnum,
+} from '../../features';
 import { useAuth } from '../../hooks/useAuth';
+import { AudioGreetings, AudioStatistics, Game, GameAuth, Loading } from './components';
+import { IStatistics } from './constants';
+import { IPropsAudio } from './Audio.interface';
 import background from '../../images/sprint-greetings-bg.jpg';
 import './Audio.scss';
-import AudioGreetings from './components/AudioGreetings';
-import { AudioStatistics } from './components/AudioStatistics/AudioStatistics';
-import { Game } from './components/game/Game';
-import { GameAuth } from './components/GameAuth/GameAuth';
-import { Loading } from './components/loading/Loading';
-import { IStatistics } from './constants';
-
-export interface IPropsAudio {
-  isGameOpenFromMenu: boolean;
-}
 
 export const Audio: FC<IPropsAudio> = ({ isGameOpenFromMenu }) => {
   const { page, group } = useAppSelector(selectSettings);
@@ -128,11 +125,11 @@ export const Audio: FC<IPropsAudio> = ({ isGameOpenFromMenu }) => {
       {isLoading && <Loading />}
       {!isStartGame && !isLoading && !isEndGame && !user.token && (
         <Game
-          handleStatistic={handleStatistic}
           data={unauthorizedWords}
           group={group}
           resetGame={resetGame}
           handleIsEndGame={handleIsEndGame}
+          handleStatistic={handleStatistic}
           handleGameStatistics={handleGameStatistics}
           handleTimeStartGame={handleTimeStartGame}
           handleTimeEndGame={handleTimeEndGame}
@@ -140,17 +137,16 @@ export const Audio: FC<IPropsAudio> = ({ isGameOpenFromMenu }) => {
       )}
       {!isStartGame && !isLoading && !isEndGame && user.token && (
         <GameAuth
-          handleStatistic={handleStatistic}
           data={authorizedWords?.paginatedResults}
           group={group}
           resetGame={resetGame}
           handleIsEndGame={handleIsEndGame}
+          handleStatistic={handleStatistic}
           handleGameStatistics={handleGameStatistics}
           handleTimeStartGame={handleTimeStartGame}
           handleTimeEndGame={handleTimeEndGame}
         />
       )}
-
       {isEndGame && (
         <AudioStatistics statistics={statisticsGame} endGame={endGame} resetGame={resetGame} />
       )}
