@@ -1,16 +1,12 @@
-import React from 'react';
+import { FC } from 'react';
 import { ButtonLevel } from './buttons';
+import { IGreetings } from './AudioGreetings.interface';
 
-export interface IGreetings {
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  isGameOpenFromMenu: boolean;
-}
-
-const AudioGreetings: React.FC<IGreetings> = ({ onClick, isGameOpenFromMenu }) => {
+const AudioGreetings: FC<IGreetings> = ({ onClick, isGameOpenFromMenu }) => {
   return (
     <div className="audio-frame">
       <h2 className="audio-frame__header">Аудиовызов</h2>
-      <p className="audio-frame__description">
+      <div className="audio-frame__description">
         «Аудиовызов» - это тренировка, которая улучшает{' '}
         <strong className="strong">восприятие речи на слух</strong>.{' '}
         <ul className="options-list">
@@ -21,7 +17,7 @@ const AudioGreetings: React.FC<IGreetings> = ({ onClick, isGameOpenFromMenu }) =
             Используйте клавишу Enter для подсказки или для перехода к следующему слову
           </li>
         </ul>
-      </p>
+      </div>
       {isGameOpenFromMenu ? (
         <>
           <p className="audio-frame__description">

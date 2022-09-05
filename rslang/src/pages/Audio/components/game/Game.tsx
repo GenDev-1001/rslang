@@ -1,25 +1,11 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import '../../Audio.scss';
 import { IStatistics, keyCodesArr, wordsArrayFilds, WordsType } from '../../constants';
 import { ButtonReset, ButtonSelect, ButtonSpeak } from '../buttons';
 import { Circle } from '../circle/Circle';
 import { Multiplier } from '../multiplier/Multiplier';
 import { WordPicture } from './WordPicture';
-
-export interface IGame {
-  data: WordsType[] | undefined;
-  group: number;
-  handleStatistics: ({
-    id,
-    audio,
-    word,
-    wordTranslate,
-    transcription,
-    result,
-  }: IStatistics) => void;
-  resetGame: () => void;
-  handleIsEndGame: (value: boolean) => void;
-}
+import { IGame } from './Game.interface';
+import '../../Audio.scss';
 
 export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, handleIsEndGame }) => {
   const [score, setScore] = useState<number>(0);
@@ -174,7 +160,6 @@ export const Game: FC<IGame> = ({ data, group, handleStatistics, resetGame, hand
     const word = data ? rightWord.word : '';
     const wordTranslate = data ? rightWord.wordTranslate : '';
     const transcription = data ? rightWord.transcription : '';
-
 
     countSreak(id, audio, word, wordTranslate, transcription, result);
     changeBtnStatus(result, selectedWord);

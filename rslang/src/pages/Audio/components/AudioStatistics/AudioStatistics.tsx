@@ -1,20 +1,8 @@
 import { FC } from 'react';
 import { ButtonReset } from '../buttons';
 import { TableRow } from '../tableRow/TableRow';
+import { IAudioStatistics } from './AudioStatistics.interface';
 import './AudioStatistics.scss';
-
-interface IAudioStatistics {
-  statistics: {
-    id: string;
-    word: string;
-    audio: string;
-    transcription: string;
-    wordTranslate: string;
-    result: boolean;
-  }[];
-  endGame: () => void;
-  resetGame: () => void;
-}
 
 const AudioStatistics: FC<IAudioStatistics> = ({ statistics, endGame, resetGame }) => {
   return (

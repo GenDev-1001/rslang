@@ -12,7 +12,7 @@ const Greetings: FC<IGreetings> = ({ onClick, isGameOpenFromMenu }) => {
       </p>
       <p className="sprint-frame__description">
         При помощи клавиш <strong className="strong">Y</strong> и{' '}
-        <strong className="strong">N</strong> вы можете управлять ответами соответственно для{' '}
+        <strong className="strong">N</strong> вы также можете управлять ответами соответственно для{' '}
         <strong className="strong">True</strong> и <strong className="strong">False</strong>
       </p>
       {isGameOpenFromMenu ? (
