@@ -239,6 +239,11 @@ const GameAuth: FC<IGameAuth> = ({
   useEffect(() => {
     getEnglishWord();
     getRandomWordTranslation();
+
+    document.addEventListener('keydown', handleKeySelect);
+    return () => {
+      document.removeEventListener('keydown', handleKeySelect);
+    };
   }, [wordIndex]);
 
   useEffect(() => {

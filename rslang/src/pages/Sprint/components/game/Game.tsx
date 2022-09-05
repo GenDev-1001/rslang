@@ -158,16 +158,16 @@ const Game: FC<IGame> = ({
     getEnglishWord();
     getRandomWordTranslation();
     handleTimeStartGame();
-
-    document.addEventListener('keydown', handleKeySelect);
-    return () => {
-      document.removeEventListener('keydown', handleKeySelect);
-    };
   }, []);
 
   useEffect(() => {
     getEnglishWord();
     getRandomWordTranslation();
+
+    document.addEventListener('keydown', handleKeySelect);
+    return () => {
+      document.removeEventListener('keydown', handleKeySelect);
+    };
   }, [wordIndex]);
 
   useEffect(() => {
