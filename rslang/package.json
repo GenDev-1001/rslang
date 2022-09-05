@@ -1,11 +1,11 @@
 {
-  "name": "rs-lang-team-84",
+  "name": "rslang",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://gendev-1001.github.io/rslang/rs-lang-team-84",
+  "homepage": "https://gendev-1001.github.io/rslang",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d ./dist -e rs-lang-team-84",
+    "deploy": "gh-pages -d ./dist",
     "start": "cross-env SERVE=true webpack serve --open",
     "watch": "webpack --watch",
     "build": "cross-env NODE_ENV=production webpack",
