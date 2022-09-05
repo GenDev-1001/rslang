@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAppDispatch } from '../../app/hooks';
 import { logOut } from '../../features/auth/authSlice';
+import { resetStatistics } from '../../features/statistic/statisticSlice';
 import { useAuth } from '../../hooks/useAuth';
 import { IHeaderProps } from './Header.interface';
 import './Header.scss';
@@ -23,9 +24,11 @@ export function Header({ isMain, handler, handleGameOpenFromMenu }: IHeaderProps
     if (user.token) {
       toast.success('User Logout Successfully');
       dispatch(logOut());
+
+      dispatch(resetStatistics());
       return;
     }
-
+    dispatch(resetStatistics());
     handler();
   };
 

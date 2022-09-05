@@ -1,4 +1,4 @@
-import { IStatistics } from '../../pages/Sprint/Sprint';
+import { IStatistics } from '../../pages/Sprint/Sprint.interface';
 import { IStatistic, StatisticGameEnum } from './statisticApiSlice.interface';
 
 export interface IStatisticState {
@@ -16,6 +16,6 @@ export interface ICurrentStatistic {
 }
 
 export interface IAnswersWords {
-  wordsFalse: string[];
-  wordsTrue: string[];
+  wordsFalse: number;
+  wordsTrue: number;
 }
