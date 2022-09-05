@@ -35,6 +35,12 @@
   border-radius: $base * 5;
   box-shadow: rgb(0 0 0 / 16%) 0 3px 6px, rgb(0 0 0 / 23%) 0 3px 6px;
   row-gap: $base * 10;
+
+  @media (max-width: $breakpoint-lg-min) {
+    width: 95vw;
+    min-height: 80vh;
+    padding: $base * 3;
+  }
 }
 
 .sprint-frame__header {

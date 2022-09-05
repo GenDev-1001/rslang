@@ -19,4 +19,15 @@
   &:active {
     transform: translate($base, $base);
   }
+
+  @media (max-width: $breakpoint-lg-min) {
+    width: $base * 40;
+    height: $base * 15;
+  }
+
+  @media (max-width: $breakpoint-xs-min) {
+    width: $base * 25;
+    height: $base * 15;
+    font-size: $base * 4;
+  }
 }
