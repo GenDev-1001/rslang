@@ -19,7 +19,7 @@ const GameAuth: FC<IGameAuth> = ({
   handleTimeEndGame,
   handleGameStatistic,
 }) => {
-  const [timer, setTimer] = useState<number>(60);
+  const [timer, setTimer] = useState<number>(5);
   const [score, setScore] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
   const [counter, setCounter] = useState<number>(0);
@@ -200,11 +200,6 @@ const GameAuth: FC<IGameAuth> = ({
     getEnglishWord();
     getRandomWordTranslation();
     handleTimeStartGame();
-
-    document.addEventListener('keydown', handleKeySelect);
-    return () => {
-      document.removeEventListener('keydown', handleKeySelect);
-    };
   }, []);
 
   useEffect(() => {
@@ -232,7 +227,7 @@ const GameAuth: FC<IGameAuth> = ({
       setTimeout(() => {
         handleIsEndGame(true);
         handleTimeEndGame();
-        handleGameStatistic(streak, score, new Date().toISOString());
+        handleGameStatistic(streak, score);
       }, 1000);
     }
   }, [timer]);

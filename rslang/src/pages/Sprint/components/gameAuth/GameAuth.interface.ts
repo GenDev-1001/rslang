@@ -19,5 +19,5 @@ export interface IGameAuth {
   handlePage: () => void;
   handleTimeStartGame: () => void;
   handleTimeEndGame: () => void;
-  handleGameStatistic: (streak: number, score: number, timeStop: string) => void;
+  handleGameStatistic: (streak: number, score: number) => void;
 }

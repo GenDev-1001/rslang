@@ -159,7 +159,7 @@ const Game: FC<IGame> = ({
       setTimeout(() => {
         handleIsEndGame(true);
         handleTimeEndGame();
-        handleGameStatistic(streak, score, new Date().toISOString());
+        handleGameStatistic(streak, score);
       }, 1000);
     }
   }, [timer]);
