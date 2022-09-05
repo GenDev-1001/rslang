@@ -69,17 +69,19 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
     ]);
   };
 
-  const handleGameStatistic = (streak: number, score: number) => {
+  const handleGameStatistic = (maxStreak: number, score: number) => {
     const gameStatistic = {
-      seriesTrueAnswers: streak,
+      seriesTrueAnswers: maxStreak,
       score,
       name: StatisticGameEnum.SPRINT,
       timeStart: timeStartGame,
       timeStop: timeEndGame,
       statisticGame: statisticsGame,
     };
+    console.log('gameStatistic', gameStatistic);
 
     const newStat = getStatistic(statistics, gameStatistic);
+    console.log('newStat', newStat);
 
     dispatch(setStatistics(newStat));
 
