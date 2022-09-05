@@ -11,7 +11,7 @@ const AudioGreetings: FC<IGreetings> = ({ onClick, isGameOpenFromMenu }) => {
         <strong className="strong">восприятие речи на слух</strong>.{' '}
         <ul className="options-list">
           <li className="list-item">Используйте мышь, чтобы выбрать правильный ответ</li>
-          <li className="list-item">Используйте цифровые клавиши от 1 до 6 для выбора ответа</li>
+          <li className="list-item">Используйте цифровые клавиши от 1 до 5 для выбора ответа</li>
           <li className="list-item">Используйте пробел для повтроного звучания слова</li>
           <li className="list-item">
             Используйте клавишу Enter для подсказки или для перехода к следующему слову
