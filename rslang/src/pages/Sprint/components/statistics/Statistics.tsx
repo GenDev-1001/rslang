@@ -1,20 +1,8 @@
 import { FC } from 'react';
 import { ButtonReset } from '../buttons';
 import { TableRow } from '..';
+import { IStatistics } from './Statistics.interface';
 import './Statistics.scss';
-
-export interface IStatistics {
-  statistics: {
-    id: string;
-    word: string;
-    audio: string;
-    transcription: string;
-    wordTranslate: string;
-    result: boolean;
-  }[];
-  endGame: () => void;
-  resetGame: () => void;
-}
 
 const Statistics: FC<IStatistics> = ({ statistics, endGame, resetGame }) => {
   return (

@@ -1,11 +1,6 @@
-import { FC, MouseEvent } from 'react';
+import { FC } from 'react';
+import { IButtonSelect } from './ButtonSelect.interface';
 import './ButtonSelect.scss';
-
-export interface IButtonSelect {
-  description: string;
-  bgColor: string;
-  onClick: (event: MouseEvent<HTMLButtonElement>) => void;
-}
 
 const ButtonSelect: FC<IButtonSelect> = ({ description, bgColor, onClick }) => {
   return (

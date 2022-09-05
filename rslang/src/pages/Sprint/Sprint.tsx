@@ -1,30 +1,23 @@
 import { FC, MouseEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { coinToss } from '../../common/utils/coinToss';
-import { useActiveWordsByUserQuery } from '../../features/aggregaredWords/aggregaredWordsApiSlice';
-import { selectSettings, setGroup, setPage } from '../../features/settings/settingsSlice';
-import { usePutStatisticMutation } from '../../features/statistic/statisticApiSlice';
-import { StatisticGameEnum } from '../../features/statistic/statisticApiSlice.interface';
-import { selectStatistic, setStatistics } from '../../features/statistic/statisticSlice';
-import { getStatistic } from '../../features/statistic/statisticSliceHelper';
-import { useGetWordsQuery } from '../../features/words/wordsApiSlice';
+import { coinToss } from '../../common/utils';
+import {
+  useActiveWordsByUserQuery,
+  selectSettings,
+  setGroup,
+  setPage,
+  usePutStatisticMutation,
+  StatisticGameEnum,
+  selectStatistic,
+  setStatistics,
+  getStatistic,
+  useGetWordsQuery,
+} from '../../features';
 import { useAuth } from '../../hooks/useAuth';
-import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import { Game, GameAuth, Greetings, Loading, Statistics } from './components';
+import { IStatistics, ISprint } from './Sprint.interface';
+import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import './Sprint.scss';
-
-export interface IStatistics {
-  id: string;
-  word: string;
-  audio: string;
-  transcription: string;
-  wordTranslate: string;
-  result: boolean;
-}
-
-export interface ISprint {
-  isGameOpenFromMenu: boolean;
-}
 
 const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
   const { page, group } = useAppSelector(selectSettings);
@@ -76,19 +69,20 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
     ]);
   };
 
-  const handleGameStatistic = (streak: number, score: number, timeStop: string) => {
+  const handleGameStatistic = (streak: number, score: number) => {
     const gameStatistic = {
       seriesTrueAnswers: streak,
       score,
       name: StatisticGameEnum.SPRINT,
       timeStart: timeStartGame,
-      timeStop,
+      timeStop: timeEndGame,
       statisticGame: statisticsGame,
     };
 
     const newStat = getStatistic(statistics, gameStatistic);
 
     dispatch(setStatistics(newStat));
+
     if (user.userId) {
       setStatistic({
         userId: user.userId || '',
@@ -155,7 +149,6 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
       {isLoading && <Loading />}
       {!isStartGame && !isLoading && !isEndGame && !user.token && (
         <Game
-          handleGameStatistic={handleGameStatistic}
           data={unauthorizedWords}
           arrayOfCoins={arrayOfCoins}
           page={page}
@@ -163,6 +156,7 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
           resetGame={resetGame}
           handleIsEndGame={handleIsEndGame}
           handleStatistics={handleStatistics}
+          handleGameStatistic={handleGameStatistic}
           handlePage={handlePage}
           handleTimeStartGame={handleTimeStartGame}
           handleTimeEndGame={handleTimeEndGame}
@@ -170,7 +164,6 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
       )}
       {!isStartGame && !isLoading && !isEndGame && user.token && (
         <GameAuth
-          handleGameStatistic={handleGameStatistic}
           data={authorizedWords?.paginatedResults}
           arrayOfCoins={arrayOfCoins}
           page={page}
@@ -178,6 +171,7 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
           resetGame={resetGame}
           handleIsEndGame={handleIsEndGame}
           handleStatistics={handleStatistics}
+          handleGameStatistic={handleGameStatistic}
           handlePage={handlePage}
           handleTimeStartGame={handleTimeStartGame}
           handleTimeEndGame={handleTimeEndGame}

@@ -1,12 +1,8 @@
-import React from 'react';
+import { FC } from 'react';
 import { ButtonLevel } from './buttons';
+import { IGreetings } from './AudioGreetings.interface';
 
-export interface IGreetings {
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  isGameOpenFromMenu: boolean;
-}
-
-const AudioGreetings: React.FC<IGreetings> = ({ onClick, isGameOpenFromMenu }) => {
+const AudioGreetings: FC<IGreetings> = ({ onClick, isGameOpenFromMenu }) => {
   return (
     <div className="audio-frame">
       <h2 className="audio-frame__header">Аудиовызов</h2>
@@ -43,4 +39,4 @@ const AudioGreetings: React.FC<IGreetings> = ({ onClick, isGameOpenFromMenu }) =
   );
 };
 
-export default AudioGreetings;
+export { AudioGreetings };

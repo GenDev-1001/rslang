@@ -1,10 +1,6 @@
-import { FC, MouseEvent } from 'react';
+import { FC } from 'react';
 import { ButtonLevel } from '..';
-
-export interface IGreetings {
-  onClick: (event: MouseEvent<HTMLButtonElement>) => void;
-  isGameOpenFromMenu: boolean;
-}
+import { IGreetings } from './Greetings.interface';
 
 const Greetings: FC<IGreetings> = ({ onClick, isGameOpenFromMenu }) => {
   return (
@@ -13,6 +9,11 @@ const Greetings: FC<IGreetings> = ({ onClick, isGameOpenFromMenu }) => {
       <p className="sprint-frame__description">
         Тренирует <strong className="strong">навык быстрого перевода</strong> с английского языка на
         русский. Вам нужно выбрать соответствует ли перевод предложенному слову.
+      </p>
+      <p className="sprint-frame__description">
+        При помощи клавиш <strong className="strong">Y</strong> и{' '}
+        <strong className="strong">N</strong> вы также можете управлять ответами соответственно для{' '}
+        <strong className="strong">True</strong> и <strong className="strong">False</strong>
       </p>
       {isGameOpenFromMenu ? (
         <>

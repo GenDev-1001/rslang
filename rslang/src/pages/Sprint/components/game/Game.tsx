@@ -1,30 +1,8 @@
 import { FC, MouseEvent, useEffect, useState } from 'react';
 import { ButtonReset, ButtonSelect, ButtonSpeak, Circle, Multiplier } from '..';
 import { random } from '../../../../common/utils/random';
-import { IWordsResponse } from '../../../../features/words/wordsSlice.interface';
-import { IStatistics } from '../../Sprint';
+import { IGame } from './Game.interface';
 import './Game.scss';
-
-export interface IGame {
-  data: IWordsResponse[] | undefined;
-  arrayOfCoins: boolean[];
-  page: number;
-  group: number;
-  resetGame: () => void;
-  handleIsEndGame: (value: boolean) => void;
-  handleStatistics: ({
-    id,
-    audio,
-    word,
-    wordTranslate,
-    transcription,
-    result,
-  }: IStatistics) => void;
-  handlePage: () => void;
-  handleTimeStartGame: () => void;
-  handleTimeEndGame: () => void;
-  handleGameStatistic: (streak: number, score: number, timeStop: string) => void;
-}
 
 const Game: FC<IGame> = ({
   data,
@@ -47,6 +25,20 @@ const Game: FC<IGame> = ({
   const [englishWord, setEnglishWord] = useState<string>('');
   const [englishWordTranslation, setEnglishWordTranslation] = useState<string>('');
   const [randomWordTranslation, setRandomWordTranslation] = useState<string>('');
+
+  const handleAudio = (value: boolean) => {
+    if (value) {
+      const successSound = new Audio(`
+        https://allsoundsaround.com/wp-content/uploads/2021/01/zvuk-otkryitiya-pravilnoy-stroki-na-tablo-v-teleshou-100-k-1-5511.mp3?_=1,
+      `);
+      successSound.play();
+    } else {
+      const errorSound = new Audio(`
+      https://allsoundsaround.com/wp-content/uploads/2021/01/zvuk-nevernogo-otveta-v-peredache-sto-k-odnomu-5541.mp3?_=2,
+      `);
+      errorSound.play();
+    }
+  };
 
   const getEnglishWord = () => {
     const word = data ? data[wordIndex].word : '';
@@ -87,6 +79,7 @@ const Game: FC<IGame> = ({
       (textContent === 'false' && !arrayOfCoins[wordIndex])
     ) {
       const result = true;
+      handleAudio(true);
 
       if (streak === 3) {
         if (multiplier !== 4) {
@@ -111,6 +104,7 @@ const Game: FC<IGame> = ({
     } else {
       const result = false;
 
+      handleAudio(false);
       handleStatistics({ id, audio, word, wordTranslate, transcription, result });
       setStreak(0);
       setMultiplier(1);
@@ -142,16 +136,16 @@ const Game: FC<IGame> = ({
     getEnglishWord();
     getRandomWordTranslation();
     handleTimeStartGame();
-
-    document.addEventListener('keydown', handleKeySelect);
-    return () => {
-      document.removeEventListener('keydown', handleKeySelect);
-    };
   }, []);
 
   useEffect(() => {
     getEnglishWord();
     getRandomWordTranslation();
+
+    document.addEventListener('keydown', handleKeySelect);
+    return () => {
+      document.removeEventListener('keydown', handleKeySelect);
+    };
   }, [wordIndex]);
 
   useEffect(() => {
@@ -165,7 +159,7 @@ const Game: FC<IGame> = ({
       setTimeout(() => {
         handleIsEndGame(true);
         handleTimeEndGame();
-        handleGameStatistic(streak, score, new Date().toISOString());
+        handleGameStatistic(streak, score);
       }, 1000);
     }
   }, [timer]);
