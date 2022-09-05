@@ -54,12 +54,12 @@ const Game: FC<IGame> = ({
         https://allsoundsaround.com/wp-content/uploads/2021/01/zvuk-otkryitiya-pravilnoy-stroki-na-tablo-v-teleshou-100-k-1-5511.mp3?_=1,
       `);
       successSound.play();
+    } else {
+      const errorSound = new Audio(`
+      https://allsoundsaround.com/wp-content/uploads/2021/01/zvuk-nevernogo-otveta-v-peredache-sto-k-odnomu-5541.mp3?_=2,
+      `);
+      errorSound.play();
     }
-
-    const errorSound = new Audio(`
-      https://allsoundsaround.com/wp-content/uploads/2021/01/zvuk-otkryitiya-pravilnoy-stroki-na-tablo-v-teleshou-100-k-1-5511.mp3?_=1,
-    `);
-    errorSound.play();
   };
 
   const getEnglishWord = () => {

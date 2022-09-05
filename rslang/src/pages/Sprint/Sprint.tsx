@@ -148,6 +148,21 @@ const Sprint: FC<ISprint> = ({ isGameOpenFromMenu }) => {
     getArrayOfCoins(200);
   }, []);
 
+  // useEffect(() => {
+  //   const result = statisticsGame.reduce(
+  //     (previousValue: IStatistics[], currentValue: IStatistics) => {
+  //       if (!previousValue.find((obj) => obj.id === currentValue.id)) {
+  //         previousValue.push(currentValue);
+  //       }
+
+  //       return previousValue;
+  //     },
+  //     [],
+  //   );
+
+  //   setStatisticsGame(result);
+  // }, [statisticsGame]);
+
   return (
     <div className="sprint-wrapper">
       <img src={sprintBg} alt="Sprint Background" className="sprint-wrapper__bg" />

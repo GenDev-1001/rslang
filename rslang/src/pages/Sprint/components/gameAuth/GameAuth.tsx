@@ -61,6 +61,20 @@ const GameAuth: FC<IGameAuth> = ({
   const [updateWord] = useUpdateUserWordMutation();
   const [createUserWord] = useCreateUserWordMutation();
 
+  const handleAudio = (value: boolean) => {
+    if (value) {
+      const successSound = new Audio(`
+        https://allsoundsaround.com/wp-content/uploads/2021/01/zvuk-otkryitiya-pravilnoy-stroki-na-tablo-v-teleshou-100-k-1-5511.mp3?_=1,
+      `);
+      successSound.play();
+    } else {
+      const errorSound = new Audio(`
+      https://allsoundsaround.com/wp-content/uploads/2021/01/zvuk-nevernogo-otveta-v-peredache-sto-k-odnomu-5541.mp3?_=2,
+      `);
+      errorSound.play();
+    }
+  };
+
   const getEnglishWord = () => {
     const word = data ? data[wordIndex].word : '';
     const wordTranslate = data ? data[wordIndex].wordTranslate : '';
@@ -134,6 +148,7 @@ const GameAuth: FC<IGameAuth> = ({
       (textContent === 'false' && !arrayOfCoins[wordIndex])
     ) {
       const result = true;
+      handleAudio(true);
 
       if (streak === 3) {
         if (multiplier !== 4) {
@@ -164,6 +179,7 @@ const GameAuth: FC<IGameAuth> = ({
       });
     } else {
       const result = false;
+      handleAudio(false);
 
       if (user.token) {
         handleAccuracy(false);
