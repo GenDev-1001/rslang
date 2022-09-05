@@ -15,31 +15,35 @@ const extStatisticRes = (response: IGetStatisticResponse): IPersonStatistic => {
   };
 };
 
-export const statisticApiSlice = apiSlice.injectEndpoints({
-  endpoints: (builder) => ({
-    getStatistic: builder.query<IPersonStatistic, string>({
-      query: (userId) => ({
-        url: `users/${userId}/statistics`,
-      }),
-      transformResponse: extStatisticRes,
-      onQueryStarted: (arg: string, { dispatch, queryFulfilled }) => {
-        queryFulfilled.then((response) => dispatch(setStatistics(response.data))).catch(() => {});
-      },
-    }),
-    putStatistic: builder.mutation<IPersonStatistic, IPutStatisticRequest>({
-      query: ({ userId, statistic: { learnedWords, statistics } }) => ({
-        url: `users/${userId}/statistics`,
-        method: 'PUT',
-        body: {
-          learnedWords,
-          optional: {
-            statistics: JSON.stringify(statistics),
-          },
+export const statisticApiSlice = apiSlice
+  .enhanceEndpoints({ addTagTypes: ['Statistics'] })
+  .injectEndpoints({
+    endpoints: (builder) => ({
+      getStatistic: builder.query<IPersonStatistic, string>({
+        query: (userId) => ({
+          url: `users/${userId}/statistics`,
+        }),
+        providesTags: [{ type: 'Statistics', id: 'LIST' }],
+        transformResponse: extStatisticRes,
+        onQueryStarted: (arg: string, { dispatch, queryFulfilled }) => {
+          queryFulfilled.then((response) => dispatch(setStatistics(response.data))).catch(() => {});
         },
       }),
-      transformResponse: extStatisticRes,
+      putStatistic: builder.mutation<IPersonStatistic, IPutStatisticRequest>({
+        query: ({ userId, statistic: { learnedWords, statistics } }) => ({
+          url: `users/${userId}/statistics`,
+          method: 'PUT',
+          body: {
+            learnedWords,
+            optional: {
+              statistics: JSON.stringify(statistics),
+            },
+          },
+        }),
+        invalidatesTags: [{ type: 'Statistics', id: 'LIST' }],
+        transformResponse: extStatisticRes,
+      }),
     }),
-  }),
-});
+  });
 
 export const { useGetStatisticQuery, usePutStatisticMutation } = statisticApiSlice;

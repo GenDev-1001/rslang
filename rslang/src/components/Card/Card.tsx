@@ -135,7 +135,7 @@ export function Card({
               <div className="games-block">
                 <span className="games-block__name">Аудиовызов</span>
                 <span className="games-block__stat">
-                  {sumCorrectErrorSprint &&
+                  {sumCorrectErrorAudiocall &&
                     `${correctAudiocall} из ${correctAudiocall + errorAudiocall}`}
                 </span>
               </div>

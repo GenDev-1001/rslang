@@ -19,8 +19,8 @@ const Statistics: FC = () => {
     let wordsTrue = 0;
     let wordsFalse = 0;
     games.forEach((game) => {
-      wordsTrue += game.wordsTrue.length;
-      wordsFalse += game.wordsFalse.length;
+      wordsTrue += game.wordsTrue;
+      wordsFalse += game.wordsFalse;
     });
     return Math.round((wordsTrue * 100) / (wordsTrue + wordsFalse)) || 0;
   };
@@ -46,8 +46,8 @@ const Statistics: FC = () => {
             <Game title="Audio Call" src={audiocallIcon} statistics={statistics} />
           </div>
         </div>
-        <Graph title="Новые слова" subtitle="за каждый день изучения" />
-        <Graph title="Изученные слова" subtitle="за весь период обучения" />
+        <Graph title="Новые слова" subtitle="за каждый день изучения" data={statistics} />
+        <Graph title="Изученные слова" subtitle="за весь период обучения" data={statistics} />
       </div>
     </div>
   );
