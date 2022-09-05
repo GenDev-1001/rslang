@@ -227,7 +227,7 @@ const GameAuth: FC<IGameAuth> = ({
       setTimeout(() => {
         handleIsEndGame(true);
         handleTimeEndGame();
-        handleGameStatistic(streak, score);
+        handleGameStatistic(maxStreak, score);
       }, 1000);
     }
   }, [timer]);

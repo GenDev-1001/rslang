@@ -30,23 +30,35 @@
 
   td {
     &:nth-child(1) {
-      width: 70px;
+      width: $base * 14;
     }
 
     &:nth-child(2) {
       width: 28%;
+
+      @media (max-width: $breakpoint-xs-min) {
+        font-size: $base * 2;
+      }
     }
 
     &:nth-child(3) {
       width: 28%;
+
+      @media (max-width: $breakpoint-xs-min) {
+        font-size: $base * 2;
+      }
     }
 
     &:nth-child(4) {
       width: 28%;
+
+      @media (max-width: $breakpoint-xs-min) {
+        font-size: $base * 2;
+      }
     }
 
     &:nth-child(5) {
-      width: 70px;
+      width: $base * 14;
     }
   }
 

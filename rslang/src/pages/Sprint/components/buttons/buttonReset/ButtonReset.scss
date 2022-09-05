@@ -37,4 +37,12 @@
       transform: none;
     }
   }
+
+  @media (max-width: $breakpoint-lg-min) {
+    min-width: $base * 15;
+    width: $base * 15;
+    min-height: $base * 15;
+    height: $base * 15;
+    font-size: $base * 3;
+  }
 }

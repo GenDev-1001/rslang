@@ -5,12 +5,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 70px);
+  height: calc(100vh - $base * 14);
 }
 
 .audio-wrapper__bg {
   position: absolute;
-
   top: 50%;
   left: 50%;
   z-index: -1;
@@ -34,23 +33,48 @@
   padding: $base * 5;
   background-color: $color-white;
   border-radius: $base * 5;
-  box-shadow: rgb(0 0 0 / 16%) 0 3px 6px, rgb(0 0 0 / 23%) 0 3px 6px;
+  box-shadow: rgb(0 0 0 / 16%) 0 0.188rem 0.375rem, rgb(0 0 0 / 23%) 0 0.188rem 0.375rem;
   row-gap: $base * 10;
-  &__header {
-    font-weight: $fw-bold;
-    font-size: $base * 20;
-    text-align: center;
+
+  @media (max-width: $breakpoint-lg-min) {
+    width: 95vw;
+    min-height: 80vh;
+    padding: $base * 3;
+    row-gap: $base * 2;
   }
-  &__description {
+
+  .audio-frame__description {
     font-size: $base * 8;
     text-align: center;
+
+    @media (max-width: $breakpoint-lg-min) {
+      font-size: $base * 6;
+    }
+
+    @media (max-width: $breakpoint-xs-min) {
+      font-size: $base * 4;
+    }
+
     .options-list {
       font-size: $base * 6;
       display: flex;
       flex-direction: column;
       text-align: initial;
-      margin: 20px 140px;
-      gap: 10px;
+      margin: $base * 4 $base * 28;
+      gap: $base * 2;
+
+      @media (max-width: $breakpoint-lg-min) {
+        font-size: $base * 6;
+      }
+
+      @media (max-width: $breakpoint-md-min) {
+        margin: $base * 4;
+      }
+
+      @media (max-width: $breakpoint-xs-min) {
+        font-size: $base * 4;
+      }
+
       .list-item {
         list-style-type: disc;
       }
@@ -64,6 +88,16 @@
   justify-content: space-between;
   column-gap: $base;
   width: 100%;
+
+  @media (max-width: $breakpoint-lg-min) {
+    flex-wrap: wrap;
+    gap: $base;
+  }
+
+  @media (max-width: $breakpoint-xs-min) {
+    justify-content: center;
+  }
+
   &__streak-wrapper {
     display: flex;
     align-items: center;
@@ -93,13 +127,16 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-
   gap: $base * 4;
+
+  @media (max-width: $breakpoint-xs-min) {
+    gap: $base * 2;
+  }
 }
 
 .button-menu {
   position: fixed;
-  top: 70px;
+  top: $base * 14;
   right: 0;
   display: flex;
   flex-direction: column;
@@ -112,7 +149,6 @@
 }
 
 .select-wrapper {
-  height: 17vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,19 +157,24 @@
 .bg_white {
   background-color: $color-white-09;
   cursor: default;
+
   &:hover {
     transform: unset;
   }
+
   &:active {
     transform: unset;
   }
 }
+
 .bg_grey {
   background-color: rgb(222, 219, 219);
   cursor: default;
+
   &:hover {
     transform: unset;
   }
+
   &:active {
     transform: unset;
   }
@@ -143,9 +184,11 @@
   background-color: rgb(222, 219, 219);
   text-decoration: line-through;
   cursor: default;
+
   &:hover {
     transform: unset;
   }
+
   &:active {
     transform: unset;
   }
