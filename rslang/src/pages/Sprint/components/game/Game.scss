@@ -6,6 +6,12 @@
   justify-content: space-between;
   column-gap: $base;
   width: 100%;
+
+  @media (max-width: $breakpoint-lg-min) {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: $base;
+  }
 }
 
 .sprint-ui__circle {
@@ -24,6 +30,14 @@
   border-radius: 50%;
   background-color: $color-white;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
+  @media (max-width: $breakpoint-lg-min) {
+    min-width: $base * 20;
+    width: $base * 20;
+    min-height: $base * 20;
+    height: $base * 20;
+    font-size: $base * 4;
+  }
 }
 
 .sprint-ui__circle_small {
@@ -31,6 +45,13 @@
   width: $base * 15;
   min-height: $base * 15;
   height: $base * 15;
+
+  @media (max-width: $breakpoint-lg-min) {
+    min-width: $base * 10;
+    width: $base * 10;
+    min-height: $base * 10;
+    height: $base * 10;
+  }
 }
 
 .sprint-ui__streak-wrapper {
