@@ -1,17 +1,37 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { UserWordStatus } from '../../../../common/interfaces';
+import { IActivePaginatedResult } from '../../../../features/aggregaredWords/aggregaredWordsApiSlice.inteface';
 import {
   useCreateUserWordMutation,
   useUpdateUserWordMutation,
 } from '../../../../features/userWords/userWordsApiSlice';
 import { useAuth } from '../../../../hooks/useAuth';
 import '../../Audio.scss';
-import { keyCodesArr, wordsArrayFilds, WordsType } from '../../constants';
+import { IStatistics, keyCodesArr, wordsArrayFilds, WordsType } from '../../constants';
 import { ButtonReset, ButtonSelect, ButtonSpeak } from '../buttons';
-import { Circle, WordPicture, Multiplier } from '..';
-import { IGameAuth } from './GameAuth.interface';
+import { Circle } from '../circle/Circle';
+import { WordPicture } from '../game/WordPicture';
+import { Multiplier } from '../multiplier/Multiplier';
 
-export const GameAuth: FC<IGameAuth> = ({
+export interface IGame {
+  data: IActivePaginatedResult[] | undefined;
+  group: number;
+  handleGameStatistics: ({
+    id,
+    audio,
+    word,
+    wordTranslate,
+    transcription,
+    result,
+  }: IStatistics) => void;
+  resetGame: () => void;
+  handleIsEndGame: (value: boolean) => void;
+  handleTimeStartGame: () => void;
+  handleTimeEndGame: () => void;
+  handleStatistic: (streak: number, score: number, timeStop: string) => void;
+}
+
+export const GameAuth: FC<IGame> = ({
   data,
   group,
   handleGameStatistics,
