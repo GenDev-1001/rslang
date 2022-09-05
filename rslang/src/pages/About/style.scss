@@ -1,28 +1,31 @@
+@import '../../sass/Constants.scss';
+
 .aboutUs-container {
   min-height: calc(100vh - 180px);
-  padding: 0 50px;
+  padding: 0 $base * 10;
 }
 
 .title {
-  margin: 40px 0;
+  margin: $base * 8 0;
   font-size: 2.5rem;
   text-align: center;
 }
 
 .team {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  flex-wrap: wrap;
 
   .member {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 500px;
-    width: 30%;
-    padding: 30px;
-    border-radius: 20px;
+    min-height: $base * 100;
+    width: 32%;
+    padding: $base * 6;
+    border-radius: $base * 4;
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
     transition: 0.3s;
 
@@ -30,28 +33,37 @@
       box-shadow: 0 8px 16px 0 rgb(0 0 0 / 20%);
     }
 
+    @media (max-width: $breakpoint-md-min) {
+      width: 48%;
+    }
+
+    @media (max-width: $breakpoint-xs-min) {
+      width: 100%;
+    }
+
     &_img {
-      width: 200px;
-      height: 200px;
-      margin-bottom: 20px;
-      border-radius: 100px;
+      width: $base * 40;
+      height: $base * 40;
+      margin-bottom: $base * 4;
+      border-radius: $base * 20;
     }
 
     &_info {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: $base * 2;
       align-items: center;
       justify-content: center;
       font-size: 1.3rem;
 
       &_name {
         font-size: 1.5rem;
+        text-align: center;
       }
 
       &_link {
         display: flex;
-        gap: 5px;
+        gap: $base;
         align-items: center;
         color: #e56c78;
 
@@ -61,8 +73,8 @@
         }
 
         .image {
-          width: 30px;
-          height: 30px;
+          width: $base * 6;
+          height: $base * 6;
         }
       }
     }
