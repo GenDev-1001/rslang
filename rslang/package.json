@@ -1,6 +1,11 @@
 {
+  "name": "rs-lang-team-84",
+  "version": "0.1.0",
   "private": true,
+  "homepage": "https://GenDev-1001/rslang/rs-lang-team-84",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d ./build -e rs-lang-team-84",
     "start": "cross-env SERVE=true webpack serve --open",
     "watch": "webpack --watch",
     "build": "cross-env NODE_ENV=production webpack",
@@ -58,6 +63,7 @@
     "@reduxjs/toolkit": "^1.8.5",
     "classnames": "^2.3.1",
     "framer-motion": "^6.5.1",
+    "gh-pages": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-google-charts": "^4.0.0",
