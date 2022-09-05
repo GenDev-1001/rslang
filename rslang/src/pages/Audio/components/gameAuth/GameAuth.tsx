@@ -132,7 +132,7 @@ export const GameAuth: FC<IGame> = ({
     const wordRequest = {
       word: {
         difficulty:
-          correctCountAudioValue >= 5 && correctCountAudioValue === 0
+          correctCountAudioValue >= 5 && correctCountAudioValue === 0 && errorCountSprintValue === 0
             ? UserWordStatus.EASY
             : UserWordStatus.HARD,
         optional,

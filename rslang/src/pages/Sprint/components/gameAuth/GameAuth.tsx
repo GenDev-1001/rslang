@@ -19,7 +19,7 @@ const GameAuth: FC<IGameAuth> = ({
   handleTimeEndGame,
   handleGameStatistic,
 }) => {
-  const [timer, setTimer] = useState<number>(60);
+  const [timer, setTimer] = useState<number>(10);
   const [score, setScore] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
   const [counter, setCounter] = useState<number>(0);
@@ -95,7 +95,7 @@ const GameAuth: FC<IGameAuth> = ({
     const wordRequest = {
       word: {
         difficulty:
-          correctCountSprintValue >= 5 && errorCountSprintValue === 0
+          correctCountSprintValue >= 5 && errorCountSprintValue === 0 && errorCountAudioValue === 0
             ? UserWordStatus.EASY
             : UserWordStatus.HARD,
         optional,

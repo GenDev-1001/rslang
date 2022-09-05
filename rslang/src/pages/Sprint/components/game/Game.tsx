@@ -17,7 +17,7 @@ const Game: FC<IGame> = ({
   handleTimeEndGame,
   handleGameStatistic,
 }) => {
-  const [timer, setTimer] = useState<number>(60);
+  const [timer, setTimer] = useState<number>(10);
   const [score, setScore] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
   const [multiplier, setMultiplier] = useState<number>(1);
