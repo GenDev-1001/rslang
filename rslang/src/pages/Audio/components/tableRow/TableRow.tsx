@@ -15,7 +15,7 @@ const TableRow: FC<ITableRow> = ({ audio, word, wordTranslate, transcription, re
   return (
     <tr className="table-row">
       <td>
-        <ButtonSpeak audio={audio} />
+        <ButtonSpeak audioLink={audio} />
       </td>
       <td>{word}</td>
       <td>{transcription}</td>
