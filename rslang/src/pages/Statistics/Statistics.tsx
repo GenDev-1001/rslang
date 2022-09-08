@@ -4,6 +4,7 @@ import { useGetStatisticQuery } from '../../features/statistic/statisticApiSlice
 import { IStatistic } from '../../features/statistic/statisticApiSlice.interface';
 import { selectStatistic } from '../../features/statistic/statisticSlice';
 import { useAuth } from '../../hooks/useAuth';
+import { Footer } from '../../components/Footer/Footer';
 import audiocallIcon from '../../images/audiocall.svg';
 import sprintBg from '../../images/sprint-greetings-bg.jpg';
 import sprintIcon from '../../images/sprint.svg';
@@ -26,30 +27,33 @@ const Statistics: FC = () => {
   };
 
   return (
-    <div className="sprint-wrapper">
-      <img src={sprintBg} alt="Statistics Background" className="sprint-wrapper__bg" />
-      <div className="sprint-frame statistics-frame">
-        <div className="statistics-wrapper">
-          <div className="statistics-wrapper_first">
-            <div className="words-learned__wrapper">
-              <h2 className="words-learned">{learnedWords}</h2>
-              <div className="words-learned__wrapper-descrption">
-                <h2>words</h2>
-                <h3>were learned</h3>
+    <>
+      <div className="sprint-wrapper">
+        <img src={sprintBg} alt="Statistics Background" className="sprint-wrapper__bg" />
+        <div className="sprint-frame statistics-frame">
+          <div className="statistics-wrapper">
+            <div className="statistics-wrapper_first">
+              <div className="words-learned__wrapper">
+                <h2 className="words-learned">{learnedWords}</h2>
+                <div className="words-learned__wrapper-descrption">
+                  <h2>words</h2>
+                  <h3>were learned</h3>
+                </div>
               </div>
-            </div>
 
-            <Progress progress={percentTrueWords(statistics)} />
+              <Progress progress={percentTrueWords(statistics)} />
+            </div>
+            <div className="statistics-wrapper_second">
+              <Game title="Sprint" src={sprintIcon} statistics={statistics} />
+              <Game title="Audio Call" src={audiocallIcon} statistics={statistics} />
+            </div>
           </div>
-          <div className="statistics-wrapper_second">
-            <Game title="Sprint" src={sprintIcon} statistics={statistics} />
-            <Game title="Audio Call" src={audiocallIcon} statistics={statistics} />
-          </div>
+          <Graph title="Новые слова" subtitle="за каждый день изучения" data={statistics} />
+          <Graph title="Изученные слова" subtitle="за весь период обучения" data={statistics} />
         </div>
-        <Graph title="Новые слова" subtitle="за каждый день изучения" data={statistics} />
-        <Graph title="Изученные слова" subtitle="за весь период обучения" data={statistics} />
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 
