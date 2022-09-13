@@ -20,5 +20,5 @@
 - [Prettier](https://prettier.io/)
 - [BEM methodology](https://en.bem.info/methodology/)
 - [Sass](https://sass-scss.ru/documentation/)
-- [react-google-charts](https://www.react-google-charts.com/components)
-- [react-icons](https://react-icons.github.io/react-icons/)
+- [React-google-charts](https://www.react-google-charts.com/components)
+- [React-icons](https://react-icons.github.io/react-icons/)
