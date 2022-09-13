@@ -1,0 +1,68 @@
+@import '../../../../sass/Constants.scss';
+
+.sprint-table__wrapper {
+  min-height: auto !important;
+  height: 70vh !important;
+  justify-content: flex-start !important;
+  row-gap: $base !important;
+  overflow-y: auto;
+}
+
+.sprint-table {
+  width: 100%;
+  border-radius: $base * 5;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
+  .sprint-ui__circle {
+    box-shadow: none;
+  }
+}
+
+.table-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid $color-dark-02;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  td {
+    &:nth-child(1) {
+      width: $base * 14;
+    }
+
+    &:nth-child(2) {
+      width: 28%;
+
+      @media (max-width: $breakpoint-xs-min) {
+        font-size: $base * 2;
+      }
+    }
+
+    &:nth-child(3) {
+      width: 28%;
+
+      @media (max-width: $breakpoint-xs-min) {
+        font-size: $base * 2;
+      }
+    }
+
+    &:nth-child(4) {
+      width: 28%;
+
+      @media (max-width: $breakpoint-xs-min) {
+        font-size: $base * 2;
+      }
+    }
+
+    &:nth-child(5) {
+      width: $base * 14;
+    }
+  }
+
+  .sprint-ui__circle {
+    background-color: transparent;
+  }
+}

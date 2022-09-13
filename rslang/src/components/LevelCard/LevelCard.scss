@@ -1,0 +1,63 @@
+.directory-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 180px;
+  height: 70px;
+  padding: 10px 12px;
+  overflow: hidden;
+  color: var(--color-pink);
+  font-size: 16px;
+  background-color: var(--color-grey);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all easy 0.5s;
+}
+
+.directory-button-left {
+  z-index: 2;
+  color: var(--color-black);
+  text-align: left;
+}
+
+.directory-button-right {
+  z-index: 2;
+}
+
+.directory-button-right__title {
+  color: var(--color-white);
+  font-size: 20px;
+}
+
+.directory-button-circle {
+  position: absolute;
+  top: -1rem;
+  right: -2.5rem;
+  width: 110px;
+  height: 110px;
+  overflow: hidden;
+  background-color: var(--color-green);
+  border-radius: 53px;
+}
+
+li:nth-child(2) .directory-button .directory-button-circle {
+  background-color: var(--color-yellow);
+}
+
+li:nth-child(3) > .directory-button .directory-button-circle {
+  background-color: var(--color-light-blue);
+}
+
+li:nth-child(4) .directory-button .directory-button-circle {
+  background-color: var(--color-pink);
+}
+
+li:nth-child(5) .directory-button .directory-button-circle {
+  background-color: var(--color-blue);
+}
+
+li:nth-child(6) .directory-button .directory-button-circle {
+  background-color: var(--color-blueviolet);
+}

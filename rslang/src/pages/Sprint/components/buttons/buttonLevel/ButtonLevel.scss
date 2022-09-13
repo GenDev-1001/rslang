@@ -1,0 +1,29 @@
+@import '../../../../../sass/Constants.scss';
+
+.button-level {
+  width: $base * 20;
+  height: $base * 20;
+  font-size: $base * 8;
+  border: none;
+  border-radius: $base * 5;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  cursor: pointer;
+  transition: all $transition-01 ease-out;
+
+  &:hover {
+    transform: translate(0.063rem, 0.063rem);
+  }
+
+  &:active {
+    transform: translate($base, $base);
+  }
+
+  @media (max-width: $breakpoint-lg-min) {
+    width: $base * 15;
+    height: $base * 15;
+  }
+}
+
+.button-start {
+  width: $base * 50;
+}

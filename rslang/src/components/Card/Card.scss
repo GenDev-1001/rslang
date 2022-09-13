@@ -1,0 +1,220 @@
+@import '../../sass/Constants.scss';
+
+.card {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  width: $base * 60;
+  min-height: $base * 110;
+  max-height: 660px;
+  color: var(--color-white);
+  background-color: var(--color-green);
+  border-radius: $base * 2;
+  border-top-left-radius: 80px;
+  border-bottom-right-radius: 80px;
+  box-shadow: 1px 1px 15px 0 rgb(0 0 0 / 20%);
+}
+
+.card.group0 {
+  background-color: var(--color-green);
+}
+
+.card.group1 {
+  background-color: var(--color-yellow);
+}
+
+.card.group2 {
+  background-color: var(--color-light-blue);
+}
+
+.card.group3 {
+  background-color: var(--color-pink);
+}
+
+.card.group4 {
+  background-color: var(--color-blue);
+}
+
+.card.group5 {
+  background-color: var(--color-blueviolet);
+}
+
+.card-img {
+  width: $base * 60;
+  height: 250px;
+  margin-bottom: $base * 2;
+  border-top-left-radius: $base * 2;
+  border-top-left-radius: 80px;
+  border-top-right-radius: $base * 2;
+  border-bottom-right-radius: 80px;
+}
+
+.card-details {
+  text-align: center;
+}
+
+.card-details__title {
+  margin-bottom: 5px;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.card-details__btns {
+  display: flex;
+  justify-content: center;
+  margin-bottom: $base * 2;
+  color: var(--color-white);
+}
+
+.card-details__btn + .card-details__btn {
+  margin-left: 5px;
+}
+
+.card.group1 .card-details__btn {
+  background-color: var(--color-green);
+}
+
+.card.card.group1 .card-details__btn:hover {
+  background-color: var(--color-yellow);
+  background-color: var(--color-white);
+}
+
+.card.card.group1 .games-block__name {
+  background-color: var(--color-green);
+}
+
+.card.card.group1 .translate-audio:hover {
+  background-color: var(--color-green);
+  border-radius: $base * 2;
+}
+
+.card-details__btn {
+  padding: 4px 6px;
+  color: var(--color-white);
+  background-color: var(--color-yellow);
+  border: 1px solid transparent;
+  border-radius: $base * 2;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.card-details__btn:hover {
+  color: var(--color-green);
+  background-color: var(--color-white);
+}
+
+.card-details__translate {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: $base * 2;
+}
+
+.card-details__text-en {
+  margin-bottom: $base * 2;
+}
+
+.text-en__first,
+.text-ru__first {
+  margin-bottom: 5px;
+}
+
+.text-en__second {
+  margin-bottom: 20px;
+}
+
+.text-en__first,
+.text-ru__first,
+.text-en__second,
+.text-ru__second {
+  padding: 0 5px;
+}
+
+.text-en__line {
+  position: relative;
+  top: -$base * 2;
+  left: 60px;
+  width: 180px;
+  height: 1px;
+  background-color: #fff;
+  background-color: var(--color-white);
+}
+
+.card-details__text-ru {
+  margin-bottom: $base * 2;
+}
+
+.translate-audio {
+  background-color: transparent;
+  border: none;
+  transition: background-color 0.5s;
+}
+
+.translate-audio__svg {
+  width: $base * 4;
+  height: $base * 4;
+  cursor: pointer;
+  filter: invert(1);
+}
+
+.translate-audio:hover {
+  background-color: var(--color-yellow);
+  border-radius: $base * 2;
+}
+
+.card-details__result-games {
+  display: flex;
+  justify-content: center;
+}
+
+.card-details__result-title {
+  margin-bottom: $base;
+  font-size: 16px;
+}
+
+.games-block + .games-block {
+  margin-left: $base * 2;
+}
+
+.games-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.games-block__name {
+  display: inline-block;
+  width: fit-content;
+  margin-bottom: 3px;
+  padding: 3px 6px;
+  color: #fffffe;
+  font-size: 12px;
+  text-transform: lowercase;
+  background-color: var(--color-yellow);
+  border-radius: $base * 5;
+}
+
+.games-block__stat {
+  display: flex;
+  align-items: center;
+  margin-bottom: $base * 2;
+  font-size: 12px;
+}
+
+.card-details__text-title {
+  margin-bottom: $base;
+  font-size: $base * 3;
+}
+
+.translate-audio.disabled {
+  cursor: default;
+}
+
+.translate-audio.disabled:hover {
+  background-color: transparent;
+}
+
+.translate-audio__svg.disabled {
+  cursor: default;
+}

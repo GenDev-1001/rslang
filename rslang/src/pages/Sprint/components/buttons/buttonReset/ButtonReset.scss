@@ -1,0 +1,48 @@
+@import '../../../../../sass/Constants.scss';
+
+.button-reset {
+  min-width: $base * 20;
+  width: $base * 20;
+  min-height: $base * 20;
+  height: $base * 20;
+  font-size: $base * 5;
+  font-weight: $fw-bold;
+  text-align: center;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 50%;
+  background-color: $color-red;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  cursor: pointer;
+  transition: all $transition-01 ease-out;
+
+  &:hover {
+    transform: translate(0.063rem, 0.063rem);
+  }
+
+  &:active {
+    transform: translate($base, $base);
+  }
+
+  &:disabled {
+    user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    background-color: $color-dark-02;
+
+    &:hover,
+    &:active {
+      transform: none;
+    }
+  }
+
+  @media (max-width: $breakpoint-lg-min) {
+    min-width: $base * 15;
+    width: $base * 15;
+    min-height: $base * 15;
+    height: $base * 15;
+    font-size: $base * 3;
+  }
+}

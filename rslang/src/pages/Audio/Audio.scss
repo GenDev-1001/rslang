@@ -1,0 +1,195 @@
+@import '../../sass/Constants.scss';
+
+.audio-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - $base * 14);
+}
+
+.audio-wrapper__bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  transform: translate(-50%, -50%);
+}
+
+.audio-frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 80vw;
+  max-width: $base * 245;
+  min-height: 75vh;
+  margin: auto;
+  padding: $base * 5;
+  background-color: $color-white;
+  border-radius: $base * 5;
+  box-shadow: rgb(0 0 0 / 16%) 0 0.188rem 0.375rem, rgb(0 0 0 / 23%) 0 0.188rem 0.375rem;
+  row-gap: $base * 10;
+
+  @media (max-width: $breakpoint-lg-min) {
+    width: 95vw;
+    min-height: 80vh;
+    padding: $base * 3;
+    row-gap: $base * 2;
+  }
+
+  .audio-frame__description {
+    font-size: $base * 8;
+    text-align: center;
+
+    @media (max-width: $breakpoint-lg-min) {
+      font-size: $base * 6;
+    }
+
+    @media (max-width: $breakpoint-xs-min) {
+      font-size: $base * 4;
+    }
+
+    .options-list {
+      font-size: $base * 6;
+      display: flex;
+      flex-direction: column;
+      text-align: initial;
+      margin: $base * 4 $base * 28;
+      gap: $base * 2;
+
+      @media (max-width: $breakpoint-lg-min) {
+        font-size: $base * 6;
+      }
+
+      @media (max-width: $breakpoint-md-min) {
+        margin: $base * 4;
+      }
+
+      @media (max-width: $breakpoint-xs-min) {
+        font-size: $base * 4;
+      }
+
+      .list-item {
+        list-style-type: disc;
+      }
+    }
+  }
+}
+
+.audio-ui {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: $base;
+  width: 100%;
+
+  @media (max-width: $breakpoint-lg-min) {
+    flex-wrap: wrap;
+    gap: $base;
+  }
+
+  @media (max-width: $breakpoint-xs-min) {
+    justify-content: center;
+  }
+
+  &__streak-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: $base * 2;
+  }
+
+  &__streak {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: $base * 5;
+  }
+
+  &__level {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: $base * 5;
+  }
+}
+
+.audio-btn-select__wrapper {
+  min-height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: $base * 4;
+
+  @media (max-width: $breakpoint-xs-min) {
+    gap: $base * 2;
+  }
+}
+
+.button-menu {
+  position: fixed;
+  top: $base * 14;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: $base * 5;
+  width: $base * 25;
+  height: 100%;
+  background-color: $color-white-02;
+}
+
+.select-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg_white {
+  background-color: $color-white-09;
+  cursor: default;
+
+  &:hover {
+    transform: unset;
+  }
+
+  &:active {
+    transform: unset;
+  }
+}
+
+.bg_grey {
+  background-color: rgb(222, 219, 219);
+  cursor: default;
+
+  &:hover {
+    transform: unset;
+  }
+
+  &:active {
+    transform: unset;
+  }
+}
+
+.answer_wrong {
+  background-color: rgb(222, 219, 219);
+  text-decoration: line-through;
+  cursor: default;
+
+  &:hover {
+    transform: unset;
+  }
+
+  &:active {
+    transform: unset;
+  }
+}

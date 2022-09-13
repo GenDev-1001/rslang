@@ -1,0 +1,177 @@
+.dictionary-block {
+  margin-bottom: 20px;
+  padding-top: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.dictionary-block-title {
+  padding: 4px 12px;
+  color: var(--color-white);
+  font-size: 20px;
+  text-transform: uppercase;
+  background-color: var(--color-green);
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgb(0 0 0 / 20%);
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+
+.dictionary-block-title.active {
+  background-color: var(--color-yellow);
+}
+
+.dictionary-lvls__wrapper-li {
+  opacity: 0.5;
+  transition: opacity 0.5s;
+}
+
+.dictionary-lvls__wrapper-li:hover {
+  opacity: 1;
+}
+
+.dictionary-lvls__wrapper-li.active,
+.dictionary-lvls-custom__wrapper-li.active {
+  opacity: 1;
+}
+
+.dictionary-lvls-custom__wrapper-li {
+  opacity: 0.5;
+  transition: opacity 0.5s;
+}
+
+.dictionary-lvls-custom__wrapper-li:hover {
+  opacity: 1;
+}
+
+.dictionary-block-title:hover {
+  background-color: var(--color-yellow);
+}
+
+.dictionary-lvl__title,
+.dictionary-words__title {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.dictionary-block-title__dev {
+  margin: 0 10px;
+  font-weight: 600;
+  font-size: 32px;
+}
+
+.dictionary-lvls__wrapper {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.dictionary-lvls-custom__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.dictionary-words__wrapper {
+  display: grid;
+  grid-gap: 37px;
+  grid-template-columns: repeat(4, 300px);
+  width: max-content;
+  margin: 0 auto 50px;
+}
+
+.no-results {
+  width: 320px;
+  margin: 0 auto;
+  padding-top: 80px;
+  color: var(--color-yellow);
+  font-size: 22px;
+  text-align: center;
+}
+
+.dictionary-games {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.dictionary-games__item + .dictionary-games__item {
+  margin-left: 20px;
+}
+
+.dictionary-games__link .dictionary-lvls__button {
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  justify-content: center;
+  width: 250px;
+  height: 85px;
+  text-align: center;
+}
+
+.dictionary-games__link .dictionary-lvls__button .directory-button-left {
+  color: var(--color-white);
+  text-align: center;
+}
+
+.dictionary-games__link .dictionary-lvls__button .directory-button-circle {
+  top: -20px;
+  right: 55px;
+  width: 140px;
+  height: 140px;
+  background-color: var(--color-green);
+  border-radius: 50%;
+}
+
+.dictionary-games__link .dictionary-lvls__button:nth-child(1) .directory-button-circle {
+  background-color: var(--color-green);
+}
+
+.dictionary-games__item {
+  opacity: 0.7;
+  transition: opacity 0.5s;
+}
+
+.dictionary-games__item:hover {
+  opacity: 1;
+}
+
+@media (max-width: 1350px) {
+  .dictionary-words__wrapper {
+    grid-gap: 30px;
+    grid-template-columns: repeat(3, 300px);
+  }
+}
+
+@media (max-width: 1200px) {
+  .dictionary-lvls__wrapper {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 990px) {
+  .dictionary-words__wrapper {
+    grid-template-columns: repeat(2, 300px);
+  }
+}
+
+@media (max-width: 670px) {
+  .dictionary-words__wrapper {
+    grid-template-columns: repeat(1, 300px);
+  }
+
+  .dictionary-games {
+    flex-wrap: wrap;
+  }
+
+  .dictionary-games__item + .dictionary-games__item {
+    margin-left: 0;
+  }
+
+  .dictionary-games__item {
+    margin-bottom: 10px;
+  }
+}

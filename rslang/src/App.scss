@@ -1,0 +1,79 @@
+@import './sass/Constants.scss';
+
+/* main style */
+
+:root {
+  --color-pink: #ff6db1;
+  --color-black: #000;
+  --color-white: #fff;
+  --color-grey: #f3f4f8;
+  --color-green: #4ccbb7;
+  --color-yellow: #ffc53d;
+  --color-light-blue: #9cd7f9;
+  --color-blueviolet: #8a78fa;
+  --color-blue: #5d7cfd;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  font-size: 0.875rem;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  font-family: DynaPuff, cursive;
+  background: var(--color-white);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  border: 0;
+  outline: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.7s;
+}
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.main {
+  flex-grow: 1;
+  min-height: calc(100vh - $base * 39);
+}
+
+.container {
+  max-width: $base * 284;
+  min-height: calc(100vh - $base * 28);
+  margin: 0 auto;
+  padding: 0 $base * 2;
+}
+
+/* main style end */
