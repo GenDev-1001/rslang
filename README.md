@@ -4,7 +4,7 @@
 ### [Site link](https://gendev-1001.github.io/rslang)
 
 <kbd>
-  ![main](https://user-images.githubusercontent.com/92532071/189867418-0893276d-7607-4615-9f80-bfb81a1f70f1.jpg)
+  ![1](https://user-images.githubusercontent.com/92532071/189867418-0893276d-7607-4615-9f80-bfb81a1f70f1.jpg)
 </kbd>
 
 ### 🛠 The tech stack is:
